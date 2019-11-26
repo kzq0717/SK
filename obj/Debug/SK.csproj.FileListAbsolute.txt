@@ -1,0 +1,16 @@
+D:\Project\TSM\SK\bin\Debug\SK.dll
+D:\Project\TSM\SK\bin\Debug\SK.pdb
+D:\Project\TSM\SK\obj\Debug\SK.dll
+D:\Project\TSM\SK\obj\Debug\SK.pdb
+D:\Project\TSM\SK\obj\Debug\SK.csproj.CoreCompileInputs.cache
+D:\Project\TSM\SK\obj\Debug\SK.csproj.CopyComplete
+D:\Project\TSM\SK\obj\Debug\SK.csproj.ResolveComReference.cache
+D:\Project\TSM\SK\obj\Debug\SK.csprojAssemblyReference.cache
+D:\Project\SK\SK\bin\Debug\SK.dll
+D:\Project\SK\SK\bin\Debug\SK.pdb
+D:\Project\SK\SK\obj\Debug\SK.csprojAssemblyReference.cache
+D:\Project\SK\SK\obj\Debug\SK.csproj.ResolveComReference.cache
+D:\Project\SK\SK\obj\Debug\SK.csproj.CoreCompileInputs.cache
+D:\Project\SK\SK\obj\Debug\SK.csproj.CopyComplete
+D:\Project\SK\SK\obj\Debug\SK.dll
+D:\Project\SK\SK\obj\Debug\SK.pdb
