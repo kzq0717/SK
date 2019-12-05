@@ -50,6 +50,7 @@
   <ItemGroup>
     <Compile Include="AppConfigHelper.cs" />
     <Compile Include="BASE36.cs" />
+    <Compile Include="DataProcessHelper.cs" />
     <Compile Include="DicomHelper.cs" />
     <Compile Include="ExcelHelper.cs" />
     <Compile Include="FormHelper.cs" />
