@@ -68,6 +68,28 @@ namespace SK
             }
         }
 
+        /// <summary>获取数据库连接字符串（Latin1 OR UTF8）
+        /// </summary>
+        /// <param name="connectionString">连接字符串</param>
+        /// <returns>latin1 / utf8 </returns>
+        public static String GetDbCharSet(string connectionString)
+        {
+            try
+            {
+                if (string.IsNullOrEmpty(connectionString) || connectionString.Split(';').Length<4)
+                {
+                    throw new Exception($"连接字符串格式不正确.(eg.server=xxx;user id=xxx;password=xxx;database=xxx;Charset=xxx;)");
+                }
+                return connectionString.Split(';')[4].Split('=')[1].ToLower();
+
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("解析连接字符串异常。",ex);
+            }
+           
+        }
+
 
         private SqlHelper() { }
 
