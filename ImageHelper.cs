@@ -11,17 +11,65 @@ namespace SK
 {
     public class ImageHelper
     {
+        #region 注释
+        ////获取seriesID
+        //public string getSeriesID()
+        //{
+        //    return seriesID;
+        //}
+
+        ////设置seriesID
+        //public void setSeriesID(string seriesID)
+        //{
+        //    this.seriesID = seriesID;
+        //}
+        //#endregion
+        //#region imageID
+        ///// <summary>getImageID
+        ///// </summary>
+        ///// <returns></returns>
+        //public string getImageID()
+        //{
+        //    return imageID;
+        //}
+
+        ///// <summary>setImageID
+        ///// </summary>
+        ///// <param name="imageID"></param>
+        //public void setImageID(string imageID)
+        //{
+        //    this.imageID = imageID;
+        //}
+
+        //#endregion
+
+        //#region imageData
+        ///// <summary>getImageData
+        ///// </summary>
+        ///// <returns>byte[] </returns>
+        //public byte[] getImageData()
+        //{
+        //    return imageData;
+        //}
+
+        ///// <summary>
+        ///// </summary>
+        ///// <param name="data"></param>
+        //public void setImageData(byte[] data)
+        //{
+        //    this.imageData = data;
+
+        //}
+        #endregion
+
         #region 属性
-        /// <summary>图像属性列表
-        /// </summary>
-        //List<ImageInfo> imageMetas = new List<ImageInfo>();
         /// <summary>256色
         /// </summary>
-        public byte[,] rgbPalette_256;
+        private byte[,] rgbPalette_256;
 
         /// <summary>灰度
         /// </summary>
-        public byte[,] greyPalette_256;
+        private byte[,] greyPalette_256;
 
         #region ARGB值
         int[] c = new int[256] {0,263172,526344,789516,1052688,1315860,1579032,1842204,
@@ -88,96 +136,64 @@ namespace SK
 
         /// <summary>seriesID
         /// </summary>
-        private string seriesID;
-
-        #region seriesID
-        //获取seriesID
-        public string getSeriesID()
-        {
-            return seriesID;
-        }
-
-        //设置seriesID
-        public void setSeriesID(string seriesID)
-        {
-            this.seriesID = seriesID;
-        }
-        #endregion
+        public string seriesID { get; set; }
 
         /// <summary>ImageID
         /// </summary>
-        private string imageID;
-
-        #region imageID
-        /// <summary>getImageID
-        /// </summary>
-        /// <returns></returns>
-        public string getImageID()
-        {
-            return imageID;
-        }
-
-        /// <summary>setImageID
-        /// </summary>
-        /// <param name="imageID"></param>
-        public void setImageID(string imageID)
-        {
-            this.imageID = imageID;
-        }
-
-        #endregion
-
+        public string imageID { get; set; }
 
         /// <summary>图像数据
         /// </summary>
-        private byte[] imageData;
-
-        #region imageData
-        /// <summary>getImageData
-        /// </summary>
-        /// <returns>byte[] </returns>
-        public byte[] getImageData()
-        {
-            return imageData;
-        }
-
-        /// <summary>
-        /// </summary>
-        /// <param name="data"></param>
-        public void setImageData(byte[] data)
-        {
-            this.imageData = data;
-
-        }
-        #endregion
+        public byte[] imageData { get; set; }
 
         /// <summary>二维图像数据
         /// </summary>
-        private short[,] ImageData { get; set; }
+        public int[,] ImageData { get; set; }
 
         /// <summary>图像宽度(240)
         /// </summary>
-        private int imageWidth { get; set; }
+        public int imageWidth { get; set; }
 
         /// <summary>图像高度(320)
         /// </summary>
-        private int imageHeight { get; set; }
+        public int imageHeight { get; set; }
 
         /// <summary>高温
         /// </summary>
-        private float hightTemperature { get; set; }
+        public float hightTemperature { get; set; }
 
         /// <summary>低温
         /// </summary>
-        private float lowTemperature { get; set; }
+        public float lowTemperature { get; set; }
 
         /// <summary>图像数量
         /// </summary>
-        private int imageCount { get; set; }
+        public int imageCount { get; set; }
 
         #endregion
 
         #region 方法
+        /// <summary>构造函数
+        /// </summary>
+        public ImageHelper(byte[]data)
+        {
+            if(data.Length>0)
+            {
+                byte[] tempBytes = new byte[data.Length - 8]; //温度数据
+                short[] tempData = new short[tempBytes.Length / 2];
+                Buffer.BlockCopy(data, 8, tempData, 0, tempBytes.Length); //拷贝数据
+                this.imageWidth = BitConverter.ToInt32(data, 0);
+                this.imageHeight = BitConverter.ToInt32(data, 4);
+                this.ImageData = OneToTwo(tempData, imageWidth, imageHeight);//温度数矩阵
+                this.hightTemperature = tempData.Cast<short>().Max() / 100.0f;//高温
+                this.lowTemperature = tempData.Cast<short>().Min() / 100.0f;//低温
+            }
+            else
+            {
+                throw new Exception("图像信息不能为空.");
+            }
+        }
+
         #region 获取图像属性(宽度，高度，图像矩阵数据，高温，低温)
         /// <summary>获取图像属性(宽度，高度，图像矩阵数据，高温，低温)
         /// </summary>
@@ -194,8 +210,8 @@ namespace SK
                     short[] data = new short[newbytes.Length / 2];//short类型的温度数据
                     Buffer.BlockCopy(bytes, 8, data, 0, newbytes.Length);
 
-                    imageInfo.imageWidth = BitConverter.ToInt32(bytes, 0); //图像的宽度
-                    imageInfo.imageHeight = BitConverter.ToInt32(bytes, 4);//图像的高度 
+                    imageInfo.imageWidth = BitConverter.ToInt32(bytes, 0); //图像的宽度（240）
+                    imageInfo.imageHeight = BitConverter.ToInt32(bytes, 4);//图像的高度（320） 
                     imageInfo.ImageData = OneToTwo(data, imageInfo.imageWidth, imageInfo.imageHeight);//二维图像数据
                     imageInfo.hightTemperature = data.Cast<short>().Max() / 100.0f;//高温
                     imageInfo.lowTemperature = data.Cast<short>().Min() / 100.0f; //低温
@@ -205,7 +221,7 @@ namespace SK
             }
             catch (Exception ex)
             {
-               System.Windows.Forms.MessageBox.Show(ex.Message + ex.StackTrace);
+                System.Windows.Forms.MessageBox.Show(ex.Message + ex.StackTrace);
                 return null;
             }
         }
@@ -213,23 +229,145 @@ namespace SK
         #endregion
 
         #region 温度数据转成BitMap图像
-        private Bitmap getBitmap(ImageInfo imageInfo)
+
+        /// <summary>将byte[]数据转为bitmap
+        /// </summary>
+        /// <returns></returns>
+        public Bitmap getBitmap()
+        {
+            try
+            {
+                int m_colorIndex; //颜色对应的索引
+                byte[,] colorImageData = new byte[imageWidth, imageHeight];//温度数据对应颜色坐标
+                init_RGB_256_Platte();
+                for (int x = 0; x < imageWidth; x++)
+                {
+                    for (int y = 0; y < imageHeight; y++)
+                    {
+                        m_colorIndex = (int)(Math.Round(ImageData[x, y] - lowTemperature) * 256.0 / (hightTemperature - lowTemperature));//对应color
+                        if (m_colorIndex > 255)
+                        {
+                            colorImageData[x, y] = 255;
+                        }
+                        else if (m_colorIndex <= 0)
+                        {
+                            colorImageData[x, y] = 0;
+                        }
+                        else
+                            colorImageData[x, y] = (byte)m_colorIndex;
+                    }
+                }
+                Bitmap bitmap = new Bitmap(imageWidth, imageHeight, PixelFormat.Format24bppRgb);
+                Rectangle re = new Rectangle(0, 0, imageWidth, imageHeight);
+                BitmapData bitmapData = bitmap.LockBits(re, ImageLockMode.ReadWrite, PixelFormat.Format24bppRgb);
+                int dstStride = bitmapData.Stride;
+                System.IntPtr dstScan0 = bitmapData.Scan0;
+                unsafe
+                {
+                    try
+                    {
+                        byte* pDst = (byte*)(void*)dstScan0;
+                        for (int x = 0; x < imageWidth; x++)
+                        {
+                            for (int y = 0; y < imageHeight; y++) //原始图像 
+                            {
+                                pDst[x * 3 + y * dstStride] = rgbPalette_256[colorImageData[x, y], 0];
+                                pDst[x * 3 + y * dstStride + 1] = rgbPalette_256[colorImageData[x, y], 1];
+                                pDst[x * 3 + y * dstStride + 2] = rgbPalette_256[colorImageData[x, y], 2];
+                            }
+                        }
+                    }
+                    catch (Exception ex)
+                    {
+                        System.Windows.Forms.MessageBox.Show(ex.Message + ex.StackTrace);
+                    }
+
+                }
+                bitmap.UnlockBits(bitmapData);
+                return bitmap;
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("无法得到BitMap图像信息.",ex.InnerException);
+            }
+
+        }
+
+        /// <summary>导出温度数据到文件中
+        /// </summary>
+        /// <param name="filePath">文件存储路径</param>
+        /// <returns>成功：true  失败：false</returns>
+        public  bool outTemperatureDataToFile(string filePath)
+        {
+            try
+            {
+                if (!Directory.Exists(filePath))
+                {
+                    Directory.CreateDirectory(filePath);
+                }
+
+                string dataFileName = filePath + "\\" + Guid.NewGuid().ToString() + ".txt";
+                if (!File.Exists(dataFileName))
+                {
+                    FileStream fs = File.Create(dataFileName);
+                    fs.Close();
+                }
+
+                StreamWriter write = File.AppendText(dataFileName);
+
+                int m_row = ImageData.GetUpperBound(0) + 1; //行数
+                int m_col = ImageData.GetLength(1);//列数
+                int i = 1;
+
+                for (int y = 0; y < m_row; y++)
+                {
+                    for (int x = 0; x < m_col; x++)
+                    {
+                        if (x % m_col == 0 && x != 0)
+                        {
+                            write.Write("\n");
+                        }
+                        else
+                        {
+                            write.Write(ImageData[y, x] + ",");
+                            i++;
+                        }
+                    }
+                }
+                write.Flush();
+                write.Close();
+                return true;
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.Message);
+                return false;
+            }
+        }
+
+        /// <summary>返回bitmap图像信息
+        /// </summary>
+        /// <param name="imageInfo">
+        /// 图像宽度、图像高度、 低温、高温 、图像数据
+        /// 
+        /// </param>
+        /// <returns></returns>
+        public Bitmap getBitmap(ImageInfo imageInfo)
         {
             try
             {
                 init_RGB_256_Platte();
 
-                int m_imageWidth = imageInfo.imageWidth; //240
-                int m_imageHight = imageInfo.imageHeight; //320
+                int m_imageWidth = imageInfo.imageWidth; //320
+                int m_imageHight = imageInfo.imageHeight; // 240
                 int m_colorIndex;
                 byte[,] colorImageData = new byte[m_imageWidth, m_imageHight];//温度数据对应颜色坐标
                 float m_imageLowTemperature = imageInfo.lowTemperature * 100.00f; //低温*100.00f
                 float m_imageHightTemperature = imageInfo.hightTemperature * 100.00f;//高温*100.00f
 
-
-                for (int y = 0; y < m_imageHight; y++)
+                for (int x = 0; x < m_imageWidth; x++)
                 {
-                    for (int x = 0; x < m_imageWidth; x++)
+                    for (int y = 0; y < m_imageHight; y++)
                     {
                         m_colorIndex = (int)(Math.Round(imageInfo.ImageData[x, y] - m_imageLowTemperature) * 256.0 / (m_imageHightTemperature - m_imageLowTemperature));//对应color
                         if (m_colorIndex > 255)
@@ -255,9 +393,9 @@ namespace SK
                     try
                     {
                         byte* pDst = (byte*)(void*)dstScan0;
-                        for (int y = 0; y < m_imageHight; y++) //原始图像
+                        for (int x = 0; x < m_imageWidth; x++)
                         {
-                            for (int x = 0; x < m_imageWidth; x++)
+                            for (int y = 0; y < m_imageHight; y++) //原始图像 
                             {
                                 pDst[x * 3 + y * dstStride] = rgbPalette_256[colorImageData[x, y], 0];
                                 pDst[x * 3 + y * dstStride + 1] = rgbPalette_256[colorImageData[x, y], 1];
@@ -267,7 +405,7 @@ namespace SK
                     }
                     catch (Exception ex)
                     {
-                       System.Windows.Forms.MessageBox.Show(ex.Message + ex.StackTrace);
+                        System.Windows.Forms.MessageBox.Show(ex.Message + ex.StackTrace);
                     }
 
                 }
@@ -284,13 +422,13 @@ namespace SK
         #region 将bitmap转存储为PNG
         /// <summary>将bitmap转存储为PNG
         /// </summary>
-        /// <param name="bitmap"></param>
-        /// <param name="imageId"></param>
-        private void setBitmapToPng(Bitmap bitmap, string imageId)
+        /// <param name="bitmap">bitmap图像</param>
+        /// <param name="imageId">图像编号</param>
+        public void setBitmapToPng(Bitmap bitmap, string imageId)
         {
             try
             {
-                string filePath =System.Windows.Forms.Application.StartupPath + "\\Image";
+                string filePath = System.Windows.Forms.Application.StartupPath + "\\Image";
                 if (!Directory.Exists(filePath))
                 {
                     Directory.CreateDirectory(filePath);
@@ -341,9 +479,9 @@ namespace SK
         /// </summary>
         /// <param name="b">一维数组（温度数据）</param>
         /// <returns></returns>
-        private short[,] OneToTwo(short[] b, int G_int_ImageWidth, int G_int_ImageHeight)
+        private int[,] OneToTwo(short[] b, int G_int_ImageWidth, int G_int_ImageHeight)
         {
-            short[,] temp = new short[G_int_ImageWidth, G_int_ImageHeight];
+            int[,] temp = new int[G_int_ImageWidth, G_int_ImageHeight];
             for (int x = 0; x < G_int_ImageWidth; x++)
             {
                 for (int y = 0; y < G_int_ImageHeight; y++)
@@ -351,10 +489,31 @@ namespace SK
                     temp[x, y] = b[G_int_ImageHeight * x + y];
                 }
             }
-
             return temp;
         }
         #endregion
+
+        /// <summary>二维转一维度数组
+        /// </summary>
+        /// <param name="b">二维数组</param>
+        /// <param name="G_int_ImageWidth">图像的宽度</param>
+        /// <param name="G_int_ImageHeight">图像的高度</param>
+        /// <returns>一维数组</returns>
+        private int[] TwoToOne(int[,] b, int G_int_ImageWidth, int G_int_ImageHeight)
+        {
+            int[] temp = new int[G_int_ImageHeight * G_int_ImageWidth + 1];
+            int n = 0;
+            for (int x = 0; x < G_int_ImageWidth; x++)
+            {
+                for (int y = 0; y < G_int_ImageHeight; y++)
+                {
+                    temp[n] = b[x, y];
+                    n++;
+                }
+            }
+            return temp;
+        }
+
 
         #region 打开指定路径文件
         /// <summary>打开指定路径文件
@@ -413,11 +572,57 @@ namespace SK
 
         #endregion
 
+        #region 图像处理类 
+        /// <summary>图像类
+        /// </summary>
+        public class ImageInfo
+        {
+            /// <summary>seriesID
+            /// </summary>
+            public string seriesID { get; set; }
+
+            /// <summary>ImageID
+            /// </summary>
+            public string imageID { get; set; }
+
+            /// <summary>图像数据
+            /// </summary>
+            public byte[] imageData { get; set; }
+
+            /// <summary>二维图像数据
+            /// </summary>
+            public int[,] ImageData { get; set; }
+
+            /// <summary>图像宽度(240)
+            /// </summary>
+            public int imageWidth { get; set; }
+
+            /// <summary>图像高度(320)
+            /// </summary>
+            public int imageHeight { get; set; }
+
+            /// <summary>高温
+            /// </summary>
+            public float hightTemperature { get; set; }
+
+            /// <summary>低温
+            /// </summary>
+            public float lowTemperature { get; set; }
+
+            /// <summary>图像数量
+            /// </summary>
+            public int imageCount { get; set; }
+
+            /// <summary>图像是否达标
+            /// </summary>
+            public string IsOK { get; set; }
+        }
+        #endregion
     }
 
     /// <summary>
     /// </summary>
-    public class UnsafeBitmap
+    class UnsafeBitmap
     {
         Bitmap bitmap;
         int stride;
@@ -508,7 +713,6 @@ namespace SK
             pBase = null;
         }
 
-
         /// <summary>设置指定位置
         /// </summary>
         /// <param name="x"></param>
@@ -556,51 +760,5 @@ namespace SK
     }
 
 
-    #region 图像处理类 
-    /// <summary>图像类
-    /// </summary>
-    class ImageInfo
-    {
-        /// <summary>seriesID
-        /// </summary>
-        public string seriesID { get; set; }
-
-        /// <summary>ImageID
-        /// </summary>
-        public string imageID { get; set; }
-
-        /// <summary>图像数据
-        /// </summary>
-        public byte[] imageData { get; set; }
-
-        /// <summary>二维图像数据
-        /// </summary>
-        public short[,] ImageData { get; set; }
-
-        /// <summary>图像宽度(240)
-        /// </summary>
-        public int imageWidth { get; set; }
-
-        /// <summary>图像高度(320)
-        /// </summary>
-        public int imageHeight { get; set; }
-
-        /// <summary>高温
-        /// </summary>
-        public float hightTemperature { get; set; }
-
-        /// <summary>低温
-        /// </summary>
-        public float lowTemperature { get; set; }
-
-        /// <summary>图像数量
-        /// </summary>
-        public int imageCount { get; set; }
-
-        /// <summary>图像是否达标
-        /// </summary>
-        public string IsOK { get; set; }
-    }
-    #endregion
 
 }

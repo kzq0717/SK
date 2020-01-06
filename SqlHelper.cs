@@ -68,7 +68,7 @@ namespace SK
             }
         }
 
-        /// <summary>获取数据库连接字符串（Latin1 OR UTF8）
+        /// <summary>获取数据库连接字符串（latin1 OR utf8）
         /// </summary>
         /// <param name="connectionString">连接字符串</param>
         /// <returns>latin1 / utf8 </returns>
@@ -80,7 +80,17 @@ namespace SK
                 {
                     throw new Exception($"连接字符串格式不正确.(eg.server=xxx;user id=xxx;password=xxx;database=xxx;Charset=xxx;)");
                 }
-                return connectionString.Split(';')[4].Split('=')[1].ToLower();
+
+               // string _msg = "server=xxx;user id=xxx;password=xxx;database=xxx;Charset=utf8;";
+                string[] _var = connectionString.Split(new char[] { ';', '=' });
+                int _index = Array.IndexOf(_var, "Charset");
+                //Console.WriteLine($"row_index:{_index}");
+                //Console.WriteLine($"Charset={_var[_index + 1]}");
+                if (string.IsNullOrEmpty(_var[_index + 1]))
+                {
+                    throw new Exception($"Charset不能为空.");
+                }
+                return _var[_index + 1].ToLower();
 
             }
             catch (Exception ex)
