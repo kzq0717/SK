@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
-VisualStudioVersion = 15.0.28307.539
+VisualStudioVersion = 15.0.28307.960
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SK", "SK.csproj", "{1803C3FB-7E94-490F-A4E9-6F0C5082B963}"
 EndProject
@@ -9,29 +9,128 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CSharp_Project", "..\..\Mod
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CSharp_Projec_Console", "..\..\Module\C#\CSharp_Project\CSharp_Projec_Console\CSharp_Projec_Console.csproj", "{1CE4DF5C-EFF9-48BA-8441-9068FA40050B}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AutoUpdater.NET", "..\..\Module\AutoUpdater.NET-master\AutoUpdater.NET-master\AutoUpdater.NET\AutoUpdater.NET.csproj", "{FB9E7E6B-B19F-4F37-A708-2996190CEF13}"
+	ProjectSection(ProjectDependencies) = postProject
+		{91DE558C-6DB8-429B-A069-C0491DCFF15B} = {91DE558C-6DB8-429B-A069-C0491DCFF15B}
+	EndProjectSection
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AutoUpdaterTest", "..\..\Module\AutoUpdater.NET-master\AutoUpdater.NET-master\AutoUpdaterTest\AutoUpdaterTest.csproj", "{FD5AE762-C630-49F8-B814-FCF70E7838D1}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ZipExtractor", "..\..\Module\AutoUpdater.NET-master\AutoUpdater.NET-master\ZipExtractor\ZipExtractor.csproj", "{91DE558C-6DB8-429B-A069-C0491DCFF15B}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AutoUpdaterTestWPF", "..\..\Module\AutoUpdater.NET-master\AutoUpdater.NET-master\AutoUpdaterTestWPF\AutoUpdaterTestWPF.csproj", "{9AEE4F21-5ED5-4C7E-9249-8A680123B5E3}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{1DBD2EE1-6C31-4B24-9212-E221404F4ADE}"
+	ProjectSection(SolutionItems) = preProject
+		..\..\Module\AutoUpdater.NET-master\AutoUpdater.NET-master\.gitignore = ..\..\Module\AutoUpdater.NET-master\AutoUpdater.NET-master\.gitignore
+		..\..\Module\AutoUpdater.NET-master\AutoUpdater.NET-master\appveyor.yml = ..\..\Module\AutoUpdater.NET-master\AutoUpdater.NET-master\appveyor.yml
+		..\..\Module\AutoUpdater.NET-master\AutoUpdater.NET-master\LICENSE = ..\..\Module\AutoUpdater.NET-master\AutoUpdater.NET-master\LICENSE
+		..\..\Module\AutoUpdater.NET-master\AutoUpdater.NET-master\README.md = ..\..\Module\AutoUpdater.NET-master\AutoUpdater.NET-master\README.md
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
+		Debug-NET35|Any CPU = Debug-NET35|Any CPU
+		Debug-NET40|Any CPU = Debug-NET40|Any CPU
 		Release|Any CPU = Release|Any CPU
+		Release-NET35|Any CPU = Release-NET35|Any CPU
+		Release-NET40|Any CPU = Release-NET40|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
 		{1803C3FB-7E94-490F-A4E9-6F0C5082B963}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{1803C3FB-7E94-490F-A4E9-6F0C5082B963}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1803C3FB-7E94-490F-A4E9-6F0C5082B963}.Debug-NET35|Any CPU.ActiveCfg = Debug|Any CPU
+		{1803C3FB-7E94-490F-A4E9-6F0C5082B963}.Debug-NET35|Any CPU.Build.0 = Debug|Any CPU
+		{1803C3FB-7E94-490F-A4E9-6F0C5082B963}.Debug-NET40|Any CPU.ActiveCfg = Debug|Any CPU
+		{1803C3FB-7E94-490F-A4E9-6F0C5082B963}.Debug-NET40|Any CPU.Build.0 = Debug|Any CPU
 		{1803C3FB-7E94-490F-A4E9-6F0C5082B963}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{1803C3FB-7E94-490F-A4E9-6F0C5082B963}.Release|Any CPU.Build.0 = Release|Any CPU
+		{1803C3FB-7E94-490F-A4E9-6F0C5082B963}.Release-NET35|Any CPU.ActiveCfg = Release|Any CPU
+		{1803C3FB-7E94-490F-A4E9-6F0C5082B963}.Release-NET35|Any CPU.Build.0 = Release|Any CPU
+		{1803C3FB-7E94-490F-A4E9-6F0C5082B963}.Release-NET40|Any CPU.ActiveCfg = Release|Any CPU
+		{1803C3FB-7E94-490F-A4E9-6F0C5082B963}.Release-NET40|Any CPU.Build.0 = Release|Any CPU
 		{5A65BA58-A9E3-4397-9F35-9109D37EC128}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{5A65BA58-A9E3-4397-9F35-9109D37EC128}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5A65BA58-A9E3-4397-9F35-9109D37EC128}.Debug-NET35|Any CPU.ActiveCfg = Debug|Any CPU
+		{5A65BA58-A9E3-4397-9F35-9109D37EC128}.Debug-NET35|Any CPU.Build.0 = Debug|Any CPU
+		{5A65BA58-A9E3-4397-9F35-9109D37EC128}.Debug-NET40|Any CPU.ActiveCfg = Debug|Any CPU
+		{5A65BA58-A9E3-4397-9F35-9109D37EC128}.Debug-NET40|Any CPU.Build.0 = Debug|Any CPU
 		{5A65BA58-A9E3-4397-9F35-9109D37EC128}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{5A65BA58-A9E3-4397-9F35-9109D37EC128}.Release|Any CPU.Build.0 = Release|Any CPU
+		{5A65BA58-A9E3-4397-9F35-9109D37EC128}.Release-NET35|Any CPU.ActiveCfg = Release|Any CPU
+		{5A65BA58-A9E3-4397-9F35-9109D37EC128}.Release-NET35|Any CPU.Build.0 = Release|Any CPU
+		{5A65BA58-A9E3-4397-9F35-9109D37EC128}.Release-NET40|Any CPU.ActiveCfg = Release|Any CPU
+		{5A65BA58-A9E3-4397-9F35-9109D37EC128}.Release-NET40|Any CPU.Build.0 = Release|Any CPU
 		{1CE4DF5C-EFF9-48BA-8441-9068FA40050B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{1CE4DF5C-EFF9-48BA-8441-9068FA40050B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1CE4DF5C-EFF9-48BA-8441-9068FA40050B}.Debug-NET35|Any CPU.ActiveCfg = Debug|Any CPU
+		{1CE4DF5C-EFF9-48BA-8441-9068FA40050B}.Debug-NET35|Any CPU.Build.0 = Debug|Any CPU
+		{1CE4DF5C-EFF9-48BA-8441-9068FA40050B}.Debug-NET40|Any CPU.ActiveCfg = Debug|Any CPU
+		{1CE4DF5C-EFF9-48BA-8441-9068FA40050B}.Debug-NET40|Any CPU.Build.0 = Debug|Any CPU
 		{1CE4DF5C-EFF9-48BA-8441-9068FA40050B}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{1CE4DF5C-EFF9-48BA-8441-9068FA40050B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{1CE4DF5C-EFF9-48BA-8441-9068FA40050B}.Release-NET35|Any CPU.ActiveCfg = Release|Any CPU
+		{1CE4DF5C-EFF9-48BA-8441-9068FA40050B}.Release-NET35|Any CPU.Build.0 = Release|Any CPU
+		{1CE4DF5C-EFF9-48BA-8441-9068FA40050B}.Release-NET40|Any CPU.ActiveCfg = Release|Any CPU
+		{1CE4DF5C-EFF9-48BA-8441-9068FA40050B}.Release-NET40|Any CPU.Build.0 = Release|Any CPU
+		{FB9E7E6B-B19F-4F37-A708-2996190CEF13}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{FB9E7E6B-B19F-4F37-A708-2996190CEF13}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{FB9E7E6B-B19F-4F37-A708-2996190CEF13}.Debug-NET35|Any CPU.ActiveCfg = Debug-NET35|Any CPU
+		{FB9E7E6B-B19F-4F37-A708-2996190CEF13}.Debug-NET35|Any CPU.Build.0 = Debug-NET35|Any CPU
+		{FB9E7E6B-B19F-4F37-A708-2996190CEF13}.Debug-NET40|Any CPU.ActiveCfg = Debug-NET40|Any CPU
+		{FB9E7E6B-B19F-4F37-A708-2996190CEF13}.Debug-NET40|Any CPU.Build.0 = Debug-NET40|Any CPU
+		{FB9E7E6B-B19F-4F37-A708-2996190CEF13}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{FB9E7E6B-B19F-4F37-A708-2996190CEF13}.Release|Any CPU.Build.0 = Release|Any CPU
+		{FB9E7E6B-B19F-4F37-A708-2996190CEF13}.Release-NET35|Any CPU.ActiveCfg = Release-NET35|Any CPU
+		{FB9E7E6B-B19F-4F37-A708-2996190CEF13}.Release-NET35|Any CPU.Build.0 = Release-NET35|Any CPU
+		{FB9E7E6B-B19F-4F37-A708-2996190CEF13}.Release-NET40|Any CPU.ActiveCfg = Release-NET40|Any CPU
+		{FB9E7E6B-B19F-4F37-A708-2996190CEF13}.Release-NET40|Any CPU.Build.0 = Release-NET40|Any CPU
+		{FD5AE762-C630-49F8-B814-FCF70E7838D1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{FD5AE762-C630-49F8-B814-FCF70E7838D1}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{FD5AE762-C630-49F8-B814-FCF70E7838D1}.Debug-NET35|Any CPU.ActiveCfg = Debug|Any CPU
+		{FD5AE762-C630-49F8-B814-FCF70E7838D1}.Debug-NET35|Any CPU.Build.0 = Debug|Any CPU
+		{FD5AE762-C630-49F8-B814-FCF70E7838D1}.Debug-NET40|Any CPU.ActiveCfg = Debug|Any CPU
+		{FD5AE762-C630-49F8-B814-FCF70E7838D1}.Debug-NET40|Any CPU.Build.0 = Debug|Any CPU
+		{FD5AE762-C630-49F8-B814-FCF70E7838D1}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{FD5AE762-C630-49F8-B814-FCF70E7838D1}.Release|Any CPU.Build.0 = Release|Any CPU
+		{FD5AE762-C630-49F8-B814-FCF70E7838D1}.Release-NET35|Any CPU.ActiveCfg = Release|Any CPU
+		{FD5AE762-C630-49F8-B814-FCF70E7838D1}.Release-NET35|Any CPU.Build.0 = Release|Any CPU
+		{FD5AE762-C630-49F8-B814-FCF70E7838D1}.Release-NET40|Any CPU.ActiveCfg = Release|Any CPU
+		{FD5AE762-C630-49F8-B814-FCF70E7838D1}.Release-NET40|Any CPU.Build.0 = Release|Any CPU
+		{91DE558C-6DB8-429B-A069-C0491DCFF15B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{91DE558C-6DB8-429B-A069-C0491DCFF15B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{91DE558C-6DB8-429B-A069-C0491DCFF15B}.Debug-NET35|Any CPU.ActiveCfg = Debug-NET35|Any CPU
+		{91DE558C-6DB8-429B-A069-C0491DCFF15B}.Debug-NET35|Any CPU.Build.0 = Debug-NET35|Any CPU
+		{91DE558C-6DB8-429B-A069-C0491DCFF15B}.Debug-NET40|Any CPU.ActiveCfg = Debug-NET40|Any CPU
+		{91DE558C-6DB8-429B-A069-C0491DCFF15B}.Debug-NET40|Any CPU.Build.0 = Debug-NET40|Any CPU
+		{91DE558C-6DB8-429B-A069-C0491DCFF15B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{91DE558C-6DB8-429B-A069-C0491DCFF15B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{91DE558C-6DB8-429B-A069-C0491DCFF15B}.Release-NET35|Any CPU.ActiveCfg = Release-NET35|Any CPU
+		{91DE558C-6DB8-429B-A069-C0491DCFF15B}.Release-NET35|Any CPU.Build.0 = Release-NET35|Any CPU
+		{91DE558C-6DB8-429B-A069-C0491DCFF15B}.Release-NET40|Any CPU.ActiveCfg = Release-NET40|Any CPU
+		{91DE558C-6DB8-429B-A069-C0491DCFF15B}.Release-NET40|Any CPU.Build.0 = Release-NET40|Any CPU
+		{9AEE4F21-5ED5-4C7E-9249-8A680123B5E3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9AEE4F21-5ED5-4C7E-9249-8A680123B5E3}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9AEE4F21-5ED5-4C7E-9249-8A680123B5E3}.Debug-NET35|Any CPU.ActiveCfg = Debug|Any CPU
+		{9AEE4F21-5ED5-4C7E-9249-8A680123B5E3}.Debug-NET35|Any CPU.Build.0 = Debug|Any CPU
+		{9AEE4F21-5ED5-4C7E-9249-8A680123B5E3}.Debug-NET40|Any CPU.ActiveCfg = Debug|Any CPU
+		{9AEE4F21-5ED5-4C7E-9249-8A680123B5E3}.Debug-NET40|Any CPU.Build.0 = Debug|Any CPU
+		{9AEE4F21-5ED5-4C7E-9249-8A680123B5E3}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9AEE4F21-5ED5-4C7E-9249-8A680123B5E3}.Release|Any CPU.Build.0 = Release|Any CPU
+		{9AEE4F21-5ED5-4C7E-9249-8A680123B5E3}.Release-NET35|Any CPU.ActiveCfg = Release|Any CPU
+		{9AEE4F21-5ED5-4C7E-9249-8A680123B5E3}.Release-NET35|Any CPU.Build.0 = Release|Any CPU
+		{9AEE4F21-5ED5-4C7E-9249-8A680123B5E3}.Release-NET40|Any CPU.ActiveCfg = Release|Any CPU
+		{9AEE4F21-5ED5-4C7E-9249-8A680123B5E3}.Release-NET40|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
-		SolutionGuid = {B116EF79-37B5-45B0-8F8D-DAA9A9EE21C1}
+		SolutionGuid = {75C1F7DD-ECF1-4859-8379-89B62DF2516C}
+	EndGlobalSection
+	GlobalSection(SubversionScc) = preSolution
+		Svn-Managed = True
+		Manager = AnkhSVN - Subversion Support for Visual Studio
 	EndGlobalSection
 EndGlobal

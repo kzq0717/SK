@@ -1,0 +1,11 @@
+D:\Project\SK\SK\bin\Release\SK.dll
+D:\Project\SK\SK\bin\Release\SK.pdb
+D:\Project\SK\SK\bin\Release\evohtmltopdf.dll
+D:\Project\SK\SK\bin\Release\MySql.Data.dll
+D:\Project\SK\SK\bin\Release\evointernal.dat
+D:\Project\SK\SK\obj\Release\SK.csproj.ResolveComReference.cache
+D:\Project\SK\SK\obj\Release\SK.csproj.CoreCompileInputs.cache
+D:\Project\SK\SK\obj\Release\SK.csproj.CopyComplete
+D:\Project\SK\SK\obj\Release\SK.dll
+D:\Project\SK\SK\obj\Release\SK.pdb
+D:\Project\SK\SK\obj\Release\SK.csprojAssemblyReference.cache
