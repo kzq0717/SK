@@ -21,7 +21,17 @@ namespace SK
         {
             try
             {
-                string fileName ="evohtmltopdf.dll";
+                string fileName = "";
+                if (Environment.Is64BitOperatingSystem)  //判断系统位数
+                {
+                    fileName = "evohtmltopdf_x64.dll";
+                }
+                else
+                {
+                    fileName = "evohtmltopdf_x86.dll";
+                }
+
+                 ;
                 if (!IsExist(fileName))
                 {
                     Console.WriteLine("DLL文件不存在");

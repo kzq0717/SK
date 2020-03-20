@@ -15,3 +15,4 @@ D:\Project\SK\SK\obj\Debug\SK.dll
 D:\Project\SK\SK\obj\Debug\SK.pdb
 D:\Project\SK\SK\bin\Debug\evohtmltopdf.dll
 D:\Project\SK\SK\bin\Debug\evointernal.dat
+D:\Project\SK\SK\obj\Debug\SK.csprojAssemblyReference.cache

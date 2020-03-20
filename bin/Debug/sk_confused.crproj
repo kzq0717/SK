@@ -1,9 +1,0 @@
-<project outputDir="D:\Project\SK\SK\bin\Debug\Confused" baseDir="D:\Project\SK\SK\bin\Debug" xmlns="http://confuser.codeplex.com">
-  <module path="SK.dll">
-    <rule pattern="true" inherit="false">
-      <protection id="anti ildasm" />
-      <protection id="anti tamper" />
-      <protection id="constants" />
-    </rule>
-  </module>
-</project>
