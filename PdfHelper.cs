@@ -21,17 +21,16 @@ namespace SK
         {
             try
             {
-                string fileName = "";
-                if (Environment.Is64BitOperatingSystem)  //判断系统位数
-                {
-                    fileName = "evohtmltopdf_x64.dll";
-                }
-                else
-                {
-                    fileName = "evohtmltopdf_x86.dll";
-                }
+                string fileName = "evohtmltopdf.dll";
+                //if (Environment.Is64BitOperatingSystem)  //判断系统位数
+                //{
+                //    fileName = "evohtmltopdf_x64.dll";
+                //}
+                //else
+                //{
+                //    fileName = "evohtmltopdf_x86.dll";
+                //}
 
-                 ;
                 if (!IsExist(fileName))
                 {
                     Console.WriteLine("DLL文件不存在");
@@ -41,7 +40,7 @@ namespace SK
             }
             catch (Exception ex)
             {
-                throw new Exception("请预先加载evohtmltopdf.dll文件", ex);
+                throw new Exception("请预先加载对应系统版本的evohtmltopdf.dll文件", ex);
             }
 
             try

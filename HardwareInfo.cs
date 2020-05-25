@@ -12,7 +12,8 @@ namespace SK
 {
     public class HardwareInfo
     {
-        private static string publicKey = @"<RSAKeyValue><Modulus>sb1zuR5gPeESE/0Cwikah1g5B6ooIfI99mHXQfSkljhWGZvuxGZPX8/lMOo/TKfyvcrR5SsXg7uZA9fQY5+oVBRrUU+mMvTpowcHC3sHYkA4HsNlYmFEm/qoWyIebDpdQYRhpIj3EaV4ZiOAZNZc1NoCIMXJMN8WL2QRwPpSlsE=</Modulus><Exponent>AQAB</Exponent></RSAKeyValue>  ";
+        //private static string publicKey = @"<RSAKeyValue><Modulus>sb1zuR5gPeESE/0Cwikah1g5B6ooIfI99mHXQfSkljhWGZvuxGZPX8/lMOo/TKfyvcrR5SsXg7uZA9fQY5+oVBRrUU+mMvTpowcHC3sHYkA4HsNlYmFEm/qoWyIebDpdQYRhpIj3EaV4ZiOAZNZc1NoCIMXJMN8WL2QRwPpSlsE=</Modulus><Exponent>AQAB</Exponent></RSAKeyValue>  ";
+        private static string publicKey = @"<RSAKeyValue><Modulus>7nrPVroeXy02q3lDM1oFN2RJv7KfruHhnI+n4uKLs5vw4g3K0L6zFWp8+JW1NQv4l38ZXpPTPyIVcQ9UEnrzHD4U2jtfB6C8CI22bBTVlWvdM2/Ti8+ivO0l7LmWGZyq0ImjVGzb438SqxGy0crice1y06zcXM+7aDgDo/NdxiU=</Modulus><Exponent>AQAB</Exponent></RSAKeyValue>";
         /*
          * 硬件
         Win32_Processor, // CPU 处理器
