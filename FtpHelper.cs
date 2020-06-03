@@ -17,7 +17,12 @@ namespace SK
         private FtpWebRequest ftpRequest = null;
         private FtpWebResponse ftpResponse = null;
         private Stream ftpStream = null;
-        private int bufferSize = 2048;
+        private string privateKey = "<RSAKeyValue><Modulus>vHIkARRpTjktpApMS2sER857Q4q/E0iiQyJSqeiruWjcrYAHzBOozMvilv4QPtHgWUFxiEn129jtRb5J9I3dNv/HSGKEQ7uzY+bBqQXkayyrWvDKYPORd19QOtrk0kfDp04KS172Rrkrx6lKCV3hko2Q6leoMVYliRYeY1T6DNU=</Modulus><Exponent>AQAB</Exponent><P>4h9kLqQAqUesk0JJ4MC3eWC9lrD+JY+oBiuAq2v2koiIBx+QDrkdhEI5dnCbaG4Nanbo6jy1ZntK1pb0bCOwXw==</P><Q>1VhUv++Xu1vwe02tWP/Uct68kI4koNJxpV1AqlxODxNuY6Kdi3bMGfqRYvbOHu91AdLhUN/HXZ0t0xTJ/qI/Sw==</Q><DP>CW0dlAQqMuRWAV2GDuR5wYmS3bFLJu2yJ2+w0XSSttESOpnKO5Lj9Bt+ob1X/SZ5ULLcSsd1GGyTVha84bUrKQ==</DP><DQ>mXC5K35Hk8IxOI2Kcms1QhS+a/0/jMcuY2+pVZ2jqqYgC9rmEmszqi+Tpyi44Hj6n4Aq+z6nJcYpMhpOmSvZ9w==</DQ><InverseQ>fJmaBAjy1iO8btV2+s7fQoH0mxiDLCHJ5afjy85FvhuJml7UVdNJ2baw6zogwcvOmfUhoGLVgjkVin8w8c9AfQ==</InverseQ><D>FTwjdH+xUiA9VWPXrxPzGohY+YZz+59OsZP3jq/qUe1QGLj5p/R7LAC5mtwsRnft+QDX40y6SLjMG/TSbp1h1PQ+CuM8toIMBBMunmNrk2e2AFGVwD7lPIDatIXcbtXPWS5zXO9kju9PCOwAFJTestadJjAxSfq/QB+IV68Qik0=</D></RSAKeyValue>";
+
+        /// <summary>
+        /// 缓冲区:4K
+        /// </summary>
+        private int bufferSize = 4096;
 
         /// <summary>构造函数
         /// </summary>
@@ -29,6 +34,35 @@ namespace SK
             host = hostIP;
             user = userName;
             pass = password;
+        }
+
+        /// <summary>
+        /// 连接字符串
+        /// </summary>
+        /// <param name="url"></param>
+        public FtpHelper(string url)
+        {
+            //string ip = "", userName = "", userPassword = "";
+            string _key = SK.SecurityHelper.RSADecrypt(privateKey, url);
+            string[] _connect = _key.Split(new char[] { '@', '=' });
+            for (int i = 0; i < _connect.Length; i++)
+            {
+                if (_connect[i].Equals("IP"))
+                {
+                    host = "ftp://" + _connect[i + 1];
+                }
+
+                if (_connect[i].Equals("UserName"))
+                {
+                    user = _connect[i + 1];
+                }
+
+                if (_connect[i].Equals("Passwd"))
+                {
+                    pass = _connect[i + 1];
+                }
+            }
+
         }
 
         /// <summary>下载文件
@@ -79,14 +113,55 @@ namespace SK
             return;
         }
 
-        /// <summary>上传文件
+
+
+
+        private string _percenage;
+        /// <summary>
+        /// 上传百分比信
         /// </summary>
-        /// <param name="remoteFile"></param>
-        /// <param name="localFile"></param>
-        public void upload(string remoteFile, string localFile)
+        public string Percenage
+        {
+            get { return _percenage; }
+            set
+            {
+                //如果变量值改变则调用事件触发函数
+                if (value != _percenage)
+                {
+                    WhenPercenageChange();
+                }
+                _percenage = value;
+            }
+        }
+
+        //定义委托
+        public delegate void PercenageChanged(object sender, EventArgs e);
+
+        //与委托相关联的事件
+        public event PercenageChanged OnPercenageChanged;
+
+        //事件触发函数
+        private void WhenPercenageChange()
+        {
+            if (OnPercenageChanged != null)
+            {
+                OnPercenageChanged(this, null);
+            }
+        }
+
+
+     /// <summary>
+     /// 上传文件
+     /// </summary>
+     /// <param name="remoteFile">远程存储文件名</param>
+     /// <param name="localFile">本地文件路径</param>
+     /// <returns>成功：true</returns>
+        public bool upload(string remoteFile, string localFile)
         {
             try
             {
+                //OnPercenageChanged += new PercenageChanged();
+
                 /* Create an FTP Request */
                 ftpRequest = (FtpWebRequest)FtpWebRequest.Create(host + "/" + remoteFile);
                 /* Log in to the FTP Server with the User Name and Password Provided */
@@ -100,27 +175,60 @@ namespace SK
                 /* Establish Return Communication with the FTP Server */
                 ftpStream = ftpRequest.GetRequestStream();
                 /* Open a File Stream to Read the File for Upload */
-                FileStream localFileStream = new FileStream(localFile, FileMode.Create);
+                FileStream localFileStream = new FileStream(localFile, FileMode.Open);
                 /* Buffer for the Downloaded Data */
                 byte[] byteBuffer = new byte[bufferSize];
                 int bytesSent = localFileStream.Read(byteBuffer, 0, bufferSize);
+
+                //已上传的字节数
+                long offset = 0;
+
+                //开始上传时间
+                DateTime startTime = DateTime.Now;
+                //文件大小
+                long fileLength = localFileStream.Length;
+
                 /* Upload the File by Sending the Buffered Data Until the Transfer is Complete */
                 try
                 {
                     while (bytesSent != 0)
                     {
                         ftpStream.Write(byteBuffer, 0, bytesSent);
+                        //计算上传大小及速度
+                        offset += bytesSent;
+                        TimeSpan span = DateTime.Now - startTime;
+                        double second = span.TotalSeconds;
+                        string msg = "";
+                        //if (second >0.0001)
+                        //{
+                        //    msg = (offset / 1024 / second).ToString("0.00") + "KB/M";
+                        //}
+                        //else
+                        //{
+                        //    msg = "正在连接中......";
+                        //}
+                        msg = (offset / 1048576.0).ToString("F2") + "/" + (fileLength / 1048576.0).ToString("F2") + "M";
+                        Percenage = msg;
                         bytesSent = localFileStream.Read(byteBuffer, 0, bufferSize);
                     }
                 }
-                catch (Exception ex) { Console.WriteLine(ex.ToString()); }
+                catch (Exception ex) {
+                    Console.WriteLine(ex.ToString());
+                    throw ex;
+                }
+
                 /* Resource Cleanup */
                 localFileStream.Close();
                 ftpStream.Close();
                 ftpRequest = null;
+
+                return true;
             }
-            catch (Exception ex) { Console.WriteLine(ex.ToString()); }
-            return;
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.ToString());
+                throw ex;
+            }
         }
 
         /// <summary>Delete File

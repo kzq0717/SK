@@ -12,12 +12,27 @@ namespace SK
 {
     public class Log
     {
+
+        private static readonly log4net.ILog log = log4net.LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
+        
+        public static void WriteLog(string msg)
+        {
+            try
+            {
+                log.Info(msg);
+            }
+            catch (Exception ex)
+            {
+
+                throw ex;
+            }
+        }
         /// <summary>
         /// 记录日志文件  (应用程序当前目录下)
         /// </summary>
         /// <param name="logName">日志描述</param>
         /// <param name="msg">写入信息</param>
-        public static void WriteMsg(string logName, string msg)
+        private static void WriteMsg(string logName, string msg)
         {
             try
             {
