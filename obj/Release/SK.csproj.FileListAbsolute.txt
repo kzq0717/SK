@@ -9,3 +9,13 @@ D:\Project\SK\SK\obj\Release\SK.csproj.CopyComplete
 D:\Project\SK\SK\obj\Release\SK.dll
 D:\Project\SK\SK\obj\Release\SK.pdb
 D:\Project\SK\SK\obj\Release\SK.csprojAssemblyReference.cache
+D:\Project\SK\SK\bin\Release\log4net.config
+D:\Project\SK\SK\bin\Release\ICSharpCode.SharpZipLib.dll
+D:\Project\SK\SK\bin\Release\log4net.dll
+D:\Project\SK\SK\bin\Release\Newtonsoft.Json.dll
+D:\Project\SK\SK\bin\Release\System.Net.Http.dll
+D:\Project\SK\SK\bin\Release\ICSharpCode.SharpZipLib.pdb
+D:\Project\SK\SK\bin\Release\ICSharpCode.SharpZipLib.xml
+D:\Project\SK\SK\bin\Release\log4net.xml
+D:\Project\SK\SK\bin\Release\Newtonsoft.Json.pdb
+D:\Project\SK\SK\bin\Release\Newtonsoft.Json.xml
