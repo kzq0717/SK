@@ -19,3 +19,5 @@ D:\Project\SK\SK\bin\Release\ICSharpCode.SharpZipLib.xml
 D:\Project\SK\SK\bin\Release\log4net.xml
 D:\Project\SK\SK\bin\Release\Newtonsoft.Json.pdb
 D:\Project\SK\SK\bin\Release\Newtonsoft.Json.xml
+D:\Project\SK\SK\obj\Release\SK.dbConnect.resources
+D:\Project\SK\SK\obj\Release\SK.csproj.GenerateResource.cache

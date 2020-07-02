@@ -41,7 +41,7 @@ namespace SK
         {
             try
             {
-                byte[] bytesStr = Encoding.GetEncoding("latin1").GetBytes(str);
+                byte[] bytesStr = Encoding.GetEncoding("ISO-8859-1").GetBytes(str);
                 return Encoding.GetEncoding("GB2312").GetString(bytesStr);
             }
             catch
@@ -60,7 +60,7 @@ namespace SK
             try
             {
                 byte[] bytesStr = Encoding.GetEncoding("gbk").GetBytes(str);
-                return Encoding.GetEncoding("latin1").GetString(bytesStr);
+                return Encoding.GetEncoding("ISO-8859-1").GetString(bytesStr);
             }
             catch
             {

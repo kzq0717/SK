@@ -76,6 +76,12 @@
     <Compile Include="AppConfigHelper.cs" />
     <Compile Include="BASE36.cs" />
     <Compile Include="DataProcessHelper.cs" />
+    <Compile Include="dbConnect.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="dbConnect.Designer.cs">
+      <DependentUpon>dbConnect.cs</DependentUpon>
+    </Compile>
     <Compile Include="DicomHelper.cs" />
     <Compile Include="ExcelHelper.cs" />
     <Compile Include="FileHeler.cs" />
@@ -133,6 +139,11 @@
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
     <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="dbConnect.resx">
+      <DependentUpon>dbConnect.cs</DependentUpon>
+    </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

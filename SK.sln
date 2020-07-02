@@ -258,6 +258,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Emgu.CV", "Emgu.CV", "{367F
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TMI_M", "..\..\TMI\2019\TMI_M\TMI_M.csproj", "{04492A8B-C5EB-454A-BA48-A47BB6CEE6BD}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Thermal_Face", "Thermal_Face", "{0F8E986D-4C8E-46D9-872D-F863F07A1307}"
+EndProject
 Global
 	GlobalSection(SharedMSBuildProjectFiles) = preSolution
 		..\libemgucv-windesktop-4.2.0.3662\Emgu.CV.Runtime\Windows\Emgu.CV.Runtime.Windows.projitems*{04492a8b-c5eb-454a-ba48-a47bb6cee6bd}*SharedItemsImports = 4
