@@ -42,7 +42,7 @@ namespace SK
             try
             {
                 byte[] bytesStr = Encoding.GetEncoding("ISO-8859-1").GetBytes(str);
-                return Encoding.GetEncoding("GB2312").GetString(bytesStr);
+                return Encoding.GetEncoding("gbk").GetString(bytesStr);
             }
             catch
             {
