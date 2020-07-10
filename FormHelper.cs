@@ -215,10 +215,14 @@ namespace SK
         #region 重绘treeview失去焦点后所选节点还在
         /// <summary>
         ///重绘treeview失去焦点后所选节点还在 
+        ///构造函数中添加一下内容：
+        /// this.treeView_kinds.HideSelection = false;
+        /// this.treeView_kinds.DrawMode = TreeViewDrawMode.OwnerDrawText;
+        ///this.treeView_kinds.DrawNode += new DrawTreeNodeEventHandler(SK.FormHelper.treeView_DrawNode);
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        public void treeView_DrawNode(object sender, DrawTreeNodeEventArgs e)
+        public static void treeView_DrawNode(object sender, DrawTreeNodeEventArgs e)
         {
             e.DrawDefault = true;//这里采用默认颜色，只需要在TreeView失去焦点时选中节点仍然突显
             return;
