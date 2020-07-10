@@ -153,8 +153,8 @@ namespace SK
      /// <summary>
      /// 上传文件
      /// </summary>
-     /// <param name="remoteFile">远程存储文件名</param>
-     /// <param name="localFile">本地文件路径</param>
+     /// <param name="remoteFile">远程存储文件名(包含路径)</param>
+     /// <param name="localFile">本地文件路径(包含路径)</param>
      /// <returns>成功：true</returns>
         public bool upload(string remoteFile, string localFile)
         {
@@ -163,7 +163,7 @@ namespace SK
                 //OnPercenageChanged += new PercenageChanged();
 
                 /* Create an FTP Request */
-                ftpRequest = (FtpWebRequest)FtpWebRequest.Create(host + "/" + remoteFile);
+                ftpRequest = (FtpWebRequest)FtpWebRequest.Create($"{host}/{remoteFile}");
                 /* Log in to the FTP Server with the User Name and Password Provided */
                 ftpRequest.Credentials = new NetworkCredential(user, pass);
                 /* When in doubt, use these options */
@@ -239,7 +239,7 @@ namespace SK
             try
             {
                 /* Create an FTP Request */
-                ftpRequest = (FtpWebRequest)WebRequest.Create(host + "/" + deleteFile);
+                ftpRequest = (FtpWebRequest)WebRequest.Create($"{host}/{deleteFile}");
                 /* Log in to the FTP Server with the User Name and Password Provided */
                 ftpRequest.Credentials = new NetworkCredential(user, pass);
                 /* When in doubt, use these options */

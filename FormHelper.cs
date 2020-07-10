@@ -211,6 +211,48 @@ namespace SK
             }
         }
 
+
+        #region 重绘treeview失去焦点后所选节点还在
+        /// <summary>
+        ///重绘treeview失去焦点后所选节点还在 
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        public void treeView_DrawNode(object sender, DrawTreeNodeEventArgs e)
+        {
+            e.DrawDefault = true;//这里采用默认颜色，只需要在TreeView失去焦点时选中节点仍然突显
+            return;
+
+            // OR 自定义颜色
+            if ((e.State & TreeNodeStates.Selected) != 0)
+            {
+                //演示为绿底白字
+                e.Graphics.FillRectangle(Brushes.DarkBlue, e.Node.Bounds);
+                Font nodeFont = e.Node.NodeFont;
+                if (nodeFont == null)
+                    nodeFont = ((TreeView)sender).Font;
+                e.Graphics.DrawString(e.Node.Text, nodeFont, Brushes.White, Rectangle.Inflate(e.Bounds, 2, 0));
+            }
+            else
+            {
+                e.DrawDefault = true;
+            }
+
+            if ((e.State & TreeNodeStates.Focused) != 0)
+            {
+                using (Pen focusPen = new Pen(Color.Black))
+                {
+                    focusPen.DashStyle = System.Drawing.Drawing2D.DashStyle.Dot;
+                    Rectangle focusBounds = e.Node.Bounds;
+                    focusBounds.Size = new Size(focusBounds.Width - 1,
+                    focusBounds.Height - 1);
+                    e.Graphics.DrawRectangle(focusPen, focusBounds);
+                }
+            }
+
+        }
+        #endregion
+
     }
 
 
