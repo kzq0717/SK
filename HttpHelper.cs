@@ -8,6 +8,8 @@ using ICSharpCode.SharpZipLib.GZip;
 using System.Net;
 using System.Text;
 
+using System.Web;
+
 namespace SK
 {
     /// <summary>
@@ -335,6 +337,212 @@ namespace SK
                 ContentType = contenttype;
             }
         }
+
+         /// <summary>
+         /// Get数据接口(Json)
+         /// </summary>
+         /// <param name="getUrl">接口地址</param>
+         /// <returns></returns>
+        public static string GetWebRequest(string getUrl)
+        {
+            try
+            {
+                string responseContent = string.Empty;
+
+                HttpWebRequest request = (HttpWebRequest)WebRequest.Create(getUrl);
+                request.ContentType = "application/json";
+                request.Method = "GET";
+
+                HttpWebResponse response = (HttpWebResponse)request.GetResponse();
+                //在这里对接收到的页面内容进行处理
+                using (Stream stream = response.GetResponseStream())
+                {
+                    using (StreamReader reader = new StreamReader(stream, Encoding.UTF8))
+                    {
+                        responseContent = reader.ReadToEnd().ToString();
+                    }
+                }
+
+                return responseContent;
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+
+         /// <summary>
+         /// POST数据接口
+         /// </summary>
+         /// <param name="postUrl">接口地址</param>
+         /// <param name="paramData">提交JSON数据</param>
+         /// <param name="dataEncode">编码方式(Encoding.UTF8)</param>
+         /// <returns></returns>
+        public static string PostWebRequest(string postUrl, string paramData, Encoding dataEncode)
+        {
+            string responseContent = string.Empty;
+            try
+            {
+                byte[] byteArray = dataEncode.GetBytes(paramData);//转化
+                HttpWebRequest request = (HttpWebRequest)WebRequest.Create(new Uri(postUrl));
+                request.Method = "POST";
+                request.ContentType = "application/x-www-form-urlencoded";
+                request.ContentLength = byteArray.Length;
+
+                using (Stream stream = request.GetRequestStream())
+                {
+                    stream.Write(byteArray,0,byteArray.Length);//写入参数
+                }
+
+                using (HttpWebResponse response = (HttpWebResponse)request.GetResponse())
+                {
+                    using (StreamReader reader = new StreamReader(response.GetResponseStream(), Encoding.Default))
+                    {
+                        responseContent = reader.ReadToEnd().ToString();
+                    }
+                }
+
+                return responseContent;
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+
+
+        /// <summary>
+        /// 通过WebClient类Post数据到远程地址，需要Basic认证；
+        /// 调用端自己处理异常
+        /// </summary>
+        /// <param name="uri"></param>
+        /// <param name="paramStr">name=张三&age=20</param>
+        /// <param name="encoding">请先确认目标网页的编码方式</param>
+        /// <param name="username"></param>
+        /// <param name="password"></param>
+        /// <returns></returns>
+        public static string Request_WebClient(string uri, string paramStr, Encoding encoding, string username, string password)
+        {
+            if (encoding == null)
+                encoding = Encoding.UTF8;
+
+            string result = string.Empty;
+
+            WebClient wc = new WebClient();
+
+            // 采取POST方式必须加的Header
+            wc.Headers.Add("Content-Type", "application/x-www-form-urlencoded");
+
+            byte[] postData = encoding.GetBytes(paramStr);
+
+            if (!string.IsNullOrEmpty(username) && !string.IsNullOrEmpty(password))
+            {
+                wc.Credentials = GetCredentialCache(uri, username, password);
+                wc.Headers.Add("Authorization", GetAuthorization(username, password));
+            }
+
+            byte[] responseData = wc.UploadData(uri, "POST", postData); // 得到返回字符流
+            return encoding.GetString(responseData);// 解码                  
+        }
+
+
+
+        public static string GetHttp(string url, HttpContext httpContext)
+        {
+            string queryString = "?";
+
+            foreach (string key in httpContext.Request.QueryString.AllKeys)
+            {
+                queryString += key + "=" + httpContext.Request.QueryString[key] + "&";
+            }
+
+            queryString = queryString.Substring(0, queryString.Length - 1);
+
+            HttpWebRequest httpWebRequest = (HttpWebRequest)WebRequest.Create(url + queryString);
+
+            httpWebRequest.ContentType = "application/json";
+            httpWebRequest.Method = "GET";
+            httpWebRequest.Timeout = 20000;
+
+            //byte[] btBodys = Encoding.UTF8.GetBytes(body);
+            //httpWebRequest.ContentLength = btBodys.Length;
+            //httpWebRequest.GetRequestStream().Write(btBodys, 0, btBodys.Length);
+
+            HttpWebResponse httpWebResponse = (HttpWebResponse)httpWebRequest.GetResponse();
+            StreamReader streamReader = new StreamReader(httpWebResponse.GetResponseStream());
+            string responseContent = streamReader.ReadToEnd();
+
+            httpWebResponse.Close();
+            streamReader.Close();
+
+            return responseContent;
+        }
+
+
+        /// <summary>
+        /// 通过 WebRequest/WebResponse 类访问远程地址并返回结果，需要Basic认证；
+        /// 调用端自己处理异常
+        /// </summary>
+        /// <param name="uri"></param>
+        /// <param name="timeout">访问超时时间，单位毫秒；如果不设置超时时间，传入0</param>
+        /// <param name="encoding">如果不知道具体的编码，传入null</param>
+        /// <param name="username"></param>
+        /// <param name="password"></param>
+        /// <returns></returns>
+        public static string Request_WebRequest(string uri, int timeout, Encoding encoding, string username, string password)
+        {
+            string result = string.Empty;
+
+            WebRequest request = WebRequest.Create(new Uri(uri));
+
+            if (!string.IsNullOrEmpty(username) && !string.IsNullOrEmpty(password))
+            {
+                request.Credentials = GetCredentialCache(uri, username, password);
+                request.Headers.Add("Authorization", GetAuthorization(username, password));
+            }
+
+            if (timeout > 0)
+                request.Timeout = timeout;
+
+            WebResponse response = request.GetResponse();
+            Stream stream = response.GetResponseStream();
+            StreamReader sr = encoding == null ? new StreamReader(stream) : new StreamReader(stream, encoding);
+
+            result = sr.ReadToEnd();
+
+            sr.Close();
+            stream.Close();
+
+            return result;
+        }
+
+        #region # 生成 Http Basic 访问凭证 #
+        /// <summary>
+        /// 生成 Http Basic 访问凭证 
+        /// </summary>
+        /// <param name="uri"></param>
+        /// <param name="username"></param>
+        /// <param name="password"></param>
+        /// <returns></returns>
+
+        private static CredentialCache GetCredentialCache(string uri, string username, string password)
+        {
+            string authorization = string.Format("{0}:{1}", username, password);
+
+            CredentialCache credCache = new CredentialCache();
+            credCache.Add(new Uri(uri), "Basic", new NetworkCredential(username, password));
+
+            return credCache;
+        }
+
+        private static string GetAuthorization(string username, string password)
+        {
+            string authorization = string.Format("{0}:{1}", username, password);
+
+            return "Basic " + Convert.ToBase64String(new ASCIIEncoding().GetBytes(authorization));
+        }
+
+        #endregion
 
     }
 }
