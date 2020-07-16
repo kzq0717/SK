@@ -260,6 +260,9 @@ namespace SK
     }
 
 
+    /// <summary>
+    ///  Scroll控件类
+    /// </summary>
     public static class FormHelper_Scroll
     {
         /// <summary>判断datagridView中垂直滑块是否已经到底
@@ -285,7 +288,7 @@ namespace SK
     }
 
 
-    static class Extension
+    public static class Extension
     {
         /// <summary>判断数组或者列表是否为空
         /// </summary>
@@ -295,6 +298,35 @@ namespace SK
         public static IEnumerable<T> checkNull<T>(this IEnumerable<T> list)
         {
             return list == null ? new List<T>(0) : list;
+        }
+    }
+
+
+    /// <summary>
+    /// textbox帮助类
+    /// </summary>
+    public static class FormHelper_TextBox
+    {
+        private const int EM_SETCUEBANNER = 0x1501;
+        [DllImport("user32.dll", CharSet = CharSet.Auto)]
+        private static extern Int32 SendMessage(IntPtr hWnd, int msg, int wParam, [MarshalAs(UnmanagedType.LPWStr)] string lParam);
+
+        /// <summary>
+        /// 为TextBox设置水印文字
+        /// </summary>
+        /// <param name="textBox">TextBox</param>
+        /// <param name="watermark">水印文字</param>
+        public static void SetWatermark(this TextBox textBox, string watermark)
+        {
+            SendMessage(textBox.Handle, EM_SETCUEBANNER, 0, watermark);
+        }
+        /// <summary>
+        /// 清除水印文字
+        /// </summary>
+        /// <param name="textBox">TextBox</param>
+        public static void ClearWatermark(this TextBox textBox)
+        {
+            SendMessage(textBox.Handle, EM_SETCUEBANNER, 0, string.Empty);
         }
     }
 
