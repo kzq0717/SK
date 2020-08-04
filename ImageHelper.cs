@@ -11,57 +11,148 @@ namespace SK
 {
     public class ImageHelper
     {
-        #region 注释
-        ////获取seriesID
-        //public string getSeriesID()
-        //{
-        //    return seriesID;
-        //}
+        /// <summary>
+        /// 人体图像 图像宽度小于图像高度
+        /// </summary>
+        /// <param name="data">温度数据*100（36.55*100）</param>
+        /// <param name="image_width">图像宽</param>
+        /// <param name="image_height">图像高</param>
+        public ImageHelper(short[] data, int image_width, int image_height)
+        {
+            if (data == null)
+            {
+                throw new Exception("温度数不能为空");
+            }
 
-        ////设置seriesID
-        //public void setSeriesID(string seriesID)
-        //{
-        //    this.seriesID = seriesID;
-        //}
-        //#endregion
-        //#region imageID
-        ///// <summary>getImageID
-        ///// </summary>
-        ///// <returns></returns>
-        //public string getImageID()
-        //{
-        //    return imageID;
-        //}
+            if (image_width <= 0 || image_height <= 0)
+            {
+                throw new Exception("请正确给出图像的高/宽的值.");
+            }
 
-        ///// <summary>setImageID
-        ///// </summary>
-        ///// <param name="imageID"></param>
-        //public void setImageID(string imageID)
-        //{
-        //    this.imageID = imageID;
-        //}
+            imageWidth = image_width;
+            imageHeight = image_height;
 
-        //#endregion
+            hightTemperature = (float)(data.Max() / 100.00);      //最大值
+            lowTemperature = (float)(data.Min() / 100.00);//最小值
+            GetAvrTemValue(data);//平均值
+        }
 
-        //#region imageData
-        ///// <summary>getImageData
-        ///// </summary>
-        ///// <returns>byte[] </returns>
-        //public byte[] getImageData()
-        //{
-        //    return imageData;
-        //}
 
-        ///// <summary>
-        ///// </summary>
-        ///// <param name="data"></param>
-        //public void setImageData(byte[] data)
-        //{
-        //    this.imageData = data;
 
-        //}
+        #region 方法
+        /// <summary>
+        /// 获取最高温
+        /// </summary>
+        /// <param name="data">温度图像数据</param>
+        private void GetMaxTemValue(short[] data)
+        {
+            try
+            {
+                if (data == null) throw new Exception("数组不能为空.");
+                int _maxValue = 0;
+                bool hasValue = false;
+                for (int i = 0; i < data.Length; i++)
+                {
+                    if (hasValue)
+                    {
+                        if (data[i] > _maxValue)
+                        {
+                            _maxValue = data[i];
+                        }
+                    }
+                    else
+                    {
+                        _maxValue = data[i];
+                        hasValue = true;
+                    }
+                }
+                if (hasValue)
+                {
+                    hightTemperature = (float)(_maxValue / 100.00);
+                }
+                else
+                {
+                    hightTemperature = (float)(0.00);
+                }
+
+            }
+            catch (Exception ex)
+            {
+                Log.WriteLog($"获取图像中最大值异常:{ex.Message}_{ex.StackTrace}");
+                return;
+            }
+
+        }
+
+
+        /// <summary>
+        /// 获取最低温
+        /// </summary>
+        /// <param name="data">温度图像数据</param>
+        private void GetMinTemValue(short[] data)
+        {
+            try
+            {
+                if (data == null) throw new Exception("数组不能为空.");
+                int _mixValue = 0;
+                bool hasValue = false;
+                for (int i = 0; i < data.Length; i++)
+                {
+                    if (hasValue)
+                    {
+                        if (data[i] > _mixValue)
+                        {
+                            _mixValue = data[i];
+                        }
+                    }
+                    else
+                    {
+                        _mixValue = data[i];
+                        hasValue = true;
+                    }
+                }
+                if (hasValue)
+                {
+                    lowTemperature = (float)(_mixValue / 100.00);
+                }
+                else
+                {
+                    lowTemperature = (float)(0.00);
+                }
+            }
+            catch (Exception ex)
+            {
+                Log.WriteLog($"获取图像中最小值异常:{ex.Message}_{ex.StackTrace}");
+                return;
+            }
+
+        }
+
+        /// <summary>
+        /// 获取平均温度
+        /// </summary>
+        /// <param name="data"></param>
+        private void GetAvrTemValue(short[] data) {
+            try
+            {
+                if (data == null) throw new Exception("数组不能为空.");
+                int sum = 0;
+                for (int i = 0; i < data.Length; i++)
+                {
+                    sum += data[i];
+                }
+
+                this.aveTemperature = (float)Math.Round(((decimal)sum/data.Length),2);
+
+            }
+            catch (Exception ex)
+            {
+                Log.WriteLog($"获取图像中最小值异常:{ex.Message}_{ex.StackTrace}");
+                return;
+            }
+
+        }
         #endregion
-
         #region 属性
         /// <summary>256色
         /// </summary>
@@ -72,7 +163,8 @@ namespace SK
         private byte[,] greyPalette_256;
 
         #region ARGB值
-        int[] c = new int[256] {0,263172,526344,789516,1052688,1315860,1579032,1842204,
+        private int[] c = new int[256] {
+        0,263172,526344,789516,1052688,1315860,1579032,1842204,
         2105376,2368548,2631720,2894892,3158064,3421236,3684408,
         3947580,4210752,4473924,4737096,5000268,5526612,5526612,
         5786700,6047816,6308932,6570048,6831164,7092280,7353396,
@@ -158,40 +250,61 @@ namespace SK
         /// </summary>
         public int imageHeight { get; set; }
 
-        /// <summary>高温
+        /// <summary>
+        /// 高温
         /// </summary>
         public float hightTemperature { get; set; }
 
-        /// <summary>低温
+        /// <summary>
+        /// 低温
         /// </summary>
         public float lowTemperature { get; set; }
+
+        /// <summary>
+        /// 平均值
+        /// </summary>
+        public float aveTemperature { get; set; }
 
         /// <summary>图像数量
         /// </summary>
         public int imageCount { get; set; }
+
+
+        /// <summary>
+        /// 256彩色图像
+        /// </summary>
+        public Bitmap getCloreImage { get; set; }
 
         #endregion
 
         #region 方法
         /// <summary>构造函数
         /// </summary>
-        public ImageHelper(byte[]data)
+        public ImageHelper(byte[] data)
         {
-            if(data.Length>0)
+            try
             {
-                byte[] tempBytes = new byte[data.Length - 8]; //温度数据
-                short[] tempData = new short[tempBytes.Length / 2];
-                Buffer.BlockCopy(data, 8, tempData, 0, tempBytes.Length); //拷贝数据
-                this.imageWidth = BitConverter.ToInt32(data, 0);
-                this.imageHeight = BitConverter.ToInt32(data, 4);
-                this.ImageData = OneToTwo(tempData, imageWidth, imageHeight);//温度数矩阵
-                this.hightTemperature = tempData.Cast<short>().Max() / 100.0f;//高温
-                this.lowTemperature = tempData.Cast<short>().Min() / 100.0f;//低温
+                if (data.Length > 0)
+                {
+                    byte[] tempBytes = new byte[data.Length - 8]; //温度数据
+                    short[] tempData = new short[tempBytes.Length / 2];
+                    Buffer.BlockCopy(data, 8, tempData, 0, tempBytes.Length); //拷贝数据
+                    this.imageWidth = BitConverter.ToInt32(data, 0);
+                    this.imageHeight = BitConverter.ToInt32(data, 4);
+                    this.ImageData = OneToTwo(tempData, imageWidth, imageHeight);//温度数矩阵
+                    this.hightTemperature = tempData.Cast<short>().Max() / 100.0f;//高温
+                    this.lowTemperature = tempData.Cast<short>().Min() / 100.0f;//低温
+                }
+                else
+                {
+                    throw new Exception("图像信息不能为空.");
+                }
             }
-            else
+            catch (Exception ex)
             {
-                throw new Exception("图像信息不能为空.");
+                throw ex;
             }
+            
         }
 
         #region 获取图像属性(宽度，高度，图像矩阵数据，高温，低温)
@@ -254,7 +367,9 @@ namespace SK
                             colorImageData[x, y] = 0;
                         }
                         else
+                        {
                             colorImageData[x, y] = (byte)m_colorIndex;
+                        }
                     }
                 }
                 Bitmap bitmap = new Bitmap(imageWidth, imageHeight, PixelFormat.Format24bppRgb);
@@ -288,7 +403,7 @@ namespace SK
             }
             catch (Exception ex)
             {
-                throw new Exception("无法得到BitMap图像信息.",ex.InnerException);
+                throw new Exception("无法得到BitMap图像信息.", ex.InnerException);
             }
 
         }
@@ -297,7 +412,7 @@ namespace SK
         /// </summary>
         /// <param name="filePath">文件存储路径</param>
         /// <returns>成功：true  失败：false</returns>
-        public  bool outTemperatureDataToFile(string filePath)
+        public bool outTemperatureDataToFile(string filePath)
         {
             try
             {
@@ -379,7 +494,9 @@ namespace SK
                             colorImageData[x, y] = 0;
                         }
                         else
+                        {
                             colorImageData[x, y] = (byte)m_colorIndex;
+                        }
                     }
                 }
 
@@ -618,6 +735,7 @@ namespace SK
             public string IsOK { get; set; }
         }
         #endregion
+
     }
 
     /// <summary>
