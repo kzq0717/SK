@@ -6,6 +6,11 @@ D:\Project\TSM\SK\obj\Debug\SK.csproj.CoreCompileInputs.cache
 D:\Project\TSM\SK\obj\Debug\SK.csproj.CopyComplete
 D:\Project\TSM\SK\obj\Debug\SK.csproj.ResolveComReference.cache
 D:\Project\TSM\SK\obj\Debug\SK.csprojAssemblyReference.cache
+D:\Project\SK\SK\obj\Debug\SK.csprojAssemblyReference.cache
+D:\Project\SK\SK\obj\Debug\SK.csproj.ResolveComReference.cache
+D:\Project\SK\SK\obj\Debug\SK.dbConnect.resources
+D:\Project\SK\SK\obj\Debug\SK.csproj.GenerateResource.cache
+D:\Project\SK\SK\obj\Debug\SK.csproj.CoreCompileInputs.cache
 D:\Project\SK\SK\bin\Debug\log4net.config
 D:\Project\SK\SK\bin\Debug\SK.dll
 D:\Project\SK\SK\bin\Debug\SK.pdb
@@ -20,11 +25,6 @@ D:\Project\SK\SK\bin\Debug\log4net.xml
 D:\Project\SK\SK\bin\Debug\Newtonsoft.Json.pdb
 D:\Project\SK\SK\bin\Debug\Newtonsoft.Json.xml
 D:\Project\SK\SK\bin\Debug\evointernal.dat
-D:\Project\SK\SK\obj\Debug\SK.csproj.ResolveComReference.cache
-D:\Project\SK\SK\obj\Debug\SK.csproj.CoreCompileInputs.cache
 D:\Project\SK\SK\obj\Debug\SK.csproj.CopyComplete
 D:\Project\SK\SK\obj\Debug\SK.dll
 D:\Project\SK\SK\obj\Debug\SK.pdb
-D:\Project\SK\SK\obj\Debug\SK.dbConnect.resources
-D:\Project\SK\SK\obj\Debug\SK.csproj.GenerateResource.cache
-D:\Project\SK\SK\obj\Debug\SK.csprojAssemblyReference.cache

@@ -9,6 +9,7 @@ using System.Net;
 using System.Text;
 
 using System.Web;
+using System.Web.Script.Serialization;//序列化
 
 namespace SK
 {
@@ -338,21 +339,37 @@ namespace SK
             }
         }
 
-         /// <summary>
-         /// Get数据接口(Json)
-         /// </summary>
-         /// <param name="getUrl">接口地址</param>
-         /// <returns></returns>
-        public static string GetWebRequest(string getUrl)
+       /// <summary>
+       /// Get数据接口
+       /// </summary>
+       /// <param name="url">接口路径<可以含参数></param>
+       /// <param name="dic">如果url中含参数，此处可以不配置参数设置为NULL</param>
+       /// <returns>解析的JSON对象</returns>
+        public static dynamic GetWebRequest(string url,Dictionary<string,string> dic)
         {
+            /*测试通过*/
             try
             {
                 string responseContent = string.Empty;
+                dynamic obj = null;
 
-                HttpWebRequest request = (HttpWebRequest)WebRequest.Create(getUrl);
+                StringBuilder builder = new StringBuilder();
+                builder.Append(url);
+                if (dic!= null && dic.Count > 0)
+                {
+                    builder.Append("?");
+                    int i = 0;
+                    foreach (var item in dic)
+                    {
+                        if (i > 0)
+                            builder.Append("&");
+                        builder.AppendFormat("{0}={1}",item.Key,item.Value);
+                    }
+                }
+                HttpWebRequest request = (HttpWebRequest)WebRequest.Create(builder.ToString());
                 request.ContentType = "application/json";
                 request.Method = "GET";
-
+                
                 HttpWebResponse response = (HttpWebResponse)request.GetResponse();
                 //在这里对接收到的页面内容进行处理
                 using (Stream stream = response.GetResponseStream())
@@ -360,10 +377,11 @@ namespace SK
                     using (StreamReader reader = new StreamReader(stream, Encoding.UTF8))
                     {
                         responseContent = reader.ReadToEnd().ToString();
+                        JavaScriptSerializer js = new JavaScriptSerializer();
+                        obj = js.Deserialize<dynamic>(responseContent);
                     }
                 }
-
-                return responseContent;
+                return obj;
             }
             catch (Exception ex)
             {
