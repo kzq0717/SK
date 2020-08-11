@@ -397,5 +397,32 @@ namespace SK
 
         #endregion 非对称加密算法
 
+        #region  生成字符串类型的ID（16位）
+        /// <summary>
+        /// 生成字符串类型的ID（16位）
+        /// </summary>
+        /// <returns></returns>
+        public static string GenerateStringID()
+        {
+            long i = 1;
+            foreach (byte b in Guid.NewGuid().ToByteArray())
+            {
+                i *= ((int)b + 1);
+            }
+            return string.Format("{0:x}", i - DateTime.Now.Ticks);
+        }
+        #endregion
+
+        #region 生成19位数字序列
+        /// <summary>
+        /// 19位数字序列
+        /// </summary>
+        /// <returns></returns>
+        public long GenerateIntID()
+        {
+            byte[] buffer = Guid.NewGuid().ToByteArray();
+            return BitConverter.ToInt64(buffer, 0);
+        }
+        #endregion
     }
 }
