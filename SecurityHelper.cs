@@ -418,7 +418,7 @@ namespace SK
         /// 19位数字序列
         /// </summary>
         /// <returns></returns>
-        public long GenerateIntID()
+        public static long GenerateIntID()
         {
             byte[] buffer = Guid.NewGuid().ToByteArray();
             return BitConverter.ToInt64(buffer, 0);

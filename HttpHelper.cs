@@ -364,6 +364,7 @@ namespace SK
                         if (i > 0)
                             builder.Append("&");
                         builder.AppendFormat("{0}={1}",item.Key,item.Value);
+                        i++;
                     }
                 }
                 HttpWebRequest request = (HttpWebRequest)WebRequest.Create(builder.ToString());

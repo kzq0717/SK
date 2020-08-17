@@ -6,7 +6,6 @@ D:\Project\TSM\SK\obj\Debug\SK.csproj.CoreCompileInputs.cache
 D:\Project\TSM\SK\obj\Debug\SK.csproj.CopyComplete
 D:\Project\TSM\SK\obj\Debug\SK.csproj.ResolveComReference.cache
 D:\Project\TSM\SK\obj\Debug\SK.csprojAssemblyReference.cache
-D:\Project\SK\SK\obj\Debug\SK.csprojAssemblyReference.cache
 D:\Project\SK\SK\obj\Debug\SK.csproj.ResolveComReference.cache
 D:\Project\SK\SK\obj\Debug\SK.dbConnect.resources
 D:\Project\SK\SK\obj\Debug\SK.csproj.GenerateResource.cache

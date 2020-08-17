@@ -93,6 +93,7 @@ namespace SK
                 // Create the HTML to PDF element
                 HtmlToPdfElement htmlToPdfElement = new HtmlToPdfElement(0, 0, urlToConvert);
 
+              
                 // Optionally set the HTML viewer width
                 htmlToPdfElement.HtmlViewerWidth = int.Parse("1024");
 
