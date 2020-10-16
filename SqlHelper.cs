@@ -20,12 +20,14 @@ using System.Text;
 using System.Threading.Tasks;
 
 using System.IO;
-using MySql.Data;
-using MySql.Data.MySqlClient;
 using System.Data;
 using System.Configuration;
 using System.Xml;
 using System.Collections;
+
+using MySql;
+using MySql.Data;
+using MySql.Data.MySqlClient;
 
 namespace SK
 {

@@ -37,8 +37,6 @@ namespace SK
             GetAvrTemValue(data);//平均值
         }
 
-
-
         #region 方法
         /// <summary>
         /// 获取最高温
@@ -153,6 +151,8 @@ namespace SK
 
         }
         #endregion
+
+
         #region 属性
         /// <summary>256色
         /// </summary>

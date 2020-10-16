@@ -367,6 +367,8 @@ namespace SK
                         i++;
                     }
                 }
+
+                SK.Log.WriteLog($"连接字符串:{builder}");
                 HttpWebRequest request = (HttpWebRequest)WebRequest.Create(builder.ToString());
                 request.ContentType = "application/json";
                 request.Method = "GET";

@@ -16,6 +16,7 @@ D:\Project\SK\SK\bin\Debug\SK.pdb
 D:\Project\SK\SK\bin\Debug\evohtmltopdf.dll
 D:\Project\SK\SK\bin\Debug\ICSharpCode.SharpZipLib.dll
 D:\Project\SK\SK\bin\Debug\log4net.dll
+D:\Project\SK\SK\bin\Debug\MySql.Data.dll
 D:\Project\SK\SK\bin\Debug\Newtonsoft.Json.dll
 D:\Project\SK\SK\bin\Debug\System.Net.Http.dll
 D:\Project\SK\SK\bin\Debug\ICSharpCode.SharpZipLib.pdb
@@ -24,6 +25,7 @@ D:\Project\SK\SK\bin\Debug\log4net.xml
 D:\Project\SK\SK\bin\Debug\Newtonsoft.Json.pdb
 D:\Project\SK\SK\bin\Debug\Newtonsoft.Json.xml
 D:\Project\SK\SK\bin\Debug\evointernal.dat
+D:\Project\SK\SK\obj\Debug\SK.csprojAssemblyReference.cache
 D:\Project\SK\SK\obj\Debug\SK.csproj.CopyComplete
 D:\Project\SK\SK\obj\Debug\SK.dll
 D:\Project\SK\SK\obj\Debug\SK.pdb

@@ -16,7 +16,7 @@ namespace SK
         /// <summary>私有密钥
         /// </summary>
         //public static string privatekey = @"<RSAKeyValue><Modulus>sb1zuR5gPeESE/0Cwikah1g5B6ooIfI99mHXQfSkljhWGZvuxGZPX8/lMOo/TKfyvcrR5SsXg7uZA9fQY5+oVBRrUU+mMvTpowcHC3sHYkA4HsNlYmFEm/qoWyIebDpdQYRhpIj3EaV4ZiOAZNZc1NoCIMXJMN8WL2QRwPpSlsE=</Modulus><Exponent>AQAB</Exponent><P>7txPLX7MRJgxS0j+T2GN0uFwwsEE4SjHOXR052bWgm0dDOCnHnTP7Apu8Ln6tcY/1pUnKO3r/Z7OH38Kd3GPrQ==</P><Q>vn5nc3kqChWNHMNVQloyhDCYIptX7FGu33AAap2JW3rDa0Rz8Beaq+DNlB4BlQHmHiiubi147OdBaIXMTb915Q==</Q><DP>GUAQ3q5YyaeNDnhY6etWIsTSNsRQz7yP0vMMqKmmY4NFXucgw4d1s24m7Cu85RpgBT8fNKRyHg17nLjBUn8ewQ==</DP><DQ>PJbd9reKLIzwRj7G5oTj3nHKYe+BBrRwZ7crGr4iy0r/zyWFrs8DLjohiUQGAswI0nzkBj1GYiun/UPZWL1WFQ==</DQ><InverseQ>l5QRa00ciNAD/GZPZwSI3vdqP38SVLOLx6btUd4naDrCCEMOzVy+N+DqgHRAm3f/1pmFtYLb2TBlSjElxwAetg==</InverseQ><D>T7OwzPY+GgFvZd8y+XYNG1wIVtOKo45JEs7VBBJ8K5Cfq2QtMYzfUwuartCcCffV9h2Y+bbVGJFrEDoajFHv3OOyompqX2/7s41GyGmpLLWsCmpCiWm4YDxY6BjlVV2wlRAzpUJryPVes6cdxaOxzKuqcDxCWw8UAfVfJTcmEkE=</D></RSAKeyValue>";
-        internal static string privatekey = @"<RSAKeyValue><Modulus>wOH5WW+6DeraSJJbBkf0sS2fdHA6tDDlqkJrlh94v4lrr4DKBfLaGKI5/DQDiU08GVpX0xcmAgdxtS4stO8/fwTWQsffUlV2PWC5EZDQizn128+oYnX2ozCYq7QMmPlMNEdXb8/UzfneWlWQr9c2oDZ4YLn5NLA5/XXr5EyYSeU=</Modulus><Exponent>AQAB</Exponent><P>6VLpPHwZDMdupSPuwLLT/kbHSULAGUUu/CkhXHPLwVEns22DnRD39hU/IJn4fvllEzt8xb42gXE7u3DONRqkRw==</P><Q>06DjcDvaaS+kwMFqRQl4Q47227SnlKeHRnpWqHqdi+nxCYwB+IlE2E1edgX1pM+2uf9LFhSlteEhLlLAaJCScw==</Q><DP>kqluOHndGR5HG4Dxs6j0/pGo9REDRR8qwJBuCvoyqqqDpRKCt3kSFFoYmzqNa+sCMMuky3ucMVNm85Sd2d2MQw==</DP><DQ>XBXlAYA50I1Xrjw7JqExQIxj5EQeq3OeTE+Nh7Aa/7ejF5lhfikU2N4JnWeIdNehVhu9K3V+ib7Vdlexu440+w==</DQ><InverseQ>ATP4ly/A9AH9eZ08yXk4jz7cI43ebyHuLky8uShrTMwCAkfveZpJwgoE+FG0IyJwJjWwRJaO8DH0J+5cuwNFEQ==</InverseQ><D>rAQby35PsH/FYjlcAlMDz0t/zGkWgYKmH9ySdFTm6/KTXfZ+tSVrCdML4XdFvBpsQbQHZRNc6yxWZR2j80z3EzSbq3b1+q9ZikfOr+MhEDNa+Po0UcM6ztk893XydtN+glA5B14cw0DDXoXu0uDBB/iPXZipG/ffope8lQWnGpU=</D></RSAKeyValue>";
+        public static string privatekey = @"<RSAKeyValue><Modulus>wOH5WW+6DeraSJJbBkf0sS2fdHA6tDDlqkJrlh94v4lrr4DKBfLaGKI5/DQDiU08GVpX0xcmAgdxtS4stO8/fwTWQsffUlV2PWC5EZDQizn128+oYnX2ozCYq7QMmPlMNEdXb8/UzfneWlWQr9c2oDZ4YLn5NLA5/XXr5EyYSeU=</Modulus><Exponent>AQAB</Exponent><P>6VLpPHwZDMdupSPuwLLT/kbHSULAGUUu/CkhXHPLwVEns22DnRD39hU/IJn4fvllEzt8xb42gXE7u3DONRqkRw==</P><Q>06DjcDvaaS+kwMFqRQl4Q47227SnlKeHRnpWqHqdi+nxCYwB+IlE2E1edgX1pM+2uf9LFhSlteEhLlLAaJCScw==</Q><DP>kqluOHndGR5HG4Dxs6j0/pGo9REDRR8qwJBuCvoyqqqDpRKCt3kSFFoYmzqNa+sCMMuky3ucMVNm85Sd2d2MQw==</DP><DQ>XBXlAYA50I1Xrjw7JqExQIxj5EQeq3OeTE+Nh7Aa/7ejF5lhfikU2N4JnWeIdNehVhu9K3V+ib7Vdlexu440+w==</DQ><InverseQ>ATP4ly/A9AH9eZ08yXk4jz7cI43ebyHuLky8uShrTMwCAkfveZpJwgoE+FG0IyJwJjWwRJaO8DH0J+5cuwNFEQ==</InverseQ><D>rAQby35PsH/FYjlcAlMDz0t/zGkWgYKmH9ySdFTm6/KTXfZ+tSVrCdML4XdFvBpsQbQHZRNc6yxWZR2j80z3EzSbq3b1+q9ZikfOr+MhEDNa+Po0UcM6ztk893XydtN+glA5B14cw0DDXoXu0uDBB/iPXZipG/ffope8lQWnGpU=</D></RSAKeyValue>";
 
 
         #endregion
@@ -413,7 +413,7 @@ namespace SK
         }
         #endregion
 
-        #region 生成19位数字序列
+        #region 生成10位数字序列
         /// <summary>
         /// 19位数字序列
         /// </summary>
@@ -421,7 +421,7 @@ namespace SK
         public static long GenerateIntID()
         {
             byte[] buffer = Guid.NewGuid().ToByteArray();
-            return BitConverter.ToInt64(buffer, 0);
+            return BitConverter.ToUInt32(buffer, 0);
         }
         #endregion
     }
