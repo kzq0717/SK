@@ -43,8 +43,8 @@ namespace SK
         {
             try
             {
-                byte[] bytesStr = Encoding.GetEncoding("ISO-8859-1").GetBytes(str);
-                return Encoding.GetEncoding("gbk").GetString(bytesStr);
+                byte[] bytesStr = Encoding.GetEncoding("latin1").GetBytes(str);
+                return Encoding.GetEncoding("GB2312").GetString(bytesStr);
             }
             catch
             {
@@ -62,7 +62,7 @@ namespace SK
             try
             {
                 byte[] bytesStr = Encoding.GetEncoding("GB2312").GetBytes(str);
-                return Encoding.GetEncoding("ISO-8859-1").GetString(bytesStr);
+                return Encoding.GetEncoding("latin1").GetString(bytesStr);
             }
             catch
             {
@@ -258,7 +258,6 @@ namespace SK
         }
 
         #endregion 私有构造函数和方法结束
-
 
         #region 数据库连接
 
