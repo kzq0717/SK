@@ -94,7 +94,7 @@ namespace SK
             }
         }
 
-       
+
         /// <summary>获取或设置包含有关控件的数据的对象。
         /// </summary>
         /// <param name="cons"></param>
@@ -327,6 +327,88 @@ namespace SK
         public static void ClearWatermark(this TextBox textBox)
         {
             SendMessage(textBox.Handle, EM_SETCUEBANNER, 0, string.Empty);
+        }
+    }
+
+
+    [AttributeUsage(AttributeTargets.Class |
+            AttributeTargets.Constructor |    //构建者
+            AttributeTargets.Field |          //领域
+            AttributeTargets.Method |         //方法
+            AttributeTargets.Property,       //属性
+            AllowMultiple = true)]
+    public class DeBugInfo : System.Attribute
+    {
+
+        private int bugNo;             //bug编号
+        private string developer;      //开发者
+        private string lastReview;     //最后更改
+        public string message;         //更改的信息
+
+
+        /// <summary>
+        /// 构造函数
+        /// </summary>
+        /// <param name="bg">bug的代码编号</param>
+        /// <param name="dev">辨认该bug的开发人员名字</param>
+        /// <param name="d">最后异常审查该代码的日期</param>
+
+        public DeBugInfo(int bg, string dev, string d)
+        {
+            this.bugNo = bg;
+            this.developer = dev;
+            this.lastReview = d;
+        }
+
+        /// <summary>
+        /// bug代码编号
+        /// </summary>
+        public int BugNo
+        {
+            get
+            {
+                return bugNo;
+            }
+        }
+
+
+        /// <summary>
+        /// bug的开发人员
+        /// </summary>
+        public string Developer
+        {
+            get
+            {
+                return developer;
+            }
+        }
+
+
+        /// <summary>
+        /// 最后一次审查该代码的日期
+        /// </summary>
+        public string LastReview
+        {
+            get
+            {
+                return lastReview;
+            }
+        }
+
+
+        /// <summary>
+        /// 存储开发人员标记的字符串信息
+        /// </summary>
+        public string Message
+        {
+            get
+            {
+                return message;
+            }
+            set
+            {
+                message = value;
+            }
         }
     }
 
