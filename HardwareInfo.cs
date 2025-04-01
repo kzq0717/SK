@@ -8,10 +8,8 @@ using System.Management;
 using System.Security.Cryptography;
 using System.Net.NetworkInformation;
 
-namespace SK
-{
-    public class HardwareInfo
-    {
+namespace SK {
+    public class HardwareInfo {
         //private static string publicKey = @"<RSAKeyValue><Modulus>sb1zuR5gPeESE/0Cwikah1g5B6ooIfI99mHXQfSkljhWGZvuxGZPX8/lMOo/TKfyvcrR5SsXg7uZA9fQY5+oVBRrUU+mMvTpowcHC3sHYkA4HsNlYmFEm/qoWyIebDpdQYRhpIj3EaV4ZiOAZNZc1NoCIMXJMN8WL2QRwPpSlsE=</Modulus><Exponent>AQAB</Exponent></RSAKeyValue>  ";
         private static string publicKey = @"<RSAKeyValue><Modulus>7nrPVroeXy02q3lDM1oFN2RJv7KfruHhnI+n4uKLs5vw4g3K0L6zFWp8+JW1NQv4l38ZXpPTPyIVcQ9UEnrzHD4U2jtfB6C8CI22bBTVlWvdM2/Ti8+ivO0l7LmWGZyq0ImjVGzb438SqxGy0crice1y06zcXM+7aDgDo/NdxiU=</Modulus><Exponent>AQAB</Exponent></RSAKeyValue>";
         /*
@@ -75,14 +73,11 @@ namespace SK
         /// </summary>
         /// <returns></returns>
         public static string GetDiskVolumeSerialNumber() {
-            try
-            {
+            try {
                 ManagementObject _disk = new ManagementObject(@"Win32_LogicalDisk.deviceid=""c:""");
                 _disk.Get();
                 return _disk["VolumeSerialNumber"].ToString();
-            }
-            catch(Exception ex)
-            {
+            } catch (Exception ex) {
                 throw ex;
             }
         }
@@ -91,19 +86,17 @@ namespace SK
         /// <summary>Get CPU ID
         /// </summary>
         /// <returns></returns>
-        public static string GetProcessorID()
-        {
+        public static string GetProcessorID() {
             try {
                 ManagementObjectSearcher _mbs = new ManagementObjectSearcher("Select ProcessorId From Win32_Processor");
                 ManagementObjectCollection _mbsList = _mbs.Get();
                 string _id = string.Empty;
-                foreach(ManagementObject _mo in _mbsList)
-                {
+                foreach (ManagementObject _mo in _mbsList) {
                     _id = _mo["ProcessorId"].ToString();
                     break;
                 }
                 return _id;
-            } catch(Exception ex) {
+            } catch (Exception ex) {
                 throw ex;
             }
         }
@@ -114,19 +107,16 @@ namespace SK
         /// <returns></returns>
         public static string GetMotherboardID() {
 
-            try
-            {
+            try {
                 ManagementObjectSearcher _mbs = new ManagementObjectSearcher("Select SerialNumber From Win32_BaseBoard");
                 ManagementObjectCollection _mbsList = _mbs.Get();
                 string _id = string.Empty;
-                foreach (ManagementObject _mo in _mbsList)
-                {
+                foreach (ManagementObject _mo in _mbsList) {
                     _id = _mo["SerialNumber"].ToString();
                     break;
                 }
                 return _id;
-            }
-            catch(Exception ex) {
+            } catch (Exception ex) {
                 throw ex;
             }
         }
@@ -134,29 +124,23 @@ namespace SK
         /// <summary>Get motherboard serial number
         /// </summary>主板编号
         /// <returns></returns>
-        public static string GetMotherboardID_ByKey()
-        {
+        public static string GetMotherboardID_ByKey() {
 
-            try
-            {
+            try {
                 ManagementObjectSearcher _mbs = new ManagementObjectSearcher("Select SerialNumber From Win32_BaseBoard");
                 ManagementObjectCollection _mbsList = _mbs.Get();
                 string _id = string.Empty;
-                foreach (ManagementObject _mo in _mbsList)
-                {
+                foreach (ManagementObject _mo in _mbsList) {
                     _id = _mo["SerialNumber"].ToString();
                     break;
                 }
-                return SecurityHelper.RSAEncrypt(publicKey,_id);
-            }
-            catch (Exception ex)
-            {
+                return SecurityHelper.RSAEncrypt(publicKey, _id);
+            } catch (Exception ex) {
                 throw ex;
             }
         }
 
-        public static IEnumerable<string>SplitInParts(string input,int partLength)
-        {
+        public static IEnumerable<string> SplitInParts(string input, int partLength) {
             if (input == null)
                 throw new ArgumentException("input");
             if (partLength <= 0)
@@ -170,8 +154,7 @@ namespace SK
         /// </summary>
         /// <returns></returns>
         /// 
-        public static string GenerateUID(string appName)
-        {
+        public static string GenerateUID(string appName) {
             //Combine the IDs and get bytes
             string _id = string.Concat(appName, GetProcessorID(), GetMotherboardID(), GetDiskVolumeSerialNumber());
             byte[] _byteIds = Encoding.UTF8.GetBytes(_id);
@@ -191,8 +174,7 @@ namespace SK
         }
 
 
-        public static byte[]GetUIDInBytes(string UID)
-        {
+        public static byte[] GetUIDInBytes(string UID) {
             //Split 4 part Id into 4 ulong
             string[] _ids = UID.Split('-');
 
@@ -213,15 +195,11 @@ namespace SK
         /// </summary>
         /// <param name="UID"></param>
         /// <returns></returns>
-        public static bool ValidateUIDFormat(string UID)
-        {
-            if (!string.IsNullOrEmpty(UID))
-            {
+        public static bool ValidateUIDFormat(string UID) {
+            if (!string.IsNullOrEmpty(UID)) {
                 string[] _ids = UID.Split('-');
                 return (_ids.Length == 4);
-            }
-            else
-            {
+            } else {
                 return false;
             }
         }
@@ -229,14 +207,12 @@ namespace SK
         /// <summary>获取MAC地址
         /// </summary>
         /// <returns></returns>
-        public static string GetMacAddress()
-        {
+        public static string GetMacAddress() {
             string macAddress = "";
-            using (ManagementClass mc = new ManagementClass("Win32_NetworkAdapterConfiguration"))
-            {
+            using (ManagementClass mc = new ManagementClass("Win32_NetworkAdapterConfiguration")) {
                 ManagementObjectCollection moc = mc.GetInstances();
                 foreach (ManagementObject mo in moc) {
-                    if ((bool)mo["IPEnabled"] == true) 
+                    if ((bool)mo["IPEnabled"] == true)
                         macAddress = mo["MacAddress"].ToString();
                     mo.Dispose();
                 }
@@ -250,18 +226,13 @@ namespace SK
         /// 通过NetworkInterface获取MAC地址
         /// </summary>
         /// <returns></returns>
-        public static string GetMacByNetworkInterface()
-        {
-            try
-            {
+        public static string GetMacByNetworkInterface() {
+            try {
                 NetworkInterface[] interfaces = NetworkInterface.GetAllNetworkInterfaces();
-                foreach (NetworkInterface ni in interfaces)
-                {
+                foreach (NetworkInterface ni in interfaces) {
                     return BitConverter.ToString(ni.GetPhysicalAddress().GetAddressBytes());
                 }
-            }
-            catch (Exception)
-            {
+            } catch (Exception) {
             }
             return "00-00-00-00-00-00";
         }

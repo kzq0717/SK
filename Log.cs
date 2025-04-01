@@ -8,21 +8,15 @@ using System.Windows.Forms;
 using System.IO;
 using System.Data;
 
-namespace SK
-{
-    public class Log
-    {
+namespace SK {
+    public class Log {
 
         private static readonly log4net.ILog log = log4net.LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
-        
-        public static void WriteLog(string msg)
-        {
-            try
-            {
+
+        public static void WriteLog(string msg) {
+            try {
                 log.Info(msg);
-            }
-            catch (Exception ex)
-            {
+            } catch (Exception ex) {
 
                 throw ex;
             }
@@ -32,10 +26,8 @@ namespace SK
         /// </summary>
         /// <param name="logName">日志描述</param>
         /// <param name="msg">写入信息</param>
-        private static void WriteMsg(string logName, string msg)
-        {
-            try
-            {
+        private static void WriteMsg(string logName, string msg) {
+            try {
                 //string path = Path.Combine("./log");
                 string path = Application.StartupPath + "./log";
                 Directory.CreateDirectory(path);
@@ -52,12 +44,9 @@ namespace SK
                 write.Flush();
                 write.Close();
 
-            }
-            catch (Exception)
-            {
+            } catch (Exception) {
                 string path = Application.StartupPath + "./log";
-                if (!Directory.Exists(path))
-                {
+                if (!Directory.Exists(path)) {
                     Directory.CreateDirectory(path);
                     string logFileName = path + "\\" + DateTime.Now.ToString("yyyy-MM-dd") + ".log";
                     if (!File.Exists(logFileName))//判断日志是否为当天

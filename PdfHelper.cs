@@ -7,20 +7,16 @@ using System.Threading.Tasks;
 using EvoPdf;
 using System.IO;
 
-namespace SK
-{
-    public class PdfHelper
-    {
+namespace SK {
+    public class PdfHelper {
 
         /// <summary> 将HTML文件转为PDF文件
         /// </summary>
         /// <param name="inFilePath">html文件路径</param>
         /// <param name="outFilePath">输出文件路径</param>
         /// <returns>成功：true ，失败：false</returns>
-        public static bool HtmlToPDF(string inFilePath, out string outFilePath)
-        {
-            try
-            {
+        public static bool HtmlToPDF(string inFilePath, out string outFilePath) {
+            try {
                 string fileName = "evohtmltopdf.dll";
                 //if (Environment.Is64BitOperatingSystem)  //判断系统位数
                 //{
@@ -31,35 +27,27 @@ namespace SK
                 //    fileName = "evohtmltopdf_x86.dll";
                 //}
 
-                if (!IsExist(fileName))
-                {
+                if (!IsExist(fileName)) {
                     Console.WriteLine("DLL文件不存在");
                     outFilePath = null;
                     return false;
                 }
-            }
-            catch (Exception ex)
-            {
+            } catch (Exception ex) {
                 throw new Exception("请预先加载对应系统版本的evohtmltopdf.dll文件", ex);
             }
 
-            try
-            {
-                if (string.IsNullOrEmpty(inFilePath))
-                {
+            try {
+                if (string.IsNullOrEmpty(inFilePath)) {
                     outFilePath = null;
                     return false;
                 }
-            }
-            catch (Exception ex)
-            {
+            } catch (Exception ex) {
                 throw new Exception("输入文件文件路径不能为空。", ex);
             }
 
             outFilePath = System.IO.Directory.GetCurrentDirectory() + @"/outPdf";
             //存放pdf的文件夹是否存在
-            if (!Directory.Exists(outFilePath))
-            {
+            if (!Directory.Exists(outFilePath)) {
                 Directory.CreateDirectory(outFilePath);
             }
 
@@ -80,8 +68,7 @@ namespace SK
 
             //Cursor = Cursors.WaitCursor;
             //string outPdfFile = @"DemoAppFiles\Output\HTML_to_PDF\Add_HTML_to_PDF_Elements_to_PDF.pdf";
-            try
-            {
+            try {
                 // The element location in PDF
                 //float xLocation = float.Parse(xLocationTextBox.Text);
                 //float yLocation = float.Parse(yLocationTextBox.Text);
@@ -125,16 +112,12 @@ namespace SK
 
                 // Write the memory buffer in a PDF file
                 System.IO.File.WriteAllBytes(outPdfFile, outPdfBuffer);
-            }
-            catch (Exception ex)
-            {
+            } catch (Exception ex) {
                 // The HTML to PDF conversion failed
                 throw new Exception(string.Format("HTML to PDF Error. {0}", ex.Message));
                 //MessageBox.Show(String.Format("HTML to PDF Error. {0}", ex.Message));
                 //return;
-            }
-            finally
-            {
+            } finally {
                 // Close the PDF document
                 pdfDocument.Close();
                 //Cursor = Cursors.Arrow;
@@ -150,10 +133,8 @@ namespace SK
         /// <param name="inFilePath">HTML文件路径</param>
         /// <param name="outFilePath">PDF文件全绝对路径</param>
         /// <returns>成功：true ，失败：false</returns>
-        public static bool HtmlToPDF(string inFilePath, string outFilePath)
-        {
-            try
-            {
+        public static bool HtmlToPDF(string inFilePath, string outFilePath) {
+            try {
                 string fileName = "evohtmltopdf.dll";
                 //if (Environment.Is64BitOperatingSystem)  //判断系统位数
                 //{
@@ -164,40 +145,31 @@ namespace SK
                 //    fileName = "evohtmltopdf_x86.dll";
                 //}
 
-                if (!IsExist(fileName))
-                {
+                if (!IsExist(fileName)) {
                     Console.WriteLine("DLL文件不存在");
                     outFilePath = null;
                     return false;
                 }
-            }
-            catch (Exception ex)
-            {
+            } catch (Exception ex) {
                 throw new Exception("请预先加载对应系统版本的evohtmltopdf.dll文件", ex);
             }
 
-            try
-            {
-                if (string.IsNullOrEmpty(inFilePath))
-                {
+            try {
+                if (string.IsNullOrEmpty(inFilePath)) {
                     outFilePath = null;
                     return false;
                 }
-            }
-            catch (Exception ex)
-            {
+            } catch (Exception ex) {
                 throw new Exception("输入文件文件路径不能为空。", ex);
             }
 
 
             string outPdfFile = "";
 
-            if (string.IsNullOrEmpty(outFilePath))
-            {
+            if (string.IsNullOrEmpty(outFilePath)) {
                 outFilePath = System.IO.Directory.GetCurrentDirectory() + @"/outPdf";
                 //存放pdf的文件夹是否存在
-                if (!Directory.Exists(outFilePath))
-                {
+                if (!Directory.Exists(outFilePath)) {
                     Directory.CreateDirectory(outFilePath);
                 }
 
@@ -221,8 +193,7 @@ namespace SK
 
             //Cursor = Cursors.WaitCursor;
             //string outPdfFile = @"DemoAppFiles\Output\HTML_to_PDF\Add_HTML_to_PDF_Elements_to_PDF.pdf";
-            try
-            {
+            try {
                 // The element location in PDF
                 //float xLocation = float.Parse(xLocationTextBox.Text);
                 //float yLocation = float.Parse(yLocationTextBox.Text);
@@ -266,16 +237,12 @@ namespace SK
 
                 // Write the memory buffer in a PDF file
                 System.IO.File.WriteAllBytes(outPdfFile, outPdfBuffer);
-            }
-            catch (Exception ex)
-            {
+            } catch (Exception ex) {
                 // The HTML to PDF conversion failed
                 throw new Exception(string.Format("HTML to PDF Error. {0}", ex.Message));
                 //MessageBox.Show(String.Format("HTML to PDF Error. {0}", ex.Message));
                 //return;
-            }
-            finally
-            {
+            } finally {
                 // Close the PDF document
                 pdfDocument.Close();
                 //Cursor = Cursors.Arrow;
@@ -290,15 +257,11 @@ namespace SK
         /// </summary>
         /// <param name="PdfPath"></param>
         /// <returns></returns>
-        public static string OpenFile(string PdfPath)
-        {
-            try
-            {
+        public static string OpenFile(string PdfPath) {
+            try {
                 System.Diagnostics.Process.Start(PdfPath);
                 return "已打开PDF文件。";
-            }
-            catch (Exception ex)
-            {
+            } catch (Exception ex) {
                 //MessageBox.Show(String.Format("Cannot open created PDF file '{0}'. {1}", outPdfFile, ex.Message));
                 return String.Format("Cannot open created PDF file '{0}'. {1}", PdfPath, ex.Message);
             }
@@ -308,26 +271,20 @@ namespace SK
         /// <summary>判断DLL文件是否存在
         /// </summary>
         /// <returns></returns>
-        public static bool IsExist(string fileName)
-        {
-            try
-            {
-                if (string.IsNullOrEmpty(fileName))
-                {
+        public static bool IsExist(string fileName) {
+            try {
+                if (string.IsNullOrEmpty(fileName)) {
                     return false;
                 }
                 string filePath = Path.Combine(System.Windows.Forms.Application.StartupPath, fileName);
 
-                if (!File.Exists(filePath))
-                {
+                if (!File.Exists(filePath)) {
                     return false;
                 }
 
                 return true;
 
-            }
-            catch (Exception)
-            {
+            } catch (Exception) {
                 return false;
             }
         }

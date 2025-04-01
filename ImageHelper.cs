@@ -7,25 +7,20 @@ using System.Drawing;
 using System.Drawing.Imaging;
 using System.IO;
 
-namespace SK
-{
-    public class ImageHelper
-    {
+namespace SK {
+    public class ImageHelper {
         /// <summary>
         /// 人体图像 图像宽度小于图像高度
         /// </summary>
         /// <param name="data">温度数据*100（36.55*100）</param>
         /// <param name="image_width">图像宽</param>
         /// <param name="image_height">图像高</param>
-        public ImageHelper(short[] data, int image_width, int image_height)
-        {
-            if (data == null)
-            {
+        public ImageHelper(short[] data, int image_width, int image_height) {
+            if (data == null) {
                 throw new Exception("温度数不能为空");
             }
 
-            if (image_width <= 0 || image_height <= 0)
-            {
+            if (image_width <= 0 || image_height <= 0) {
                 throw new Exception("请正确给出图像的高/宽的值.");
             }
 
@@ -42,40 +37,28 @@ namespace SK
         /// 获取最高温
         /// </summary>
         /// <param name="data">温度图像数据</param>
-        private void GetMaxTemValue(short[] data)
-        {
-            try
-            {
+        private void GetMaxTemValue(short[] data) {
+            try {
                 if (data == null) throw new Exception("数组不能为空.");
                 int _maxValue = 0;
                 bool hasValue = false;
-                for (int i = 0; i < data.Length; i++)
-                {
-                    if (hasValue)
-                    {
-                        if (data[i] > _maxValue)
-                        {
+                for (int i = 0; i < data.Length; i++) {
+                    if (hasValue) {
+                        if (data[i] > _maxValue) {
                             _maxValue = data[i];
                         }
-                    }
-                    else
-                    {
+                    } else {
                         _maxValue = data[i];
                         hasValue = true;
                     }
                 }
-                if (hasValue)
-                {
+                if (hasValue) {
                     hightTemperature = (float)(_maxValue / 100.00);
-                }
-                else
-                {
+                } else {
                     hightTemperature = (float)(0.00);
                 }
 
-            }
-            catch (Exception ex)
-            {
+            } catch (Exception ex) {
                 Log.WriteLog($"获取图像中最大值异常:{ex.Message}_{ex.StackTrace}");
                 return;
             }
@@ -87,39 +70,27 @@ namespace SK
         /// 获取最低温
         /// </summary>
         /// <param name="data">温度图像数据</param>
-        private void GetMinTemValue(short[] data)
-        {
-            try
-            {
+        private void GetMinTemValue(short[] data) {
+            try {
                 if (data == null) throw new Exception("数组不能为空.");
                 int _mixValue = 0;
                 bool hasValue = false;
-                for (int i = 0; i < data.Length; i++)
-                {
-                    if (hasValue)
-                    {
-                        if (data[i] > _mixValue)
-                        {
+                for (int i = 0; i < data.Length; i++) {
+                    if (hasValue) {
+                        if (data[i] > _mixValue) {
                             _mixValue = data[i];
                         }
-                    }
-                    else
-                    {
+                    } else {
                         _mixValue = data[i];
                         hasValue = true;
                     }
                 }
-                if (hasValue)
-                {
+                if (hasValue) {
                     lowTemperature = (float)(_mixValue / 100.00);
-                }
-                else
-                {
+                } else {
                     lowTemperature = (float)(0.00);
                 }
-            }
-            catch (Exception ex)
-            {
+            } catch (Exception ex) {
                 Log.WriteLog($"获取图像中最小值异常:{ex.Message}_{ex.StackTrace}");
                 return;
             }
@@ -131,27 +102,22 @@ namespace SK
         /// </summary>
         /// <param name="data"></param>
         private void GetAvrTemValue(short[] data) {
-            try
-            {
+            try {
                 if (data == null) throw new Exception("数组不能为空.");
                 int sum = 0;
-                for (int i = 0; i < data.Length; i++)
-                {
+                for (int i = 0; i < data.Length; i++) {
                     sum += data[i];
                 }
 
-                this.aveTemperature = (float)Math.Round(((decimal)sum/data.Length),2);
+                this.aveTemperature = (float)Math.Round(((decimal)sum / data.Length), 2);
 
-            }
-            catch (Exception ex)
-            {
+            } catch (Exception ex) {
                 Log.WriteLog($"获取图像中最小值异常:{ex.Message}_{ex.StackTrace}");
                 return;
             }
 
         }
         #endregion
-
 
         #region 属性
         /// <summary>256色
@@ -280,12 +246,9 @@ namespace SK
         #region 方法
         /// <summary>构造函数
         /// </summary>
-        public ImageHelper(byte[] data)
-        {
-            try
-            {
-                if (data.Length > 0)
-                {
+        public ImageHelper(byte[] data) {
+            try {
+                if (data.Length > 0) {
                     byte[] tempBytes = new byte[data.Length - 8]; //温度数据
                     short[] tempData = new short[tempBytes.Length / 2];
                     Buffer.BlockCopy(data, 8, tempData, 0, tempBytes.Length); //拷贝数据
@@ -294,30 +257,23 @@ namespace SK
                     this.ImageData = OneToTwo(tempData, imageWidth, imageHeight);//温度数矩阵
                     this.hightTemperature = tempData.Cast<short>().Max() / 100.0f;//高温
                     this.lowTemperature = tempData.Cast<short>().Min() / 100.0f;//低温
-                }
-                else
-                {
+                } else {
                     throw new Exception("图像信息不能为空.");
                 }
-            }
-            catch (Exception ex)
-            {
+            } catch (Exception ex) {
                 throw ex;
             }
-            
+
         }
 
         #region 获取图像属性(宽度，高度，图像矩阵数据，高温，低温)
         /// <summary>获取图像属性(宽度，高度，图像矩阵数据，高温，低温)
         /// </summary>
         /// <param name="bytes"></param>
-        private List<ImageInfo> setImageMeta(List<ImageInfo> L_imageInfo)
-        {
-            try
-            {
+        private List<ImageInfo> setImageMeta(List<ImageInfo> L_imageInfo) {
+            try {
                 List<ImageInfo> imageMetas = new List<ImageInfo>();
-                foreach (ImageInfo imageInfo in L_imageInfo)
-                {
+                foreach (ImageInfo imageInfo in L_imageInfo) {
                     byte[] bytes = imageInfo.imageData;
                     byte[] newbytes = new byte[bytes.Length - 8];//只存温度数据
                     short[] data = new short[newbytes.Length / 2];//short类型的温度数据
@@ -331,9 +287,7 @@ namespace SK
                     imageMetas.Add(imageInfo);
                 }
                 return imageMetas;
-            }
-            catch (Exception ex)
-            {
+            } catch (Exception ex) {
                 System.Windows.Forms.MessageBox.Show(ex.Message + ex.StackTrace);
                 return null;
             }
@@ -346,28 +300,19 @@ namespace SK
         /// <summary>将byte[]数据转为bitmap
         /// </summary>
         /// <returns></returns>
-        public Bitmap getBitmap()
-        {
-            try
-            {
+        public Bitmap getBitmap() {
+            try {
                 int m_colorIndex; //颜色对应的索引
                 byte[,] colorImageData = new byte[imageWidth, imageHeight];//温度数据对应颜色坐标
                 init_RGB_256_Platte();
-                for (int x = 0; x < imageWidth; x++)
-                {
-                    for (int y = 0; y < imageHeight; y++)
-                    {
+                for (int x = 0; x < imageWidth; x++) {
+                    for (int y = 0; y < imageHeight; y++) {
                         m_colorIndex = (int)(Math.Round(ImageData[x, y] - lowTemperature) * 256.0 / (hightTemperature - lowTemperature));//对应color
-                        if (m_colorIndex > 255)
-                        {
+                        if (m_colorIndex > 255) {
                             colorImageData[x, y] = 255;
-                        }
-                        else if (m_colorIndex <= 0)
-                        {
+                        } else if (m_colorIndex <= 0) {
                             colorImageData[x, y] = 0;
-                        }
-                        else
-                        {
+                        } else {
                             colorImageData[x, y] = (byte)m_colorIndex;
                         }
                     }
@@ -377,13 +322,10 @@ namespace SK
                 BitmapData bitmapData = bitmap.LockBits(re, ImageLockMode.ReadWrite, PixelFormat.Format24bppRgb);
                 int dstStride = bitmapData.Stride;
                 System.IntPtr dstScan0 = bitmapData.Scan0;
-                unsafe
-                {
-                    try
-                    {
+                unsafe {
+                    try {
                         byte* pDst = (byte*)(void*)dstScan0;
-                        for (int x = 0; x < imageWidth; x++)
-                        {
+                        for (int x = 0; x < imageWidth; x++) {
                             for (int y = 0; y < imageHeight; y++) //原始图像 
                             {
                                 pDst[x * 3 + y * dstStride] = rgbPalette_256[colorImageData[x, y], 0];
@@ -391,18 +333,14 @@ namespace SK
                                 pDst[x * 3 + y * dstStride + 2] = rgbPalette_256[colorImageData[x, y], 2];
                             }
                         }
-                    }
-                    catch (Exception ex)
-                    {
+                    } catch (Exception ex) {
                         System.Windows.Forms.MessageBox.Show(ex.Message + ex.StackTrace);
                     }
 
                 }
                 bitmap.UnlockBits(bitmapData);
                 return bitmap;
-            }
-            catch (Exception ex)
-            {
+            } catch (Exception ex) {
                 throw new Exception("无法得到BitMap图像信息.", ex.InnerException);
             }
 
@@ -412,18 +350,14 @@ namespace SK
         /// </summary>
         /// <param name="filePath">文件存储路径</param>
         /// <returns>成功：true  失败：false</returns>
-        public bool outTemperatureDataToFile(string filePath)
-        {
-            try
-            {
-                if (!Directory.Exists(filePath))
-                {
+        public bool outTemperatureDataToFile(string filePath) {
+            try {
+                if (!Directory.Exists(filePath)) {
                     Directory.CreateDirectory(filePath);
                 }
 
                 string dataFileName = filePath + "\\" + Guid.NewGuid().ToString() + ".txt";
-                if (!File.Exists(dataFileName))
-                {
+                if (!File.Exists(dataFileName)) {
                     FileStream fs = File.Create(dataFileName);
                     fs.Close();
                 }
@@ -434,16 +368,11 @@ namespace SK
                 int m_col = ImageData.GetLength(1);//列数
                 int i = 1;
 
-                for (int y = 0; y < m_row; y++)
-                {
-                    for (int x = 0; x < m_col; x++)
-                    {
-                        if (x % m_col == 0 && x != 0)
-                        {
+                for (int y = 0; y < m_row; y++) {
+                    for (int x = 0; x < m_col; x++) {
+                        if (x % m_col == 0 && x != 0) {
                             write.Write("\n");
-                        }
-                        else
-                        {
+                        } else {
                             write.Write(ImageData[y, x] + ",");
                             i++;
                         }
@@ -452,9 +381,7 @@ namespace SK
                 write.Flush();
                 write.Close();
                 return true;
-            }
-            catch (Exception ex)
-            {
+            } catch (Exception ex) {
                 Console.WriteLine(ex.Message);
                 return false;
             }
@@ -467,10 +394,8 @@ namespace SK
         /// 
         /// </param>
         /// <returns></returns>
-        public Bitmap getBitmap(ImageInfo imageInfo)
-        {
-            try
-            {
+        public Bitmap getBitmap(ImageInfo imageInfo) {
+            try {
                 init_RGB_256_Platte();
 
                 int m_imageWidth = imageInfo.imageWidth; //320
@@ -480,21 +405,14 @@ namespace SK
                 float m_imageLowTemperature = imageInfo.lowTemperature * 100.00f; //低温*100.00f
                 float m_imageHightTemperature = imageInfo.hightTemperature * 100.00f;//高温*100.00f
 
-                for (int x = 0; x < m_imageWidth; x++)
-                {
-                    for (int y = 0; y < m_imageHight; y++)
-                    {
+                for (int x = 0; x < m_imageWidth; x++) {
+                    for (int y = 0; y < m_imageHight; y++) {
                         m_colorIndex = (int)(Math.Round(imageInfo.ImageData[x, y] - m_imageLowTemperature) * 256.0 / (m_imageHightTemperature - m_imageLowTemperature));//对应color
-                        if (m_colorIndex > 255)
-                        {
+                        if (m_colorIndex > 255) {
                             colorImageData[x, y] = 255;
-                        }
-                        else if (m_colorIndex <= 0)
-                        {
+                        } else if (m_colorIndex <= 0) {
                             colorImageData[x, y] = 0;
-                        }
-                        else
-                        {
+                        } else {
                             colorImageData[x, y] = (byte)m_colorIndex;
                         }
                     }
@@ -505,13 +423,10 @@ namespace SK
                 BitmapData bitmapData = bitmap.LockBits(re, ImageLockMode.ReadWrite, PixelFormat.Format24bppRgb);
                 int dstStride = bitmapData.Stride;
                 System.IntPtr dstScan0 = bitmapData.Scan0;
-                unsafe
-                {
-                    try
-                    {
+                unsafe {
+                    try {
                         byte* pDst = (byte*)(void*)dstScan0;
-                        for (int x = 0; x < m_imageWidth; x++)
-                        {
+                        for (int x = 0; x < m_imageWidth; x++) {
                             for (int y = 0; y < m_imageHight; y++) //原始图像 
                             {
                                 pDst[x * 3 + y * dstStride] = rgbPalette_256[colorImageData[x, y], 0];
@@ -519,18 +434,14 @@ namespace SK
                                 pDst[x * 3 + y * dstStride + 2] = rgbPalette_256[colorImageData[x, y], 2];
                             }
                         }
-                    }
-                    catch (Exception ex)
-                    {
+                    } catch (Exception ex) {
                         System.Windows.Forms.MessageBox.Show(ex.Message + ex.StackTrace);
                     }
 
                 }
                 bitmap.UnlockBits(bitmapData);
                 return bitmap;
-            }
-            catch (Exception ex)
-            {
+            } catch (Exception ex) {
                 throw ex;
             }
         }
@@ -541,20 +452,15 @@ namespace SK
         /// </summary>
         /// <param name="bitmap">bitmap图像</param>
         /// <param name="imageId">图像编号</param>
-        public void setBitmapToPng(Bitmap bitmap, string imageId)
-        {
-            try
-            {
+        public void setBitmapToPng(Bitmap bitmap, string imageId) {
+            try {
                 string filePath = System.Windows.Forms.Application.StartupPath + "\\Image";
-                if (!Directory.Exists(filePath))
-                {
+                if (!Directory.Exists(filePath)) {
                     Directory.CreateDirectory(filePath);
                 }
 
                 bitmap.Save(filePath + "\\" + imageId + ".png", System.Drawing.Imaging.ImageFormat.Png); ;
-            }
-            catch (Exception ex)
-            {
+            } catch (Exception ex) {
                 throw ex;
             }
         }
@@ -563,12 +469,10 @@ namespace SK
         #region 初始化8位色彩色模式
         /// <summary>初始化8位色彩色模式
         /// </summary>
-        private void init_RGB_256_Platte()
-        {
+        private void init_RGB_256_Platte() {
             Color temp;
             rgbPalette_256 = new byte[256, 3];
-            for (int i = 0; i < 256; i++)
-            {
+            for (int i = 0; i < 256; i++) {
                 temp = ColorTranslator.FromWin32(c[i]);
                 rgbPalette_256[i, 0] = temp.B;
                 rgbPalette_256[i, 1] = temp.G;
@@ -580,10 +484,8 @@ namespace SK
         #region 初始化8位色灰度模式
         /// <summary>初始化8位色灰度模式
         /// </summary>
-        private void init_Grey_256_Platte()
-        {
-            for (int i = 0; i < 256; i++)
-            {
+        private void init_Grey_256_Platte() {
+            for (int i = 0; i < 256; i++) {
                 greyPalette_256[i, 0] = (byte)i;
                 greyPalette_256[i, 1] = (byte)i;
                 greyPalette_256[i, 2] = (byte)i;
@@ -596,13 +498,10 @@ namespace SK
         /// </summary>
         /// <param name="b">一维数组（温度数据）</param>
         /// <returns></returns>
-        private int[,] OneToTwo(short[] b, int G_int_ImageWidth, int G_int_ImageHeight)
-        {
+        private int[,] OneToTwo(short[] b, int G_int_ImageWidth, int G_int_ImageHeight) {
             int[,] temp = new int[G_int_ImageWidth, G_int_ImageHeight];
-            for (int x = 0; x < G_int_ImageWidth; x++)
-            {
-                for (int y = 0; y < G_int_ImageHeight; y++)
-                {
+            for (int x = 0; x < G_int_ImageWidth; x++) {
+                for (int y = 0; y < G_int_ImageHeight; y++) {
                     temp[x, y] = b[G_int_ImageHeight * x + y];
                 }
             }
@@ -616,14 +515,11 @@ namespace SK
         /// <param name="G_int_ImageWidth">图像的宽度</param>
         /// <param name="G_int_ImageHeight">图像的高度</param>
         /// <returns>一维数组</returns>
-        private int[] TwoToOne(int[,] b, int G_int_ImageWidth, int G_int_ImageHeight)
-        {
+        private int[] TwoToOne(int[,] b, int G_int_ImageWidth, int G_int_ImageHeight) {
             int[] temp = new int[G_int_ImageHeight * G_int_ImageWidth + 1];
             int n = 0;
-            for (int x = 0; x < G_int_ImageWidth; x++)
-            {
-                for (int y = 0; y < G_int_ImageHeight; y++)
-                {
+            for (int x = 0; x < G_int_ImageWidth; x++) {
+                for (int y = 0; y < G_int_ImageHeight; y++) {
                     temp[n] = b[x, y];
                     n++;
                 }
@@ -636,8 +532,7 @@ namespace SK
         /// <summary>打开指定路径文件
         /// </summary>
         /// <param name="fileFullName">文件所在路径</param>
-        private void OpenFolderAndSelectFile(string fileFullName)
-        {
+        private void OpenFolderAndSelectFile(string fileFullName) {
             System.Diagnostics.ProcessStartInfo psi = new System.Diagnostics.ProcessStartInfo("Explorer.exe");
             psi.Arguments = "/e,/select," + fileFullName;
             System.Diagnostics.Process.Start(psi);
@@ -651,23 +546,18 @@ namespace SK
         /// <param name="desiredWidth">缩略图像宽度</param>
         /// <param name="desiredHeight">缩略图像高度</param>
         /// <returns>生成的缩略图</returns>
-        public static Bitmap CreateThumbnail(Bitmap originalBmp, int desiredWidth, int desiredHeight)
-        {
+        public static Bitmap CreateThumbnail(Bitmap originalBmp, int desiredWidth, int desiredHeight) {
             //If the image is smaller than a thumbnail just return it
-            if (originalBmp.Width <= desiredWidth && originalBmp.Height <= desiredHeight)
-            {
+            if (originalBmp.Width <= desiredWidth && originalBmp.Height <= desiredHeight) {
                 return originalBmp;
             }
             int newWidth, newHeight;
 
             //scale down the smaller dimentsion
-            if (desiredWidth * originalBmp.Height < desiredHeight * originalBmp.Width)
-            {
+            if (desiredWidth * originalBmp.Height < desiredHeight * originalBmp.Width) {
                 newWidth = desiredWidth;
                 newHeight = (int)Math.Round((decimal)originalBmp.Height * desiredHeight / originalBmp.Width);
-            }
-            else
-            {
+            } else {
                 newHeight = desiredHeight;
                 newWidth = (int)Math.Round((decimal)originalBmp.Width * desiredWidth / originalBmp.Height);
             }
@@ -677,8 +567,7 @@ namespace SK
             //This is preferred to calling Bitmap.GetThumbnailImage()
             Bitmap bitmap = new Bitmap(newWidth, newHeight);
 
-            using (Graphics graphics = Graphics.FromImage(bitmap))
-            {
+            using (Graphics graphics = Graphics.FromImage(bitmap)) {
                 graphics.InterpolationMode = System.Drawing.Drawing2D.InterpolationMode.HighQualityBicubic;
                 graphics.FillRectangle(Brushes.White, 0, 0, newWidth, newHeight);
                 graphics.DrawImage(originalBmp, 0, 0, newWidth, newHeight);
@@ -692,8 +581,7 @@ namespace SK
         #region 图像处理类 
         /// <summary>图像类
         /// </summary>
-        public class ImageInfo
-        {
+        public class ImageInfo {
             /// <summary>seriesID
             /// </summary>
             public string seriesID { get; set; }
@@ -740,47 +628,39 @@ namespace SK
 
     /// <summary>
     /// </summary>
-    class UnsafeBitmap
-    {
+    class UnsafeBitmap {
         Bitmap bitmap;
         int stride;
         BitmapData bitmapData = null;
         unsafe Byte* pBase = null;
 
-        public UnsafeBitmap(Bitmap bitmap)
-        {
+        public UnsafeBitmap(Bitmap bitmap) {
             this.bitmap = new Bitmap(bitmap);
         }
 
 
-        public UnsafeBitmap(int width, int height)
-        {
+        public UnsafeBitmap(int width, int height) {
             this.bitmap = new Bitmap(width, height, PixelFormat.Format24bppRgb);
         }
 
-        public void Dispose()
-        {
+        public void Dispose() {
             bitmap.Dispose();
         }
 
-        public Bitmap Bitmap
-        {
+        public Bitmap Bitmap {
             get { return (bitmap); }
         }
 
 
-        public struct PixelData
-        {
+        public struct PixelData {
             public byte blue;
             public byte green;
             public byte red;
         };
 
 
-        private Point PixeSize
-        {
-            get
-            {
+        private Point PixeSize {
+            get {
                 GraphicsUnit graphicsUnit = GraphicsUnit.Pixel; //给定像素类型
                 RectangleF bounds = bitmap.GetBounds(ref graphicsUnit);
                 return new Point((int)bounds.Width, (int)bounds.Height);
@@ -789,8 +669,7 @@ namespace SK
 
         /// <summary>将bitmap所到内存中
         /// </summary>
-        public void LockBitmap()
-        {
+        public void LockBitmap() {
             GraphicsUnit graphicsUnit = GraphicsUnit.Pixel;
             RectangleF rectangleF = bitmap.GetBounds(ref graphicsUnit);
             Rectangle rectangle = new Rectangle((int)rectangleF.X, (int)rectangleF.Y, (int)rectangleF.Width, (int)rectangleF.Height);
@@ -803,8 +682,7 @@ namespace SK
         /// <param name="x"></param>
         /// <param name="y"></param>
         /// <returns></returns>
-        unsafe public PixelData GetPixel(int x, int y)
-        {
+        unsafe public PixelData GetPixel(int x, int y) {
             PixelData returnValue = *PixelAt(x, y);
             return returnValue;
         }
@@ -814,8 +692,7 @@ namespace SK
         /// <param name="x"></param>
         /// <param name="y"></param>
         /// <param name="colour"></param>
-        unsafe public void SetPixel(int x, int y, PixelData colour)
-        {
+        unsafe public void SetPixel(int x, int y, PixelData colour) {
 
             PixelData* pixel = PixelAt(x, y);
             *pixel = colour;
@@ -824,8 +701,7 @@ namespace SK
 
         /// <summary>将数据锁到内存中
         /// </summary>
-        unsafe public void UnlockBitmap()
-        {
+        unsafe public void UnlockBitmap() {
             bitmap.UnlockBits(bitmapData);
             bitmapData = null;
             pBase = null;
@@ -836,8 +712,7 @@ namespace SK
         /// <param name="x"></param>
         /// <param name="y"></param>
         /// <returns></returns>
-        unsafe public PixelData* PixelAt(int x, int y)
-        {
+        unsafe public PixelData* PixelAt(int x, int y) {
             return (PixelData*)(pBase + y * stride + x * sizeof(PixelData));
         }
 
@@ -845,18 +720,14 @@ namespace SK
 
     /// <summary>测试类--查看循环读取，与内存读取的效率问题
     /// </summary>
-    public class test
-    {
-        static void Main()
-        {
+    public class test {
+        static void Main() {
             Bitmap bitmap = new Bitmap(@"1.jpg");
             UnsafeBitmap bitmap2 = new UnsafeBitmap(bitmap);
             System.Diagnostics.Stopwatch stopwatch = new System.Diagnostics.Stopwatch();
             stopwatch.Start();
-            for (int i = 0; i < bitmap.Width; i++)
-            {
-                for (int j = 0; j < bitmap.Height; j++)
-                {
+            for (int i = 0; i < bitmap.Width; i++) {
+                for (int j = 0; j < bitmap.Height; j++) {
                     Color c = bitmap.GetPixel(i, j);
                 }
             }
@@ -867,8 +738,7 @@ namespace SK
             stopwatch.Start();
             bitmap2.LockBitmap();
             for (int i = 0; i < bitmap.Width; i++)
-                for (int j = 0; j < bitmap.Height; j++)
-                {
+                for (int j = 0; j < bitmap.Height; j++) {
                     UnsafeBitmap.PixelData c = bitmap2.GetPixel(i, j);
                 }
             bitmap2.UnlockBitmap();
@@ -876,7 +746,4 @@ namespace SK
             Console.WriteLine(stopwatch.ElapsedTicks);
         }
     }
-
-
-
 }

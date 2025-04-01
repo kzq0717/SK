@@ -1,0 +1,336 @@
+﻿<!DOCTYPE html>
+<!-- saved from url=(0014)about:internet -->
+ <html xmlns:msxsl="urn:schemas-microsoft-com:xslt"><head><meta content="en-us" http-equiv="Content-Language" /><meta content="text/html; charset=utf-16" http-equiv="Content-Type" /><title _locID="ConversionReport0">
+          迁移报告
+        </title><style> 
+                    /* Body style, for the entire document */
+                    body
+                    {
+                        background: #F3F3F4;
+                        color: #1E1E1F;
+                        font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+                        padding: 0;
+                        margin: 0;
+                    }
+
+                    /* Header1 style, used for the main title */
+                    h1
+                    {
+                        padding: 10px 0px 10px 10px;
+                        font-size: 21pt;
+                        background-color: #E2E2E2;
+                        border-bottom: 1px #C1C1C2 solid; 
+                        color: #201F20;
+                        margin: 0;
+                        font-weight: normal;
+                    }
+
+                    /* Header2 style, used for "Overview" and other sections */
+                    h2
+                    {
+                        font-size: 18pt;
+                        font-weight: normal;
+                        padding: 15px 0 5px 0;
+                        margin: 0;
+                    }
+
+                    /* Header3 style, used for sub-sections, such as project name */
+                    h3
+                    {
+                        font-weight: normal;
+                        font-size: 15pt;
+                        margin: 0;
+                        padding: 15px 0 5px 0;
+                        background-color: transparent;
+                    }
+
+                    /* Color all hyperlinks one color */
+                    a
+                    {
+                        color: #1382CE;
+                    }
+
+                    /* Table styles */ 
+                    table
+                    {
+                        border-spacing: 0 0;
+                        border-collapse: collapse;
+                        font-size: 10pt;
+                    }
+
+                    table th
+                    {
+                        background: #E7E7E8;
+                        text-align: left;
+                        text-decoration: none;
+                        font-weight: normal;
+                        padding: 3px 6px 3px 6px;
+                    }
+
+                    table td
+                    {
+                        vertical-align: top;
+                        padding: 3px 6px 5px 5px;
+                        margin: 0px;
+                        border: 1px solid #E7E7E8;
+                        background: #F7F7F8;
+                    }
+
+                    /* Local link is a style for hyperlinks that link to file:/// content, there are lots so color them as 'normal' text until the user mouse overs */
+                    .localLink
+                    {
+                        color: #1E1E1F;
+                        background: #EEEEED;
+                        text-decoration: none;
+                    }
+
+                    .localLink:hover
+                    {
+                        color: #1382CE;
+                        background: #FFFF99;
+                        text-decoration: none;
+                    }
+
+                    /* Center text, used in the over views cells that contain message level counts */ 
+                    .textCentered
+                    {
+                        text-align: center;
+                    }
+
+                    /* The message cells in message tables should take up all avaliable space */
+                    .messageCell
+                    {
+                        width: 100%;
+                    }
+
+                    /* Padding around the content after the h1 */ 
+                    #content 
+                    {
+	                    padding: 0px 12px 12px 12px; 
+                    }
+
+                    /* The overview table expands to width, with a max width of 97% */ 
+                    #overview table
+                    {
+                        width: auto;
+                        max-width: 75%; 
+                    }
+
+                    /* The messages tables are always 97% width */
+                    #messages table
+                    {
+                        width: 97%;
+                    }
+
+                    /* All Icons */
+                    .IconSuccessEncoded, .IconInfoEncoded, .IconWarningEncoded, .IconErrorEncoded
+                    {
+                        min-width:18px;
+                        min-height:18px; 
+                        background-repeat:no-repeat;
+                        background-position:center;
+                    }
+
+                    /* Success icon encoded */
+                    .IconSuccessEncoded
+                    {
+                        /* Note: Do not delete the comment below. It is used to verify the correctness of the encoded image resource below before the product is released */
+                        /* [---XsltValidateInternal-Base64EncodedImage:IconSuccess#Begin#background-image: url(data:image/png;base64,#Separator#);#End#] */
+                        background-image: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAACXBIWXMAAA7EAAAOxAGVKw4bAAABcElEQVR4Xq2TsUsCURzHv15g8ZJcBWlyiYYgCIWcb9DFRRwMW5TA2c0/QEFwFkxxUQdxVlBwCYWOi6IhWgQhBLHJUCkhLr/BW8S7gvrAg+N+v8/v+x68Z8MGy+XSCyABQAXgBgHGALoASkIIDWSLeLBetdHryMjd5IxQPWT4rn1c/P7+xxp72Cs9m5SZ0Bq2vPnbPFafK2zDvmNHypdC0BPkLlQhxJsCAhQoZwdZU5mwxh720qGo8MzTxTTKZDPCx2HoVzp6lz0Q9tKhyx0kGs8Ny+TkWRKk8lCROwEduhyg9l/6lunOPSfmH3NUH6uQ0KHLAe7JYvJjevm+DAMGJHToKtigE+vwvIidxLamb8IBY9e+C5LiXREkfho3TSd06HJA13/oh6T51MTsfQbHrsMynQ5dDihFjiK8JJAU9AKIWTp76dCVN7HWHrajmUEGvyF9nkbAE6gLIS7kTUyuf2gscLoJrElZo/Mvj+nPz/kLTmfnEwP3tB0AAAAASUVORK5CYII=);
+                    }
+
+                    /* Information icon encoded */
+                    .IconInfoEncoded
+                    {
+                        /* Note: Do not delete the comment below. It is used to verify the correctness of the encoded image resource below before the product is released */
+                        /* [---XsltValidateInternal-Base64EncodedImage:IconInformation#Begin#background-image: url(data:image/png;base64,#Separator#);#End#] */
+                        background-image: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAABHElEQVR4Xs2TsUoDQRRF7wwoziokjZUKadInhdhukR9YP8DMX1hYW+QvdsXa/QHBbcXC7W0CamWTQnclFutceIQJwwaWNLlwm5k5d94M76mmaeCrrmsLYOocY12FcxZFUeozCqKqqgYA8uevv1H6VuPxcwlfk5N92KHBxfFeCSAxxswlYAW/Xr989x/mv9gkhtyMDhcAxgzRsp7flj8B/HF1RsMXq+NZMkopaHe7lbKxQUEIGbKsYNoGn969060hZBkQex/W8oRQwsQaW2o3Ago2SVcJUzAgY3N0lTCZZm+zPS8HB51gMmS1DEYyOz9acKO1D8JWTlafKIMxdhvlfdyT94Vv5h7P8Ky7nQzACmhvKq3zk3PjW9asz9D/1oigecsioooAAAAASUVORK5CYII=);
+                    }
+
+                    /* Warning icon encoded */
+                    .IconWarningEncoded
+                    {
+                        /* Note: Do not delete the comment below. It is used to verify the correctness of the encoded image resource below before the product is released */
+                        /* [---XsltValidateInternal-Base64EncodedImage:IconWarning#Begin#background-image: url(data:image/png;base64,#Separator#);#End#] */
+                        background-image: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAACXBIWXMAAA7EAAAOxAGVKw4bAAAAx0lEQVR4XpWSMQ7CMAxFf4xAyBMLCxMrO8dhaBcuwdCJS3RJBw7SA/QGTCxdWJgiQYWKXJWKIXHIlyw5lqr34tQgEOdcBsCOx5yZK3hCCKdYXneQkh4pEfqzLfu+wVDSyyzFoJjfz9NB+pAF+eizx2Vruts0k15mPgvS6GYvpVtQhB61IB/dk6AF6fS4Ben0uIX5odtFe8Q/eW1KvFeH4e8khT6+gm5B+t3juyDt7n0jpe+CANTd+oTUjN/U3yVaABnSUjFz/gFq44JaVSCXeQAAAABJRU5ErkJggg==);
+                    }
+
+                    /* Error icon encoded */
+                    .IconErrorEncoded
+                    {
+                        /* Note: Do not delete the comment below. It is used to verify the correctness of the encoded image resource below before the product is released */
+                        /* [---XsltValidateInternal-Base64EncodedImage:IconError#Begin#background-image: url(data:image/png;base64,#Separator#);#End#] */
+                        background-image: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAABQElEQVR4XqWTvUoEQRCE6wYPZUA80AfwAQz23uCMjA7MDRQEIzPBVEyNTQUFIw00vcQTTMzuAh/AxEQQT8HF/3G/oGGnEUGuoNnd6qoZuqltyKEsyzVJq5I6rnUp6SjGeGhESikzzlc1eL7opfuVbrqbU1Zw9NCgtQMaZpY0eNnaaL2fHusvTK5vKu7sjSS1Y4y3QUA6K3e3Mau5UFDyMP7tYF9o8cAHZv68vipoIJg971PZIZ5HiwdvYGGvFVFHmGmZ2MxwmQYPXubPl9Up0tfoMQGetXd6mRbvhBw+boZ6WF7Mbv1+GsHRk0fQmPAH1GfmZirbCfDJ61tw3Px8/8pZsPAG4jlVhcPgZ7adwNWBB68lkRQWFiTgFlbnLY3DGGM7izIJIyT/jjIvEJw6fdJTc6krDzh6aMwMP9bvDH4ADSsa9uSWVJkAAAAASUVORK5CYII=);
+                    }
+                 </style><script type="text/javascript" language="javascript"> 
+          
+            // Startup 
+            // Hook up the the loaded event for the document/window, to linkify the document content
+            var startupFunction = function() { linkifyElement("messages"); };
+            
+            if(window.attachEvent)
+            {
+              window.attachEvent('onload', startupFunction);
+            }
+            else if (window.addEventListener) 
+            {
+              window.addEventListener('load', startupFunction, false);
+            }
+            else 
+            {
+              document.addEventListener('load', startupFunction, false);
+            } 
+            
+            // Toggles the visibility of table rows with the specified name 
+            function toggleTableRowsByName(name)
+            {
+               var allRows = document.getElementsByTagName('tr');
+               for (i=0; i < allRows.length; i++)
+               {
+                  var currentName = allRows[i].getAttribute('name');
+                  if(!!currentName && currentName.indexOf(name) == 0)
+                  {
+                      var isVisible = allRows[i].style.display == ''; 
+                      isVisible ? allRows[i].style.display = 'none' : allRows[i].style.display = '';
+                  }
+               }
+            }
+            
+            function scrollToFirstVisibleRow(name) 
+            {
+               var allRows = document.getElementsByTagName('tr');
+               for (i=0; i < allRows.length; i++)
+               {
+                  var currentName = allRows[i].getAttribute('name');
+                  var isVisible = allRows[i].style.display == ''; 
+                  if(!!currentName && currentName.indexOf(name) == 0 && isVisible)
+                  {
+                     allRows[i].scrollIntoView(true); 
+                     return true; 
+                  }
+               }
+               
+               return false;
+            }
+            
+            // Linkifies the specified text content, replaces candidate links with html links 
+            function linkify(text)
+            {
+                 if(!text || 0 === text.length)
+                 {
+                     return text; 
+                 }
+
+                 // Find http, https and ftp links and replace them with hyper links 
+                 var urlLink = /(http|https|ftp)\:\/\/[a-zA-Z0-9\-\.]+(:[a-zA-Z0-9]*)?\/?([a-zA-Z0-9\-\._\?\,\/\\\+&%\$#\=~;\{\}])*/gi;
+                 
+                 return text.replace(urlLink, '<a href="$&">$&</a>') ;
+            }
+            
+            // Linkifies the specified element by ID
+            function linkifyElement(id)
+            {
+                var element = document.getElementById(id);
+                if(!!element)
+                {
+                  element.innerHTML = linkify(element.innerHTML); 
+                }
+            }
+            
+            function ToggleMessageVisibility(projectName)
+            {
+              if(!projectName || 0 === projectName.length)
+              {
+                return; 
+              }
+              
+              toggleTableRowsByName("MessageRowClass" + projectName);
+              toggleTableRowsByName('MessageRowHeaderShow' + projectName);
+              toggleTableRowsByName('MessageRowHeaderHide' + projectName); 
+            }
+            
+            function ScrollToFirstVisibleMessage(projectName)
+            {
+              if(!projectName || 0 === projectName.length)
+              {
+                return; 
+              }
+              
+              // First try the 'Show messages' row
+              if(!scrollToFirstVisibleRow('MessageRowHeaderShow' + projectName))
+              {
+                // Failed to find a visible row for 'Show messages', try an actual message row 
+                scrollToFirstVisibleRow('MessageRowClass' + projectName); 
+              }
+            }
+           </script></head><body><h1 _locID="ConversionReport">
+          迁移报告 - </h1><div id="content"><h2 _locID="OverviewTitle">概述</h2><div id="overview"><table><tr><th></th><th _locID="ProjectTableHeader">项目</th><th _locID="PathTableHeader">路径</th><th _locID="ErrorsTableHeader">错误</th><th _locID="WarningsTableHeader">警告</th><th _locID="MessagesTableHeader">消息</th></tr><tr><td class="IconErrorEncoded" /><td><strong><a href="#python_faceDetecter">python_faceDetecter</a></strong></td><td>..\..\Image_Processing\AI-Thermometer\python_faceDetecter\python_faceDetecter.pyproj</td><td class="textCentered"><a href="#python_faceDetecterError">1</a></td><td class="textCentered"><a>0</a></td><td class="textCentered"><a href="#">0</a></td></tr><tr><td class="IconSuccessEncoded" /><td><strong><a href="#[共享的 MSBuild 项目文件]">[共享的 MSBuild 项目文件]</a></strong></td><td>[共享的 MSBuild 项目文件]</td><td class="textCentered"><a>0</a></td><td class="textCentered"><a>0</a></td><td class="textCentered"><a href="#">0</a></td></tr><tr><td class="IconSuccessEncoded" /><td><strong><a href="#01_body_from_image_default">01_body_from_image_default</a></strong></td><td>..\..\Image_Processing\openpose-master\build\examples\tutorial_api_cpp\01_body_from_image_default.vcxproj</td><td class="textCentered"><a>0</a></td><td class="textCentered"><a>0</a></td><td class="textCentered"><a href="#">0</a></td></tr><tr><td class="IconSuccessEncoded" /><td><strong><a href="#02_whole_body_from_image_default">02_whole_body_from_image_default</a></strong></td><td>..\..\Image_Processing\openpose-master\build\examples\tutorial_api_cpp\02_whole_body_from_image_default.vcxproj</td><td class="textCentered"><a>0</a></td><td class="textCentered"><a>0</a></td><td class="textCentered"><a href="#">0</a></td></tr><tr><td class="IconSuccessEncoded" /><td><strong><a href="#03_keypoints_from_image">03_keypoints_from_image</a></strong></td><td>..\..\Image_Processing\openpose-master\build\examples\tutorial_api_cpp\03_keypoints_from_image.vcxproj</td><td class="textCentered"><a>0</a></td><td class="textCentered"><a>0</a></td><td class="textCentered"><a href="#">0</a></td></tr><tr><td class="IconSuccessEncoded" /><td><strong><a href="#04_keypoints_from_images">04_keypoints_from_images</a></strong></td><td>..\..\Image_Processing\openpose-master\build\examples\tutorial_api_cpp\04_keypoints_from_images.vcxproj</td><td class="textCentered"><a>0</a></td><td class="textCentered"><a>0</a></td><td class="textCentered"><a href="#">0</a></td></tr><tr><td class="IconSuccessEncoded" /><td><strong><a href="#05_keypoints_from_images_multi_gpu">05_keypoints_from_images_multi_gpu</a></strong></td><td>..\..\Image_Processing\openpose-master\build\examples\tutorial_api_cpp\05_keypoints_from_images_multi_gpu.vcxproj</td><td class="textCentered"><a>0</a></td><td class="textCentered"><a>0</a></td><td class="textCentered"><a href="#">0</a></td></tr><tr><td class="IconSuccessEncoded" /><td><strong><a href="#06_face_from_image">06_face_from_image</a></strong></td><td>..\..\Image_Processing\openpose-master\build\examples\tutorial_api_cpp\06_face_from_image.vcxproj</td><td class="textCentered"><a>0</a></td><td class="textCentered"><a>0</a></td><td class="textCentered"><a href="#">0</a></td></tr><tr><td class="IconSuccessEncoded" /><td><strong><a href="#07_hand_from_image">07_hand_from_image</a></strong></td><td>..\..\Image_Processing\openpose-master\build\examples\tutorial_api_cpp\07_hand_from_image.vcxproj</td><td class="textCentered"><a>0</a></td><td class="textCentered"><a>0</a></td><td class="textCentered"><a href="#">0</a></td></tr><tr><td class="IconSuccessEncoded" /><td><strong><a href="#08_heatmaps_from_image">08_heatmaps_from_image</a></strong></td><td>..\..\Image_Processing\openpose-master\build\examples\tutorial_api_cpp\08_heatmaps_from_image.vcxproj</td><td class="textCentered"><a>0</a></td><td class="textCentered"><a>0</a></td><td class="textCentered"><a href="#">0</a></td></tr><tr><td class="IconSuccessEncoded" /><td><strong><a href="#09_keypoints_from_heatmaps">09_keypoints_from_heatmaps</a></strong></td><td>..\..\Image_Processing\openpose-master\build\examples\tutorial_api_cpp\09_keypoints_from_heatmaps.vcxproj</td><td class="textCentered"><a>0</a></td><td class="textCentered"><a>0</a></td><td class="textCentered"><a href="#">0</a></td></tr><tr><td class="IconSuccessEncoded" /><td><strong><a href="#1_custom_post_processing">1_custom_post_processing</a></strong></td><td>..\..\Image_Processing\openpose-master\build\examples\tutorial_add_module\1_custom_post_processing.vcxproj</td><td class="textCentered"><a>0</a></td><td class="textCentered"><a>0</a></td><td class="textCentered"><a href="#">0</a></td></tr><tr><td class="IconSuccessEncoded" /><td><strong><a href="#1_thread_user_processing_function">1_thread_user_processing_function</a></strong></td><td>..\..\Image_Processing\openpose-master\build\examples\tutorial_api_thread\1_thread_user_processing_function.vcxproj</td><td class="textCentered"><a>0</a></td><td class="textCentered"><a>0</a></td><td class="textCentered"><a href="#">0</a></td></tr><tr><td class="IconSuccessEncoded" /><td><strong><a href="#10_asynchronous_custom_input">10_asynchronous_custom_input</a></strong></td><td>..\..\Image_Processing\openpose-master\build\examples\tutorial_api_cpp\10_asynchronous_custom_input.vcxproj</td><td class="textCentered"><a>0</a></td><td class="textCentered"><a>0</a></td><td class="textCentered"><a href="#">0</a></td></tr><tr><td class="IconSuccessEncoded" /><td><strong><a href="#11_asynchronous_custom_output">11_asynchronous_custom_output</a></strong></td><td>..\..\Image_Processing\openpose-master\build\examples\tutorial_api_cpp\11_asynchronous_custom_output.vcxproj</td><td class="textCentered"><a>0</a></td><td class="textCentered"><a>0</a></td><td class="textCentered"><a href="#">0</a></td></tr><tr><td class="IconSuccessEncoded" /><td><strong><a href="#12_asynchronous_custom_input_output_and_datum">12_asynchronous_custom_input_output_and_datum</a></strong></td><td>..\..\Image_Processing\openpose-master\build\examples\tutorial_api_cpp\12_asynchronous_custom_input_output_and_datum.vcxproj</td><td class="textCentered"><a>0</a></td><td class="textCentered"><a>0</a></td><td class="textCentered"><a href="#">0</a></td></tr><tr><td class="IconSuccessEncoded" /><td><strong><a href="#13_synchronous_custom_input">13_synchronous_custom_input</a></strong></td><td>..\..\Image_Processing\openpose-master\build\examples\tutorial_api_cpp\13_synchronous_custom_input.vcxproj</td><td class="textCentered"><a>0</a></td><td class="textCentered"><a>0</a></td><td class="textCentered"><a href="#">0</a></td></tr><tr><td class="IconSuccessEncoded" /><td><strong><a href="#14_synchronous_custom_preprocessing">14_synchronous_custom_preprocessing</a></strong></td><td>..\..\Image_Processing\openpose-master\build\examples\tutorial_api_cpp\14_synchronous_custom_preprocessing.vcxproj</td><td class="textCentered"><a>0</a></td><td class="textCentered"><a>0</a></td><td class="textCentered"><a href="#">0</a></td></tr><tr><td class="IconSuccessEncoded" /><td><strong><a href="#15_synchronous_custom_postprocessing">15_synchronous_custom_postprocessing</a></strong></td><td>..\..\Image_Processing\openpose-master\build\examples\tutorial_api_cpp\15_synchronous_custom_postprocessing.vcxproj</td><td class="textCentered"><a>0</a></td><td class="textCentered"><a>0</a></td><td class="textCentered"><a href="#">0</a></td></tr><tr><td class="IconSuccessEncoded" /><td><strong><a href="#16_synchronous_custom_output">16_synchronous_custom_output</a></strong></td><td>..\..\Image_Processing\openpose-master\build\examples\tutorial_api_cpp\16_synchronous_custom_output.vcxproj</td><td class="textCentered"><a>0</a></td><td class="textCentered"><a>0</a></td><td class="textCentered"><a href="#">0</a></td></tr><tr><td class="IconSuccessEncoded" /><td><strong><a href="#17_synchronous_custom_all_and_datum">17_synchronous_custom_all_and_datum</a></strong></td><td>..\..\Image_Processing\openpose-master\build\examples\tutorial_api_cpp\17_synchronous_custom_all_and_datum.vcxproj</td><td class="textCentered"><a>0</a></td><td class="textCentered"><a>0</a></td><td class="textCentered"><a href="#">0</a></td></tr><tr><td class="IconSuccessEncoded" /><td><strong><a href="#2_thread_user_input_processing_output_and_datum">2_thread_user_input_processing_output_and_datum</a></strong></td><td>..\..\Image_Processing\openpose-master\build\examples\tutorial_api_thread\2_thread_user_input_processing_output_and_datum.vcxproj</td><td class="textCentered"><a>0</a></td><td class="textCentered"><a>0</a></td><td class="textCentered"><a href="#">0</a></td></tr><tr><td class="IconSuccessEncoded" /><td><strong><a href="#AddModule">AddModule</a></strong></td><td>AddModule</td><td class="textCentered"><a>0</a></td><td class="textCentered"><a>0</a></td><td class="textCentered"><a href="#">0</a></td></tr><tr><td class="IconSuccessEncoded" /><td><strong><a href="#ALL_BUILD">ALL_BUILD</a></strong></td><td>..\..\Image_Processing\openpose-master\build\ALL_BUILD.vcxproj</td><td class="textCentered"><a>0</a></td><td class="textCentered"><a>0</a></td><td class="textCentered"><a href="#">0</a></td></tr><tr><td class="IconSuccessEncoded" /><td><strong><a href="#AutoUpdater.NET">AutoUpdater.NET</a></strong></td><td>..\..\Module\AutoUpdater.NET-master\AutoUpdater.NET-master\AutoUpdater.NET\AutoUpdater.NET.csproj</td><td class="textCentered"><a>0</a></td><td class="textCentered"><a>0</a></td><td class="textCentered"><a href="#">0</a></td></tr><tr><td class="IconSuccessEncoded" /><td><strong><a href="#AutoUpdaterTest">AutoUpdaterTest</a></strong></td><td>..\..\Module\AutoUpdater.NET-master\AutoUpdater.NET-master\AutoUpdaterTest\AutoUpdaterTest.csproj</td><td class="textCentered"><a>0</a></td><td class="textCentered"><a>0</a></td><td class="textCentered"><a href="#">0</a></td></tr><tr><td class="IconSuccessEncoded" /><td><strong><a href="#AutoUpdaterTestWPF">AutoUpdaterTestWPF</a></strong></td><td>..\..\Module\AutoUpdater.NET-master\AutoUpdater.NET-master\AutoUpdaterTestWPF\AutoUpdaterTestWPF.csproj</td><td class="textCentered"><a>0</a></td><td class="textCentered"><a>0</a></td><td class="textCentered"><a href="#">0</a></td></tr><tr><td class="IconSuccessEncoded" /><td><strong><a href="#C++ API">C++ API</a></strong></td><td>C++ API</td><td class="textCentered"><a>0</a></td><td class="textCentered"><a>0</a></td><td class="textCentered"><a href="#">0</a></td></tr><tr><td class="IconSuccessEncoded" /><td><strong><a href="#Calibration">Calibration</a></strong></td><td>..\..\Image_Processing\openpose-master\build\examples\calibration\Calibration.vcxproj</td><td class="textCentered"><a>0</a></td><td class="textCentered"><a>0</a></td><td class="textCentered"><a href="#">0</a></td></tr><tr><td class="IconSuccessEncoded" /><td><strong><a href="#Cameras">Cameras</a></strong></td><td>..\Cameras\Cameras.csproj</td><td class="textCentered"><a>0</a></td><td class="textCentered"><a>0</a></td><td class="textCentered"><a href="#">0</a></td></tr><tr><td class="IconSuccessEncoded" /><td><strong><a href="#CMakePredefinedTargets">CMakePredefinedTargets</a></strong></td><td>CMakePredefinedTargets</td><td class="textCentered"><a>0</a></td><td class="textCentered"><a>0</a></td><td class="textCentered"><a href="#">0</a></td></tr><tr><td class="IconSuccessEncoded" /><td><strong><a href="#CSharp_Projec_Console">CSharp_Projec_Console</a></strong></td><td>..\..\Module\C#\CSharp_Project\CSharp_Projec_Console\CSharp_Projec_Console.csproj</td><td class="textCentered"><a>0</a></td><td class="textCentered"><a>0</a></td><td class="textCentered"><a href="#">0</a></td></tr><tr><td class="IconSuccessEncoded" /><td><strong><a href="#CSharp_Project">CSharp_Project</a></strong></td><td>..\..\Module\C#\CSharp_Project\CSharp_Project\CSharp_Project.csproj</td><td class="textCentered"><a>0</a></td><td class="textCentered"><a>0</a></td><td class="textCentered"><a href="#">0</a></td></tr><tr><td class="IconSuccessEncoded" /><td><strong><a href="#DBManager">DBManager</a></strong></td><td>..\..\DBManager\DBManager\DBManager.csproj</td><td class="textCentered"><a>0</a></td><td class="textCentered"><a>0</a></td><td class="textCentered"><a href="#">0</a></td></tr><tr><td class="IconSuccessEncoded" /><td><strong><a href="#DualCamera">DualCamera</a></strong></td><td>..\Cameras\FLIR\flir atlas samples\Samples v5.01\DualCamera\DualCamera.csproj</td><td class="textCentered"><a>0</a></td><td class="textCentered"><a>0</a></td><td class="textCentered"><a href="#">0</a></td></tr><tr><td class="IconSuccessEncoded" /><td><strong><a href="#Emgu.CV">Emgu.CV</a></strong></td><td>Emgu.CV</td><td class="textCentered"><a>0</a></td><td class="textCentered"><a>0</a></td><td class="textCentered"><a href="#">0</a></td></tr><tr><td class="IconSuccessEncoded" /><td><strong><a href="#Emgu.CV.UI">Emgu.CV.UI</a></strong></td><td>..\libemgucv-windesktop-4.2.0.3662\Emgu.CV.UI\Emgu.CV.UI.csproj</td><td class="textCentered"><a>0</a></td><td class="textCentered"><a>0</a></td><td class="textCentered"><a href="#">0</a></td></tr><tr><td class="IconSuccessEncoded" /><td><strong><a href="#Examples">Examples</a></strong></td><td>Examples</td><td class="textCentered"><a>0</a></td><td class="textCentered"><a>0</a></td><td class="textCentered"><a href="#">0</a></td></tr><tr><td class="IconSuccessEncoded" /><td><strong><a href="#face_detect">face_detect</a></strong></td><td>..\face_detect\face_detect.csproj</td><td class="textCentered"><a>0</a></td><td class="textCentered"><a>0</a></td><td class="textCentered"><a href="#">0</a></td></tr><tr><td class="IconSuccessEncoded" /><td><strong><a href="#FLIR">FLIR</a></strong></td><td>FLIR</td><td class="textCentered"><a>0</a></td><td class="textCentered"><a>0</a></td><td class="textCentered"><a href="#">0</a></td></tr><tr><td class="IconSuccessEncoded" /><td><strong><a href="#FLIR_Demo">FLIR_Demo</a></strong></td><td>..\Cameras\FLIR\FLIR_Demo\FLIR_Demo.csproj</td><td class="textCentered"><a>0</a></td><td class="textCentered"><a>0</a></td><td class="textCentered"><a href="#">0</a></td></tr><tr><td class="IconSuccessEncoded" /><td><strong><a href="#GigabitCamera">GigabitCamera</a></strong></td><td>..\Cameras\FLIR\flir atlas samples\Samples v5.01\GigabitCamera\GigabitCamera.csproj</td><td class="textCentered"><a>0</a></td><td class="textCentered"><a>0</a></td><td class="textCentered"><a href="#">0</a></td></tr><tr><td class="IconSuccessEncoded" /><td><strong><a href="#INSTALL">INSTALL</a></strong></td><td>..\..\Image_Processing\openpose-master\build\examples\INSTALL.vcxproj</td><td class="textCentered"><a>0</a></td><td class="textCentered"><a>0</a></td><td class="textCentered"><a href="#">0</a></td></tr><tr><td class="IconSuccessEncoded" /><td><strong><a href="#IP Config">IP Config</a></strong></td><td>..\Cameras\FLIR\flir atlas samples\Samples v5.01\IP Config\IP Config.csproj</td><td class="textCentered"><a>0</a></td><td class="textCentered"><a>0</a></td><td class="textCentered"><a href="#">0</a></td></tr><tr><td class="IconSuccessEncoded" /><td><strong><a href="#IRImageReaderDemo">IRImageReaderDemo</a></strong></td><td>..\Cameras\FLIR\flir atlas samples\Samples v5.01\IRImageReaderDemo\IRImageReaderDemo.csproj</td><td class="textCentered"><a>0</a></td><td class="textCentered"><a>0</a></td><td class="textCentered"><a href="#">0</a></td></tr><tr><td class="IconSuccessEncoded" /><td><strong><a href="#IRS">IRS</a></strong></td><td>..\IRS\IRS.csproj</td><td class="textCentered"><a>0</a></td><td class="textCentered"><a>0</a></td><td class="textCentered"><a href="#">0</a></td></tr><tr><td class="IconSuccessEncoded" /><td><strong><a href="#Modify">Modify</a></strong></td><td>..\..\TMI\Modify\Modify.vcxproj</td><td class="textCentered"><a>0</a></td><td class="textCentered"><a>0</a></td><td class="textCentered"><a href="#">0</a></td></tr><tr><td class="IconSuccessEncoded" /><td><strong><a href="#openpose">openpose</a></strong></td><td>..\..\Image_Processing\openpose-master\build\src\openpose\openpose.vcxproj</td><td class="textCentered"><a>0</a></td><td class="textCentered"><a>0</a></td><td class="textCentered"><a href="#">0</a></td></tr><tr><td class="IconSuccessEncoded" /><td><strong><a href="#OpenPose">OpenPose</a></strong></td><td>OpenPose</td><td class="textCentered"><a>0</a></td><td class="textCentered"><a>0</a></td><td class="textCentered"><a href="#">0</a></td></tr><tr><td class="IconSuccessEncoded" /><td><strong><a href="#OpenPose library">OpenPose library</a></strong></td><td>OpenPose library</td><td class="textCentered"><a>0</a></td><td class="textCentered"><a>0</a></td><td class="textCentered"><a href="#">0</a></td></tr><tr><td class="IconSuccessEncoded" /><td><strong><a href="#OpenPoseDemo">OpenPoseDemo</a></strong></td><td>..\..\Image_Processing\openpose-master\build\examples\openpose\OpenPoseDemo.vcxproj</td><td class="textCentered"><a>0</a></td><td class="textCentered"><a>0</a></td><td class="textCentered"><a href="#">0</a></td></tr><tr><td class="IconSuccessEncoded" /><td><strong><a href="#Prebuilt">Prebuilt</a></strong></td><td>Prebuilt</td><td class="textCentered"><a>0</a></td><td class="textCentered"><a>0</a></td><td class="textCentered"><a href="#">0</a></td></tr><tr><td class="IconSuccessEncoded" /><td><strong><a href="#pyopenpose">pyopenpose</a></strong></td><td>..\..\Image_Processing\openpose-master\build\python\openpose\pyopenpose.vcxproj</td><td class="textCentered"><a>0</a></td><td class="textCentered"><a>0</a></td><td class="textCentered"><a href="#">0</a></td></tr><tr><td class="IconSuccessEncoded" /><td><strong><a href="#Save2CSV">Save2CSV</a></strong></td><td>..\Cameras\FLIR\flir atlas samples\Samples v5.01\Save2CSV\Save2CSV.csproj</td><td class="textCentered"><a>0</a></td><td class="textCentered"><a>0</a></td><td class="textCentered"><a href="#">0</a></td></tr><tr><td class="IconSuccessEncoded" /><td><strong><a href="#Solution Items">Solution Items</a></strong></td><td>Solution Items</td><td class="textCentered"><a>0</a></td><td class="textCentered"><a>0</a></td><td class="textCentered"><a href="#">0</a></td></tr><tr><td class="IconSuccessEncoded" /><td><strong><a href="#Thermal_Face">Thermal_Face</a></strong></td><td>Thermal_Face</td><td class="textCentered"><a>0</a></td><td class="textCentered"><a>0</a></td><td class="textCentered"><a href="#">0</a></td></tr><tr><td class="IconSuccessEncoded" /><td><strong><a href="#ThermalImageStreamerDemo">ThermalImageStreamerDemo</a></strong></td><td>..\Cameras\FLIR\flir atlas samples\Samples v5.01\ThermalImageStreamerDemo\ThermalImageStreamerDemo.csproj</td><td class="textCentered"><a>0</a></td><td class="textCentered"><a>0</a></td><td class="textCentered"><a href="#">0</a></td></tr><tr><td class="IconSuccessEncoded" /><td><strong><a href="#Thread API">Thread API</a></strong></td><td>Thread API</td><td class="textCentered"><a>0</a></td><td class="textCentered"><a>0</a></td><td class="textCentered"><a href="#">0</a></td></tr><tr><td class="IconSuccessEncoded" /><td><strong><a href="#TMI_M">TMI_M</a></strong></td><td>..\..\TMI\2019\TMI_M\TMI_M.csproj</td><td class="textCentered"><a>0</a></td><td class="textCentered"><a>0</a></td><td class="textCentered"><a href="#">0</a></td></tr><tr><td class="IconSuccessEncoded" /><td><strong><a href="#Tutorial">Tutorial</a></strong></td><td>Tutorial</td><td class="textCentered"><a>0</a></td><td class="textCentered"><a>0</a></td><td class="textCentered"><a href="#">0</a></td></tr><tr><td class="IconSuccessEncoded" /><td><strong><a href="#ULIS">ULIS</a></strong></td><td>..\InfraredImageProcessing\ULIS\ULIS\ULIS.csproj</td><td class="textCentered"><a>0</a></td><td class="textCentered"><a>0</a></td><td class="textCentered"><a href="#">0</a></td></tr><tr><td class="IconSuccessEncoded" /><td><strong><a href="#x64">x64</a></strong></td><td>x64</td><td class="textCentered"><a>0</a></td><td class="textCentered"><a>0</a></td><td class="textCentered"><a href="#">0</a></td></tr><tr><td class="IconSuccessEncoded" /><td><strong><a href="#x86">x86</a></strong></td><td>x86</td><td class="textCentered"><a>0</a></td><td class="textCentered"><a>0</a></td><td class="textCentered"><a href="#">0</a></td></tr><tr><td class="IconSuccessEncoded" /><td><strong><a href="#ZipExtractor">ZipExtractor</a></strong></td><td>..\..\Module\AutoUpdater.NET-master\AutoUpdater.NET-master\ZipExtractor\ZipExtractor.csproj</td><td class="textCentered"><a>0</a></td><td class="textCentered"><a>0</a></td><td class="textCentered"><a href="#">0</a></td></tr><tr><td class="IconSuccessEncoded" /><td><strong><a href="#Solution"><span _locID="OverviewSolutionSpan">解决方案</span></a></strong></td><td>SK.sln</td><td class="textCentered"><a>0</a></td><td class="textCentered"><a>0</a></td><td class="textCentered"><a href="#" onclick="ScrollToFirstVisibleMessage('Solution'); return false;">1</a></td></tr></table></div><h2 _locID="SolutionAndProjectsTitle">解决方案和项目</h2><div id="messages"><a name="python_faceDetecter" /><h3>python_faceDetecter</h3><table><tr id="python_faceDetecterHeaderRow"><th></th><th class="messageCell" _locID="MessageTableHeader">消息</th></tr><tr name="ErrorRowClasspython_faceDetecter"><td class="IconErrorEncoded"><a name="python_faceDetecterError" /></td><td class="messageCell"><strong>..\..\Image_Processing\AI-Thermometer\python_faceDetecter\python_faceDetecter.pyproj:
+        </strong><span>找不到此项目类型所基于的应用程序。有关更多信息，请尝试此链接: 888888a0-9f3d-457c-b088-3a5042f75d52</span></td></tr></table><a name="[共享的 MSBuild 项目文件]" /><h3>[共享的 MSBuild 项目文件]</h3><table><tr id="[共享的 MSBuild 项目文件]HeaderRow"><th></th><th class="messageCell" _locID="MessageTableHeader">消息</th></tr><tr><td class="IconInfoEncoded" /><td class="messageCell" _locID="NoMessagesRow">[共享的 MSBuild 项目文件] 未记录任何消息。
+                  </td></tr></table><a name="01_body_from_image_default" /><h3>01_body_from_image_default</h3><table><tr id="01_body_from_image_defaultHeaderRow"><th></th><th class="messageCell" _locID="MessageTableHeader">消息</th></tr><tr><td class="IconInfoEncoded" /><td class="messageCell" _locID="NoMessagesRow">01_body_from_image_default 未记录任何消息。
+                  </td></tr></table><a name="02_whole_body_from_image_default" /><h3>02_whole_body_from_image_default</h3><table><tr id="02_whole_body_from_image_defaultHeaderRow"><th></th><th class="messageCell" _locID="MessageTableHeader">消息</th></tr><tr><td class="IconInfoEncoded" /><td class="messageCell" _locID="NoMessagesRow">02_whole_body_from_image_default 未记录任何消息。
+                  </td></tr></table><a name="03_keypoints_from_image" /><h3>03_keypoints_from_image</h3><table><tr id="03_keypoints_from_imageHeaderRow"><th></th><th class="messageCell" _locID="MessageTableHeader">消息</th></tr><tr><td class="IconInfoEncoded" /><td class="messageCell" _locID="NoMessagesRow">03_keypoints_from_image 未记录任何消息。
+                  </td></tr></table><a name="04_keypoints_from_images" /><h3>04_keypoints_from_images</h3><table><tr id="04_keypoints_from_imagesHeaderRow"><th></th><th class="messageCell" _locID="MessageTableHeader">消息</th></tr><tr><td class="IconInfoEncoded" /><td class="messageCell" _locID="NoMessagesRow">04_keypoints_from_images 未记录任何消息。
+                  </td></tr></table><a name="05_keypoints_from_images_multi_gpu" /><h3>05_keypoints_from_images_multi_gpu</h3><table><tr id="05_keypoints_from_images_multi_gpuHeaderRow"><th></th><th class="messageCell" _locID="MessageTableHeader">消息</th></tr><tr><td class="IconInfoEncoded" /><td class="messageCell" _locID="NoMessagesRow">05_keypoints_from_images_multi_gpu 未记录任何消息。
+                  </td></tr></table><a name="06_face_from_image" /><h3>06_face_from_image</h3><table><tr id="06_face_from_imageHeaderRow"><th></th><th class="messageCell" _locID="MessageTableHeader">消息</th></tr><tr><td class="IconInfoEncoded" /><td class="messageCell" _locID="NoMessagesRow">06_face_from_image 未记录任何消息。
+                  </td></tr></table><a name="07_hand_from_image" /><h3>07_hand_from_image</h3><table><tr id="07_hand_from_imageHeaderRow"><th></th><th class="messageCell" _locID="MessageTableHeader">消息</th></tr><tr><td class="IconInfoEncoded" /><td class="messageCell" _locID="NoMessagesRow">07_hand_from_image 未记录任何消息。
+                  </td></tr></table><a name="08_heatmaps_from_image" /><h3>08_heatmaps_from_image</h3><table><tr id="08_heatmaps_from_imageHeaderRow"><th></th><th class="messageCell" _locID="MessageTableHeader">消息</th></tr><tr><td class="IconInfoEncoded" /><td class="messageCell" _locID="NoMessagesRow">08_heatmaps_from_image 未记录任何消息。
+                  </td></tr></table><a name="09_keypoints_from_heatmaps" /><h3>09_keypoints_from_heatmaps</h3><table><tr id="09_keypoints_from_heatmapsHeaderRow"><th></th><th class="messageCell" _locID="MessageTableHeader">消息</th></tr><tr><td class="IconInfoEncoded" /><td class="messageCell" _locID="NoMessagesRow">09_keypoints_from_heatmaps 未记录任何消息。
+                  </td></tr></table><a name="1_custom_post_processing" /><h3>1_custom_post_processing</h3><table><tr id="1_custom_post_processingHeaderRow"><th></th><th class="messageCell" _locID="MessageTableHeader">消息</th></tr><tr><td class="IconInfoEncoded" /><td class="messageCell" _locID="NoMessagesRow">1_custom_post_processing 未记录任何消息。
+                  </td></tr></table><a name="1_thread_user_processing_function" /><h3>1_thread_user_processing_function</h3><table><tr id="1_thread_user_processing_functionHeaderRow"><th></th><th class="messageCell" _locID="MessageTableHeader">消息</th></tr><tr><td class="IconInfoEncoded" /><td class="messageCell" _locID="NoMessagesRow">1_thread_user_processing_function 未记录任何消息。
+                  </td></tr></table><a name="10_asynchronous_custom_input" /><h3>10_asynchronous_custom_input</h3><table><tr id="10_asynchronous_custom_inputHeaderRow"><th></th><th class="messageCell" _locID="MessageTableHeader">消息</th></tr><tr><td class="IconInfoEncoded" /><td class="messageCell" _locID="NoMessagesRow">10_asynchronous_custom_input 未记录任何消息。
+                  </td></tr></table><a name="11_asynchronous_custom_output" /><h3>11_asynchronous_custom_output</h3><table><tr id="11_asynchronous_custom_outputHeaderRow"><th></th><th class="messageCell" _locID="MessageTableHeader">消息</th></tr><tr><td class="IconInfoEncoded" /><td class="messageCell" _locID="NoMessagesRow">11_asynchronous_custom_output 未记录任何消息。
+                  </td></tr></table><a name="12_asynchronous_custom_input_output_and_datum" /><h3>12_asynchronous_custom_input_output_and_datum</h3><table><tr id="12_asynchronous_custom_input_output_and_datumHeaderRow"><th></th><th class="messageCell" _locID="MessageTableHeader">消息</th></tr><tr><td class="IconInfoEncoded" /><td class="messageCell" _locID="NoMessagesRow">12_asynchronous_custom_input_output_and_datum 未记录任何消息。
+                  </td></tr></table><a name="13_synchronous_custom_input" /><h3>13_synchronous_custom_input</h3><table><tr id="13_synchronous_custom_inputHeaderRow"><th></th><th class="messageCell" _locID="MessageTableHeader">消息</th></tr><tr><td class="IconInfoEncoded" /><td class="messageCell" _locID="NoMessagesRow">13_synchronous_custom_input 未记录任何消息。
+                  </td></tr></table><a name="14_synchronous_custom_preprocessing" /><h3>14_synchronous_custom_preprocessing</h3><table><tr id="14_synchronous_custom_preprocessingHeaderRow"><th></th><th class="messageCell" _locID="MessageTableHeader">消息</th></tr><tr><td class="IconInfoEncoded" /><td class="messageCell" _locID="NoMessagesRow">14_synchronous_custom_preprocessing 未记录任何消息。
+                  </td></tr></table><a name="15_synchronous_custom_postprocessing" /><h3>15_synchronous_custom_postprocessing</h3><table><tr id="15_synchronous_custom_postprocessingHeaderRow"><th></th><th class="messageCell" _locID="MessageTableHeader">消息</th></tr><tr><td class="IconInfoEncoded" /><td class="messageCell" _locID="NoMessagesRow">15_synchronous_custom_postprocessing 未记录任何消息。
+                  </td></tr></table><a name="16_synchronous_custom_output" /><h3>16_synchronous_custom_output</h3><table><tr id="16_synchronous_custom_outputHeaderRow"><th></th><th class="messageCell" _locID="MessageTableHeader">消息</th></tr><tr><td class="IconInfoEncoded" /><td class="messageCell" _locID="NoMessagesRow">16_synchronous_custom_output 未记录任何消息。
+                  </td></tr></table><a name="17_synchronous_custom_all_and_datum" /><h3>17_synchronous_custom_all_and_datum</h3><table><tr id="17_synchronous_custom_all_and_datumHeaderRow"><th></th><th class="messageCell" _locID="MessageTableHeader">消息</th></tr><tr><td class="IconInfoEncoded" /><td class="messageCell" _locID="NoMessagesRow">17_synchronous_custom_all_and_datum 未记录任何消息。
+                  </td></tr></table><a name="2_thread_user_input_processing_output_and_datum" /><h3>2_thread_user_input_processing_output_and_datum</h3><table><tr id="2_thread_user_input_processing_output_and_datumHeaderRow"><th></th><th class="messageCell" _locID="MessageTableHeader">消息</th></tr><tr><td class="IconInfoEncoded" /><td class="messageCell" _locID="NoMessagesRow">2_thread_user_input_processing_output_and_datum 未记录任何消息。
+                  </td></tr></table><a name="AddModule" /><h3>AddModule</h3><table><tr id="AddModuleHeaderRow"><th></th><th class="messageCell" _locID="MessageTableHeader">消息</th></tr><tr><td class="IconInfoEncoded" /><td class="messageCell" _locID="NoMessagesRow">AddModule 未记录任何消息。
+                  </td></tr></table><a name="ALL_BUILD" /><h3>ALL_BUILD</h3><table><tr id="ALL_BUILDHeaderRow"><th></th><th class="messageCell" _locID="MessageTableHeader">消息</th></tr><tr><td class="IconInfoEncoded" /><td class="messageCell" _locID="NoMessagesRow">ALL_BUILD 未记录任何消息。
+                  </td></tr></table><a name="AutoUpdater.NET" /><h3>AutoUpdater.NET</h3><table><tr id="AutoUpdater.NETHeaderRow"><th></th><th class="messageCell" _locID="MessageTableHeader">消息</th></tr><tr><td class="IconInfoEncoded" /><td class="messageCell" _locID="NoMessagesRow">AutoUpdater.NET 未记录任何消息。
+                  </td></tr></table><a name="AutoUpdaterTest" /><h3>AutoUpdaterTest</h3><table><tr id="AutoUpdaterTestHeaderRow"><th></th><th class="messageCell" _locID="MessageTableHeader">消息</th></tr><tr><td class="IconInfoEncoded" /><td class="messageCell" _locID="NoMessagesRow">AutoUpdaterTest 未记录任何消息。
+                  </td></tr></table><a name="AutoUpdaterTestWPF" /><h3>AutoUpdaterTestWPF</h3><table><tr id="AutoUpdaterTestWPFHeaderRow"><th></th><th class="messageCell" _locID="MessageTableHeader">消息</th></tr><tr><td class="IconInfoEncoded" /><td class="messageCell" _locID="NoMessagesRow">AutoUpdaterTestWPF 未记录任何消息。
+                  </td></tr></table><a name="C++ API" /><h3>C++ API</h3><table><tr id="C++ APIHeaderRow"><th></th><th class="messageCell" _locID="MessageTableHeader">消息</th></tr><tr><td class="IconInfoEncoded" /><td class="messageCell" _locID="NoMessagesRow">C++ API 未记录任何消息。
+                  </td></tr></table><a name="Calibration" /><h3>Calibration</h3><table><tr id="CalibrationHeaderRow"><th></th><th class="messageCell" _locID="MessageTableHeader">消息</th></tr><tr><td class="IconInfoEncoded" /><td class="messageCell" _locID="NoMessagesRow">Calibration 未记录任何消息。
+                  </td></tr></table><a name="Cameras" /><h3>Cameras</h3><table><tr id="CamerasHeaderRow"><th></th><th class="messageCell" _locID="MessageTableHeader">消息</th></tr><tr><td class="IconInfoEncoded" /><td class="messageCell" _locID="NoMessagesRow">Cameras 未记录任何消息。
+                  </td></tr></table><a name="CMakePredefinedTargets" /><h3>CMakePredefinedTargets</h3><table><tr id="CMakePredefinedTargetsHeaderRow"><th></th><th class="messageCell" _locID="MessageTableHeader">消息</th></tr><tr><td class="IconInfoEncoded" /><td class="messageCell" _locID="NoMessagesRow">CMakePredefinedTargets 未记录任何消息。
+                  </td></tr></table><a name="CSharp_Projec_Console" /><h3>CSharp_Projec_Console</h3><table><tr id="CSharp_Projec_ConsoleHeaderRow"><th></th><th class="messageCell" _locID="MessageTableHeader">消息</th></tr><tr><td class="IconInfoEncoded" /><td class="messageCell" _locID="NoMessagesRow">CSharp_Projec_Console 未记录任何消息。
+                  </td></tr></table><a name="CSharp_Project" /><h3>CSharp_Project</h3><table><tr id="CSharp_ProjectHeaderRow"><th></th><th class="messageCell" _locID="MessageTableHeader">消息</th></tr><tr><td class="IconInfoEncoded" /><td class="messageCell" _locID="NoMessagesRow">CSharp_Project 未记录任何消息。
+                  </td></tr></table><a name="DBManager" /><h3>DBManager</h3><table><tr id="DBManagerHeaderRow"><th></th><th class="messageCell" _locID="MessageTableHeader">消息</th></tr><tr><td class="IconInfoEncoded" /><td class="messageCell" _locID="NoMessagesRow">DBManager 未记录任何消息。
+                  </td></tr></table><a name="DualCamera" /><h3>DualCamera</h3><table><tr id="DualCameraHeaderRow"><th></th><th class="messageCell" _locID="MessageTableHeader">消息</th></tr><tr><td class="IconInfoEncoded" /><td class="messageCell" _locID="NoMessagesRow">DualCamera 未记录任何消息。
+                  </td></tr></table><a name="Emgu.CV" /><h3>Emgu.CV</h3><table><tr id="Emgu.CVHeaderRow"><th></th><th class="messageCell" _locID="MessageTableHeader">消息</th></tr><tr><td class="IconInfoEncoded" /><td class="messageCell" _locID="NoMessagesRow">Emgu.CV 未记录任何消息。
+                  </td></tr></table><a name="Emgu.CV.UI" /><h3>Emgu.CV.UI</h3><table><tr id="Emgu.CV.UIHeaderRow"><th></th><th class="messageCell" _locID="MessageTableHeader">消息</th></tr><tr><td class="IconInfoEncoded" /><td class="messageCell" _locID="NoMessagesRow">Emgu.CV.UI 未记录任何消息。
+                  </td></tr></table><a name="Examples" /><h3>Examples</h3><table><tr id="ExamplesHeaderRow"><th></th><th class="messageCell" _locID="MessageTableHeader">消息</th></tr><tr><td class="IconInfoEncoded" /><td class="messageCell" _locID="NoMessagesRow">Examples 未记录任何消息。
+                  </td></tr></table><a name="face_detect" /><h3>face_detect</h3><table><tr id="face_detectHeaderRow"><th></th><th class="messageCell" _locID="MessageTableHeader">消息</th></tr><tr><td class="IconInfoEncoded" /><td class="messageCell" _locID="NoMessagesRow">face_detect 未记录任何消息。
+                  </td></tr></table><a name="FLIR" /><h3>FLIR</h3><table><tr id="FLIRHeaderRow"><th></th><th class="messageCell" _locID="MessageTableHeader">消息</th></tr><tr><td class="IconInfoEncoded" /><td class="messageCell" _locID="NoMessagesRow">FLIR 未记录任何消息。
+                  </td></tr></table><a name="FLIR_Demo" /><h3>FLIR_Demo</h3><table><tr id="FLIR_DemoHeaderRow"><th></th><th class="messageCell" _locID="MessageTableHeader">消息</th></tr><tr><td class="IconInfoEncoded" /><td class="messageCell" _locID="NoMessagesRow">FLIR_Demo 未记录任何消息。
+                  </td></tr></table><a name="GigabitCamera" /><h3>GigabitCamera</h3><table><tr id="GigabitCameraHeaderRow"><th></th><th class="messageCell" _locID="MessageTableHeader">消息</th></tr><tr><td class="IconInfoEncoded" /><td class="messageCell" _locID="NoMessagesRow">GigabitCamera 未记录任何消息。
+                  </td></tr></table><a name="INSTALL" /><h3>INSTALL</h3><table><tr id="INSTALLHeaderRow"><th></th><th class="messageCell" _locID="MessageTableHeader">消息</th></tr><tr><td class="IconInfoEncoded" /><td class="messageCell" _locID="NoMessagesRow">INSTALL 未记录任何消息。
+                  </td></tr></table><a name="IP Config" /><h3>IP Config</h3><table><tr id="IP ConfigHeaderRow"><th></th><th class="messageCell" _locID="MessageTableHeader">消息</th></tr><tr><td class="IconInfoEncoded" /><td class="messageCell" _locID="NoMessagesRow">IP Config 未记录任何消息。
+                  </td></tr></table><a name="IRImageReaderDemo" /><h3>IRImageReaderDemo</h3><table><tr id="IRImageReaderDemoHeaderRow"><th></th><th class="messageCell" _locID="MessageTableHeader">消息</th></tr><tr><td class="IconInfoEncoded" /><td class="messageCell" _locID="NoMessagesRow">IRImageReaderDemo 未记录任何消息。
+                  </td></tr></table><a name="IRS" /><h3>IRS</h3><table><tr id="IRSHeaderRow"><th></th><th class="messageCell" _locID="MessageTableHeader">消息</th></tr><tr><td class="IconInfoEncoded" /><td class="messageCell" _locID="NoMessagesRow">IRS 未记录任何消息。
+                  </td></tr></table><a name="Modify" /><h3>Modify</h3><table><tr id="ModifyHeaderRow"><th></th><th class="messageCell" _locID="MessageTableHeader">消息</th></tr><tr><td class="IconInfoEncoded" /><td class="messageCell" _locID="NoMessagesRow">Modify 未记录任何消息。
+                  </td></tr></table><a name="openpose" /><h3>openpose</h3><table><tr id="openposeHeaderRow"><th></th><th class="messageCell" _locID="MessageTableHeader">消息</th></tr><tr><td class="IconInfoEncoded" /><td class="messageCell" _locID="NoMessagesRow">openpose 未记录任何消息。
+                  </td></tr></table><a name="OpenPose" /><h3>OpenPose</h3><table><tr id="OpenPoseHeaderRow"><th></th><th class="messageCell" _locID="MessageTableHeader">消息</th></tr><tr><td class="IconInfoEncoded" /><td class="messageCell" _locID="NoMessagesRow">OpenPose 未记录任何消息。
+                  </td></tr></table><a name="OpenPose library" /><h3>OpenPose library</h3><table><tr id="OpenPose libraryHeaderRow"><th></th><th class="messageCell" _locID="MessageTableHeader">消息</th></tr><tr><td class="IconInfoEncoded" /><td class="messageCell" _locID="NoMessagesRow">OpenPose library 未记录任何消息。
+                  </td></tr></table><a name="OpenPoseDemo" /><h3>OpenPoseDemo</h3><table><tr id="OpenPoseDemoHeaderRow"><th></th><th class="messageCell" _locID="MessageTableHeader">消息</th></tr><tr><td class="IconInfoEncoded" /><td class="messageCell" _locID="NoMessagesRow">OpenPoseDemo 未记录任何消息。
+                  </td></tr></table><a name="Prebuilt" /><h3>Prebuilt</h3><table><tr id="PrebuiltHeaderRow"><th></th><th class="messageCell" _locID="MessageTableHeader">消息</th></tr><tr><td class="IconInfoEncoded" /><td class="messageCell" _locID="NoMessagesRow">Prebuilt 未记录任何消息。
+                  </td></tr></table><a name="pyopenpose" /><h3>pyopenpose</h3><table><tr id="pyopenposeHeaderRow"><th></th><th class="messageCell" _locID="MessageTableHeader">消息</th></tr><tr><td class="IconInfoEncoded" /><td class="messageCell" _locID="NoMessagesRow">pyopenpose 未记录任何消息。
+                  </td></tr></table><a name="Save2CSV" /><h3>Save2CSV</h3><table><tr id="Save2CSVHeaderRow"><th></th><th class="messageCell" _locID="MessageTableHeader">消息</th></tr><tr><td class="IconInfoEncoded" /><td class="messageCell" _locID="NoMessagesRow">Save2CSV 未记录任何消息。
+                  </td></tr></table><a name="Solution Items" /><h3>Solution Items</h3><table><tr id="Solution ItemsHeaderRow"><th></th><th class="messageCell" _locID="MessageTableHeader">消息</th></tr><tr><td class="IconInfoEncoded" /><td class="messageCell" _locID="NoMessagesRow">Solution Items 未记录任何消息。
+                  </td></tr></table><a name="Thermal_Face" /><h3>Thermal_Face</h3><table><tr id="Thermal_FaceHeaderRow"><th></th><th class="messageCell" _locID="MessageTableHeader">消息</th></tr><tr><td class="IconInfoEncoded" /><td class="messageCell" _locID="NoMessagesRow">Thermal_Face 未记录任何消息。
+                  </td></tr></table><a name="ThermalImageStreamerDemo" /><h3>ThermalImageStreamerDemo</h3><table><tr id="ThermalImageStreamerDemoHeaderRow"><th></th><th class="messageCell" _locID="MessageTableHeader">消息</th></tr><tr><td class="IconInfoEncoded" /><td class="messageCell" _locID="NoMessagesRow">ThermalImageStreamerDemo 未记录任何消息。
+                  </td></tr></table><a name="Thread API" /><h3>Thread API</h3><table><tr id="Thread APIHeaderRow"><th></th><th class="messageCell" _locID="MessageTableHeader">消息</th></tr><tr><td class="IconInfoEncoded" /><td class="messageCell" _locID="NoMessagesRow">Thread API 未记录任何消息。
+                  </td></tr></table><a name="TMI_M" /><h3>TMI_M</h3><table><tr id="TMI_MHeaderRow"><th></th><th class="messageCell" _locID="MessageTableHeader">消息</th></tr><tr><td class="IconInfoEncoded" /><td class="messageCell" _locID="NoMessagesRow">TMI_M 未记录任何消息。
+                  </td></tr></table><a name="Tutorial" /><h3>Tutorial</h3><table><tr id="TutorialHeaderRow"><th></th><th class="messageCell" _locID="MessageTableHeader">消息</th></tr><tr><td class="IconInfoEncoded" /><td class="messageCell" _locID="NoMessagesRow">Tutorial 未记录任何消息。
+                  </td></tr></table><a name="ULIS" /><h3>ULIS</h3><table><tr id="ULISHeaderRow"><th></th><th class="messageCell" _locID="MessageTableHeader">消息</th></tr><tr><td class="IconInfoEncoded" /><td class="messageCell" _locID="NoMessagesRow">ULIS 未记录任何消息。
+                  </td></tr></table><a name="x64" /><h3>x64</h3><table><tr id="x64HeaderRow"><th></th><th class="messageCell" _locID="MessageTableHeader">消息</th></tr><tr><td class="IconInfoEncoded" /><td class="messageCell" _locID="NoMessagesRow">x64 未记录任何消息。
+                  </td></tr></table><a name="x86" /><h3>x86</h3><table><tr id="x86HeaderRow"><th></th><th class="messageCell" _locID="MessageTableHeader">消息</th></tr><tr><td class="IconInfoEncoded" /><td class="messageCell" _locID="NoMessagesRow">x86 未记录任何消息。
+                  </td></tr></table><a name="ZipExtractor" /><h3>ZipExtractor</h3><table><tr id="ZipExtractorHeaderRow"><th></th><th class="messageCell" _locID="MessageTableHeader">消息</th></tr><tr><td class="IconInfoEncoded" /><td class="messageCell" _locID="NoMessagesRow">ZipExtractor 未记录任何消息。
+                  </td></tr></table><a name="Solution" /><h3 _locID="ProjectDisplayNameHeader">解决方案</h3><table><tr id="SolutionHeaderRow"><th></th><th class="messageCell" _locID="MessageTableHeader">消息</th></tr><tr name="MessageRowHeaderShowSolution"><td class="IconInfoEncoded" /><td class="messageCell"><a _locID="ShowAdditionalMessages" href="#" name="SolutionMessage" onclick="ToggleMessageVisibility('Solution'); return false;">
+          显示 1 其他消息
+        </a></td></tr><tr name="MessageRowClassSolution" style="display: none"><td class="IconInfoEncoded"><a name="SolutionMessage" /></td><td class="messageCell"><strong>SK.sln:
+        </strong><span>解决方案文件不需要迁移。</span></td></tr><tr style="display: none" name="MessageRowHeaderHideSolution"><td class="IconInfoEncoded" /><td class="messageCell"><a _locID="HideAdditionalMessages" href="#" name="SolutionMessage" onclick="ToggleMessageVisibility('Solution'); return false;">
+          隐藏 1 其他消息
+        </a></td></tr></table></div></div></body></html>

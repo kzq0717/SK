@@ -29,25 +29,19 @@ using MySql;
 using MySql.Data;
 using MySql.Data.MySqlClient;
 
-namespace SK
-{
-    public class SqlHelper
-    {
+namespace SK {
+    public class SqlHelper {
         #region 私有构造函数和方法
 
         /// <summary>Latin转GBK
         /// </summary>
         /// <param name="str"></param>
         /// <returns></returns>
-        public static String Latin2GBK(String str)
-        {
-            try
-            {
+        public static String Latin2GBK(String str) {
+            try {
                 byte[] bytesStr = Encoding.GetEncoding("latin1").GetBytes(str);
                 return Encoding.GetEncoding("GB2312").GetString(bytesStr);
-            }
-            catch
-            {
+            } catch {
                 return str;
             }
         }
@@ -57,15 +51,11 @@ namespace SK
         /// </summary>
         /// <param name="str"></param>
         /// <returns></returns>
-        public static String GBK2Latin(String str)
-        {
-            try
-            {
+        public static String GBK2Latin(String str) {
+            try {
                 byte[] bytesStr = Encoding.GetEncoding("GB2312").GetBytes(str);
                 return Encoding.GetEncoding("latin1").GetString(bytesStr);
-            }
-            catch
-            {
+            } catch {
                 return str;
             }
         }
@@ -74,32 +64,26 @@ namespace SK
         /// </summary>
         /// <param name="connectionString">连接字符串</param>
         /// <returns>latin1 / utf8 </returns>
-        public static String GetDbCharSet(string connectionString)
-        {
-            try
-            {
-                if (string.IsNullOrEmpty(connectionString) || connectionString.Split(';').Length<4)
-                {
+        public static String GetDbCharSet(string connectionString) {
+            try {
+                if (string.IsNullOrEmpty(connectionString) || connectionString.Split(';').Length < 4) {
                     throw new Exception($"连接字符串格式不正确.(eg.server=xxx;user id=xxx;password=xxx;database=xxx;Charset=xxx;)");
                 }
 
-               // string _msg = "server=xxx;user id=xxx;password=xxx;database=xxx;Charset=utf8;";
+                // string _msg = "server=xxx;user id=xxx;password=xxx;database=xxx;Charset=utf8;";
                 string[] _var = connectionString.Split(new char[] { ';', '=' });
                 int _index = Array.IndexOf(_var, "Charset");
                 //Console.WriteLine($"row_index:{_index}");
                 //Console.WriteLine($"Charset={_var[_index + 1]}");
-                if (string.IsNullOrEmpty(_var[_index + 1]))
-                {
+                if (string.IsNullOrEmpty(_var[_index + 1])) {
                     throw new Exception($"Charset不能为空.");
                 }
                 return _var[_index + 1].ToLower();
 
+            } catch (Exception ex) {
+                throw new Exception("解析连接字符串异常。", ex);
             }
-            catch (Exception ex)
-            {
-                throw new Exception("解析连接字符串异常。",ex);
-            }
-           
+
         }
 
 
@@ -112,19 +96,14 @@ namespace SK
         /// </summary> 
         /// <param name="command">命令名</param> 
         /// <param name="commandParameters">SqlParameters数组</param> 
-        private static void AttachParameters(MySqlCommand command, MySqlParameter[] commandParameters)
-        {
+        private static void AttachParameters(MySqlCommand command, MySqlParameter[] commandParameters) {
             if (command == null) throw new ArgumentNullException("command");
-            if (commandParameters != null)
-            {
-                foreach (MySqlParameter p in commandParameters)
-                {
-                    if (p != null)
-                    {
+            if (commandParameters != null) {
+                foreach (MySqlParameter p in commandParameters) {
+                    if (p != null) {
                         // 检查未分配值的输出参数,将其分配以DBNull.Value. 
                         if ((p.Direction == ParameterDirection.InputOutput || p.Direction == ParameterDirection.Input) &&
-                            (p.Value == null))
-                        {
+                            (p.Value == null)) {
                             p.Value = DBNull.Value;
                         }
                         command.Parameters.Add(p);
@@ -138,17 +117,14 @@ namespace SK
         /// </summary> 
         /// <param name="commandParameters">要分配值的MySqlParameter参数数组</param> 
         /// <param name="dataRow">将要分配给存储过程参数的DataRow</param> 
-        private static void AssignParameterValues(MySqlParameter[] commandParameters, DataRow dataRow)
-        {
-            if ((commandParameters == null) || (dataRow == null))
-            {
+        private static void AssignParameterValues(MySqlParameter[] commandParameters, DataRow dataRow) {
+            if ((commandParameters == null) || (dataRow == null)) {
                 return;
             }
 
             int i = 0;
             // 设置参数值 
-            foreach (MySqlParameter commandParameter in commandParameters)
-            {
+            foreach (MySqlParameter commandParameter in commandParameters) {
                 // 创建参数名称,如果不存在,只抛出一个异常. 
                 if (commandParameter.ParameterName == null ||
                     commandParameter.ParameterName.Length <= 1)
@@ -167,41 +143,29 @@ namespace SK
         /// </summary> 
         /// <param name="commandParameters">要分配值的MySqlParameter参数数组</param> 
         /// <param name="parameterValues">将要分配给存储过程参数的对象数组</param> 
-        private static void AssignParameterValues(MySqlParameter[] commandParameters, object[] parameterValues)
-        {
-            if ((commandParameters == null) || (parameterValues == null))
-            {
+        private static void AssignParameterValues(MySqlParameter[] commandParameters, object[] parameterValues) {
+            if ((commandParameters == null) || (parameterValues == null)) {
                 return;
             }
 
             // 确保对象数组个数与参数个数匹配,如果不匹配,抛出一个异常. 
-            if (commandParameters.Length != parameterValues.Length)
-            {
+            if (commandParameters.Length != parameterValues.Length) {
                 throw new ArgumentException("参数值个数与参数不匹配.");
             }
 
             // 给参数赋值 
-            for (int i = 0, j = commandParameters.Length; i < j; i++)
-            {
+            for (int i = 0, j = commandParameters.Length; i < j; i++) {
                 // If the current array value derives from IDbDataParameter, then assign its Value property 
-                if (parameterValues[i] is IDbDataParameter)
-                {
+                if (parameterValues[i] is IDbDataParameter) {
                     IDbDataParameter paramInstance = (IDbDataParameter)parameterValues[i];
-                    if (paramInstance.Value == null)
-                    {
+                    if (paramInstance.Value == null) {
                         commandParameters[i].Value = DBNull.Value;
-                    }
-                    else
-                    {
+                    } else {
                         commandParameters[i].Value = paramInstance.Value;
                     }
-                }
-                else if (parameterValues[i] == null)
-                {
+                } else if (parameterValues[i] == null) {
                     commandParameters[i].Value = DBNull.Value;
-                }
-                else
-                {
+                } else {
                     commandParameters[i].Value = parameterValues[i];
                 }
             }
@@ -217,19 +181,15 @@ namespace SK
         /// <param name="commandText">存储过程名或都T-SQL命令文本</param> 
         /// <param name="commandParameters">和命令相关联的MySqlParameter参数数组,如果没有参数为'null'</param> 
         /// <param name="mustCloseConnection"><c>true</c> 如果连接是打开的,则为true,其它情况下为false.</param> 
-        private static void PrepareCommand(MySqlCommand command, MySqlConnection connection, MySqlTransaction transaction, CommandType commandType, string commandText, MySqlParameter[] commandParameters, out bool mustCloseConnection)
-        {
+        private static void PrepareCommand(MySqlCommand command, MySqlConnection connection, MySqlTransaction transaction, CommandType commandType, string commandText, MySqlParameter[] commandParameters, out bool mustCloseConnection) {
             if (command == null) throw new ArgumentNullException("command");
             if (commandText == null || commandText.Length == 0) throw new ArgumentNullException("commandText");
 
             // If the provided connection is not open, we will open it 
-            if (connection.State != ConnectionState.Open)
-            {
+            if (connection.State != ConnectionState.Open) {
                 mustCloseConnection = true;
                 connection.Open();
-            }
-            else
-            {
+            } else {
                 mustCloseConnection = false;
             }
 
@@ -240,8 +200,7 @@ namespace SK
             command.CommandText = commandText;
 
             // 分配事务 
-            if (transaction != null)
-            {
+            if (transaction != null) {
                 if (transaction.Connection == null) throw new ArgumentException("The transaction was rollbacked or commited, please provide an open transaction.", "transaction");
                 command.Transaction = transaction;
             }
@@ -250,8 +209,7 @@ namespace SK
             command.CommandType = commandType;
 
             // 分配命令参数 
-            if (commandParameters != null)
-            {
+            if (commandParameters != null) {
                 AttachParameters(command, commandParameters);
             }
             return;
@@ -269,8 +227,7 @@ namespace SK
         /// <param name="port">端口</param>
         /// <param name="db">数据库</param>
         /// <returns></returns>
-        public static string GetConnect(string ip, string username, string pwd, int port,string db)
-        {
+        public static string GetConnect(string ip, string username, string pwd, int port, string db) {
             return "data source= " + ip + ";database=" + db + ";uid=" + username + ";pwd=" + pwd + ";Port=" + port + ";";
         }
 
@@ -278,16 +235,14 @@ namespace SK
         /// </summary>
         /// <param name="connectionString">连接字符串（加密后）</param>
         /// <returns></returns>
-        public static string GetConnString(string connectionString)
-        {
+        public static string GetConnString(string connectionString) {
             return SecurityHelper.RSADecrypt(SecurityHelper.privatekey, connectionString);
         }
-      /// <summary>连接数据库
-      /// </summary>
-      /// <param name="db">App.config中数据库连接字串的Key值</param>
-      /// <returns>加密后的连接字串</returns>
-        public static string GetConnSting(string db)
-        {
+        /// <summary>连接数据库
+        /// </summary>
+        /// <param name="db">App.config中数据库连接字串的Key值</param>
+        /// <returns>加密后的连接字串</returns>
+        public static string GetConnSting(string db) {
             //return ConfigurationManager.ConnectionStrings["ConStr"].ConnectionString;
             return SecurityHelper.RSADecrypt(SecurityHelper.privatekey, ConfigurationManager.ConnectionStrings[db].ConnectionString);
         }
@@ -296,8 +251,7 @@ namespace SK
         /// 一个有效的数据库连接对象 
         /// </summary> 
         /// <returns></returns> 
-        public static MySqlConnection GetConnection(string db)
-        {
+        public static MySqlConnection GetConnection(string db) {
             MySqlConnection Connection = new MySqlConnection(SqlHelper.GetConnSting(db));
             return Connection;
         }
@@ -316,8 +270,7 @@ namespace SK
         /// <param name="commandType">命令类型 (存储过程,命令文本, 其它.)</param> 
         /// <param name="commandText">存储过程名称或SQL语句</param> 
         /// <returns>返回命令影响的行数</returns> 
-        public static int ExecuteNonQuery(string connectionString, CommandType commandType, string commandText)
-        {
+        public static int ExecuteNonQuery(string connectionString, CommandType commandType, string commandText) {
             return ExecuteNonQuery(connectionString, commandType, commandText, (MySqlParameter[])null);
         }
 
@@ -333,12 +286,10 @@ namespace SK
         /// <param name="commandText">存储过程名称或SQL语句</param> 
         /// <param name="commandParameters">MySqlParameter参数数组</param> 
         /// <returns>返回命令影响的行数</returns> 
-        public static int ExecuteNonQuery(string connectionString, CommandType commandType, string commandText, params MySqlParameter[] commandParameters)
-        {
+        public static int ExecuteNonQuery(string connectionString, CommandType commandType, string commandText, params MySqlParameter[] commandParameters) {
             if (connectionString == null || connectionString.Length == 0) throw new ArgumentNullException("connectionString");
 
-            using (MySqlConnection connection = new MySqlConnection(connectionString))
-            {
+            using (MySqlConnection connection = new MySqlConnection(connectionString)) {
                 connection.Open();
 
                 return ExecuteNonQuery(connection, commandType, commandText, commandParameters);
@@ -358,14 +309,12 @@ namespace SK
         /// <param name="spName">存储过程名称</param> 
         /// <param name="parameterValues">分配到存储过程输入参数的对象数组</param> 
         /// <returns>返回受影响的行数</returns> 
-        public static int ExecuteNonQuery(string connectionString, string spName, params object[] parameterValues)
-        {
+        public static int ExecuteNonQuery(string connectionString, string spName, params object[] parameterValues) {
             if (connectionString == null || connectionString.Length == 0) throw new ArgumentNullException("connectionString");
             if (spName == null || spName.Length == 0) throw new ArgumentNullException("spName");
 
             // 如果存在参数值 
-            if ((parameterValues != null) && (parameterValues.Length > 0))
-            {
+            if ((parameterValues != null) && (parameterValues.Length > 0)) {
                 // 从探索存储过程参数(加载到缓存)并分配给存储过程参数数组. 
                 MySqlParameter[] commandParameters = SqlHelperParameterCache.GetSpParameterSet(connectionString, spName);
 
@@ -374,9 +323,7 @@ namespace SK
                 AssignParameterValues(commandParameters, parameterValues);
 
                 return ExecuteNonQuery(connectionString, CommandType.StoredProcedure, spName, commandParameters);
-            }
-            else
-            {
+            } else {
                 // 没有参数情况下 
                 return ExecuteNonQuery(connectionString, CommandType.StoredProcedure, spName);
             }
@@ -393,8 +340,7 @@ namespace SK
         /// <param name="commandType">命令类型(存储过程,命令文本或其它.)</param> 
         /// <param name="commandText">存储过程名称或T-SQL语句</param> 
         /// <returns>返回影响的行数</returns> 
-        public static int ExecuteNonQuery(MySqlConnection connection, CommandType commandType, string commandText)
-        {
+        public static int ExecuteNonQuery(MySqlConnection connection, CommandType commandType, string commandText) {
             return ExecuteNonQuery(connection, commandType, commandText, (MySqlParameter[])null);
         }
 
@@ -410,8 +356,7 @@ namespace SK
         /// <param name="commandText">T存储过程名称或T-SQL语句</param> 
         /// <param name="commandParameters">SqlParamter参数数组</param> 
         /// <returns>返回影响的行数</returns> 
-        public static int ExecuteNonQuery(MySqlConnection connection, CommandType commandType, string commandText, params MySqlParameter[] commandParameters)
-        {
+        public static int ExecuteNonQuery(MySqlConnection connection, CommandType commandType, string commandText, params MySqlParameter[] commandParameters) {
             if (connection == null) throw new ArgumentNullException("connection");
 
             // 创建MySqlCommand命令,并进行预处理 
@@ -441,14 +386,12 @@ namespace SK
         /// <param name="spName">存储过程名</param> 
         /// <param name="parameterValues">分配给存储过程输入参数的对象数组</param> 
         /// <returns>返回影响的行数</returns> 
-        public static int ExecuteNonQuery(MySqlConnection connection, string spName, params object[] parameterValues)
-        {
+        public static int ExecuteNonQuery(MySqlConnection connection, string spName, params object[] parameterValues) {
             if (connection == null) throw new ArgumentNullException("connection");
             if (spName == null || spName.Length == 0) throw new ArgumentNullException("spName");
 
             // 如果有参数值 
-            if ((parameterValues != null) && (parameterValues.Length > 0))
-            {
+            if ((parameterValues != null) && (parameterValues.Length > 0)) {
                 // 从缓存中加载存储过程参数 
                 MySqlParameter[] commandParameters = SqlHelperParameterCache.GetSpParameterSet(connection, spName);
 
@@ -456,9 +399,7 @@ namespace SK
                 AssignParameterValues(commandParameters, parameterValues);
 
                 return ExecuteNonQuery(connection, CommandType.StoredProcedure, spName, commandParameters);
-            }
-            else
-            {
+            } else {
                 return ExecuteNonQuery(connection, CommandType.StoredProcedure, spName);
             }
         }
@@ -474,8 +415,7 @@ namespace SK
         /// <param name="commandType">命令类型(存储过程,命令文本或其它.)</param> 
         /// <param name="commandText">存储过程名称或T-SQL语句</param> 
         /// <returns>返回影响的行数/returns> 
-        public static int ExecuteNonQuery(MySqlTransaction transaction, CommandType commandType, string commandText)
-        {
+        public static int ExecuteNonQuery(MySqlTransaction transaction, CommandType commandType, string commandText) {
             return ExecuteNonQuery(transaction, commandType, commandText, (MySqlParameter[])null);
         }
 
@@ -491,8 +431,7 @@ namespace SK
         /// <param name="commandText">存储过程名称或T-SQL语句</param> 
         /// <param name="commandParameters">SqlParamter参数数组</param> 
         /// <returns>返回影响的行数</returns> 
-        public static int ExecuteNonQuery(MySqlTransaction transaction, CommandType commandType, string commandText, params MySqlParameter[] commandParameters)
-        {
+        public static int ExecuteNonQuery(MySqlTransaction transaction, CommandType commandType, string commandText, params MySqlParameter[] commandParameters) {
             if (transaction == null) throw new ArgumentNullException("transaction");
             if (transaction != null && transaction.Connection == null) throw new ArgumentException("The transaction was rollbacked or commited, please provide an open transaction.", "transaction");
 
@@ -521,15 +460,13 @@ namespace SK
         /// <param name="spName">存储过程名</param> 
         /// <param name="parameterValues">分配给存储过程输入参数的对象数组</param> 
         /// <returns>返回受影响的行数</returns> 
-        public static int ExecuteNonQuery(MySqlTransaction transaction, string spName, params object[] parameterValues)
-        {
+        public static int ExecuteNonQuery(MySqlTransaction transaction, string spName, params object[] parameterValues) {
             if (transaction == null) throw new ArgumentNullException("transaction");
             if (transaction != null && transaction.Connection == null) throw new ArgumentException("The transaction was rollbacked or commited, please provide an open transaction.", "transaction");
             if (spName == null || spName.Length == 0) throw new ArgumentNullException("spName");
 
             // 如果有参数值 
-            if ((parameterValues != null) && (parameterValues.Length > 0))
-            {
+            if ((parameterValues != null) && (parameterValues.Length > 0)) {
                 // 从缓存中加载存储过程参数,如果缓存中不存在则从数据库中检索参数信息并加载到缓存中. () 
                 MySqlParameter[] commandParameters = SqlHelperParameterCache.GetSpParameterSet(transaction.Connection, spName);
 
@@ -538,9 +475,7 @@ namespace SK
 
                 // 调用重载方法 
                 return ExecuteNonQuery(transaction, CommandType.StoredProcedure, spName, commandParameters);
-            }
-            else
-            {
+            } else {
                 // 没有参数值 
                 return ExecuteNonQuery(transaction, CommandType.StoredProcedure, spName);
             }
@@ -561,8 +496,7 @@ namespace SK
         /// <param name="commandType">命令类型 (存储过程,命令文本或其它)</param> 
         /// <param name="commandText">存储过程名称或T-SQL语句</param> 
         /// <returns>返回一个包含结果集的DataSet</returns> 
-        public static DataSet ExecuteDataset(string connectionString, CommandType commandType, string commandText)
-        {
+        public static DataSet ExecuteDataset(string connectionString, CommandType commandType, string commandText) {
             return ExecuteDataset(connectionString, commandType, commandText, (MySqlParameter[])null);
         }
 
@@ -578,12 +512,10 @@ namespace SK
         /// <param name="commandText">存储过程名称或T-SQL语句</param> 
         /// <param name="commandParameters">SqlParamters参数数组</param> 
         /// <returns>返回一个包含结果集的DataSet</returns> 
-        public static DataSet ExecuteDataset(string connectionString, CommandType commandType, string commandText, params MySqlParameter[] commandParameters)
-        {
+        public static DataSet ExecuteDataset(string connectionString, CommandType commandType, string commandText, params MySqlParameter[] commandParameters) {
             if (connectionString == null || connectionString.Length == 0) throw new ArgumentNullException("connectionString");
             // 创建并打开数据库连接对象,操作完成释放对象. 
-            using (MySqlConnection connection = new MySqlConnection(connectionString))
-            {
+            using (MySqlConnection connection = new MySqlConnection(connectionString)) {
                 connection.Open();
                 // 调用指定数据库连接字符串重载方法. 
                 return ExecuteDataset(connection, commandType, commandText, commandParameters);
@@ -602,13 +534,11 @@ namespace SK
         /// <param name="spName">存储过程名</param> 
         /// <param name="parameterValues">分配给存储过程输入参数的对象数组</param> 
         /// <returns>返回一个包含结果集的DataSet</returns> 
-        public static DataSet ExecuteDataset(string connectionString, string spName, params object[] parameterValues)
-        {
+        public static DataSet ExecuteDataset(string connectionString, string spName, params object[] parameterValues) {
             if (connectionString == null || connectionString.Length == 0) throw new ArgumentNullException("connectionString");
             if (spName == null || spName.Length == 0) throw new ArgumentNullException("spName");
 
-            if ((parameterValues != null) && (parameterValues.Length > 0))
-            {
+            if ((parameterValues != null) && (parameterValues.Length > 0)) {
                 // 从缓存中检索存储过程参数 
                 MySqlParameter[] commandParameters = SqlHelperParameterCache.GetSpParameterSet(connectionString, spName);
 
@@ -616,9 +546,7 @@ namespace SK
                 AssignParameterValues(commandParameters, parameterValues);
 
                 return ExecuteDataset(connectionString, CommandType.StoredProcedure, spName, commandParameters);
-            }
-            else
-            {
+            } else {
                 return ExecuteDataset(connectionString, CommandType.StoredProcedure, spName);
             }
         }
@@ -634,8 +562,7 @@ namespace SK
         /// <param name="commandType">命令类型 (存储过程,命令文本或其它)</param> 
         /// <param name="commandText">存储过程名或T-SQL语句</param> 
         /// <returns>返回一个包含结果集的DataSet</returns> 
-        public static DataSet ExecuteDataset(MySqlConnection connection, CommandType commandType, string commandText)
-        {
+        public static DataSet ExecuteDataset(MySqlConnection connection, CommandType commandType, string commandText) {
             return ExecuteDataset(connection, commandType, commandText, (MySqlParameter[])null);
         }
 
@@ -651,8 +578,7 @@ namespace SK
         /// <param name="commandText">存储过程名或T-SQL语句</param> 
         /// <param name="commandParameters">SqlParamter参数数组</param> 
         /// <returns>返回一个包含结果集的DataSet</returns> 
-        public static DataSet ExecuteDataset(MySqlConnection connection, CommandType commandType, string commandText, params MySqlParameter[] commandParameters)
-        {
+        public static DataSet ExecuteDataset(MySqlConnection connection, CommandType commandType, string commandText, params MySqlParameter[] commandParameters) {
             if (connection == null) throw new ArgumentNullException("connection");
 
             // 预处理 
@@ -661,8 +587,7 @@ namespace SK
             PrepareCommand(cmd, connection, (MySqlTransaction)null, commandType, commandText, commandParameters, out mustCloseConnection);
 
             // 创建MySqlDataAdapter和DataSet. 
-            using (MySqlDataAdapter da = new MySqlDataAdapter(cmd))
-            {
+            using (MySqlDataAdapter da = new MySqlDataAdapter(cmd)) {
                 DataSet ds = new DataSet();
 
                 // 填充DataSet. 
@@ -689,13 +614,11 @@ namespace SK
         /// <param name="spName">存储过程名</param> 
         /// <param name="parameterValues">分配给存储过程输入参数的对象数组</param> 
         /// <returns>返回一个包含结果集的DataSet</returns> 
-        public static DataSet ExecuteDataset(MySqlConnection connection, string spName, params object[] parameterValues)
-        {
+        public static DataSet ExecuteDataset(MySqlConnection connection, string spName, params object[] parameterValues) {
             if (connection == null) throw new ArgumentNullException("connection");
             if (spName == null || spName.Length == 0) throw new ArgumentNullException("spName");
 
-            if ((parameterValues != null) && (parameterValues.Length > 0))
-            {
+            if ((parameterValues != null) && (parameterValues.Length > 0)) {
                 // 比缓存中加载存储过程参数 
                 MySqlParameter[] commandParameters = SqlHelperParameterCache.GetSpParameterSet(connection, spName);
 
@@ -703,9 +626,7 @@ namespace SK
                 AssignParameterValues(commandParameters, parameterValues);
 
                 return ExecuteDataset(connection, CommandType.StoredProcedure, spName, commandParameters);
-            }
-            else
-            {
+            } else {
                 return ExecuteDataset(connection, CommandType.StoredProcedure, spName);
             }
         }
@@ -721,8 +642,7 @@ namespace SK
         /// <param name="commandType">命令类型 (存储过程,命令文本或其它)</param> 
         /// <param name="commandText">存储过程名或T-SQL语句</param> 
         /// <returns>返回一个包含结果集的DataSet</returns> 
-        public static DataSet ExecuteDataset(MySqlTransaction transaction, CommandType commandType, string commandText)
-        {
+        public static DataSet ExecuteDataset(MySqlTransaction transaction, CommandType commandType, string commandText) {
             return ExecuteDataset(transaction, commandType, commandText, (MySqlParameter[])null);
         }
 
@@ -738,8 +658,7 @@ namespace SK
         /// <param name="commandText">存储过程名或T-SQL语句</param> 
         /// <param name="commandParameters">SqlParamter参数数组</param> 
         /// <returns>返回一个包含结果集的DataSet</returns> 
-        public static DataSet ExecuteDataset(MySqlTransaction transaction, CommandType commandType, string commandText, params MySqlParameter[] commandParameters)
-        {
+        public static DataSet ExecuteDataset(MySqlTransaction transaction, CommandType commandType, string commandText, params MySqlParameter[] commandParameters) {
             if (transaction == null) throw new ArgumentNullException("transaction");
             if (transaction != null && transaction.Connection == null) throw new ArgumentException("The transaction was rollbacked or commited, please provide an open transaction.", "transaction");
 
@@ -749,8 +668,7 @@ namespace SK
             PrepareCommand(cmd, transaction.Connection, transaction, commandType, commandText, commandParameters, out mustCloseConnection);
 
             // 创建 DataAdapter & DataSet 
-            using (MySqlDataAdapter da = new MySqlDataAdapter(cmd))
-            {
+            using (MySqlDataAdapter da = new MySqlDataAdapter(cmd)) {
                 DataSet ds = new DataSet();
                 da.Fill(ds);
                 cmd.Parameters.Clear();
@@ -770,14 +688,12 @@ namespace SK
         /// <param name="spName">存储过程名</param> 
         /// <param name="parameterValues">分配给存储过程输入参数的对象数组</param> 
         /// <returns>返回一个包含结果集的DataSet</returns> 
-        public static DataSet ExecuteDataset(MySqlTransaction transaction, string spName, params object[] parameterValues)
-        {
+        public static DataSet ExecuteDataset(MySqlTransaction transaction, string spName, params object[] parameterValues) {
             if (transaction == null) throw new ArgumentNullException("transaction");
             if (transaction != null && transaction.Connection == null) throw new ArgumentException("The transaction was rollbacked or commited, please provide an open transaction.", "transaction");
             if (spName == null || spName.Length == 0) throw new ArgumentNullException("spName");
 
-            if ((parameterValues != null) && (parameterValues.Length > 0))
-            {
+            if ((parameterValues != null) && (parameterValues.Length > 0)) {
                 // 从缓存中加载存储过程参数 
                 MySqlParameter[] commandParameters = SqlHelperParameterCache.GetSpParameterSet(transaction.Connection, spName);
 
@@ -785,9 +701,7 @@ namespace SK
                 AssignParameterValues(commandParameters, parameterValues);
 
                 return ExecuteDataset(transaction, CommandType.StoredProcedure, spName, commandParameters);
-            }
-            else
-            {
+            } else {
                 return ExecuteDataset(transaction, CommandType.StoredProcedure, spName);
             }
         }
@@ -799,8 +713,7 @@ namespace SK
         /// <summary> 
         /// 枚举,标识数据库连接是由SqlHelper提供还是由调用者提供 
         /// </summary> 
-        private enum SqlConnectionOwnership
-        {
+        private enum SqlConnectionOwnership {
             /// <summary>由SqlHelper提供连接</summary> 
             Internal,
             /// <summary>由调用者提供连接</summary> 
@@ -821,26 +734,21 @@ namespace SK
         /// <param name="commandParameters">SqlParameters参数数组,如果没有参数则为'null'</param> 
         /// <param name="connectionOwnership">标识数据库连接对象是由调用者提供还是由SqlHelper提供</param> 
         /// <returns>返回包含结果集的MySqlDataReader</returns> 
-        private static MySqlDataReader ExecuteReader(MySqlConnection connection, MySqlTransaction transaction, CommandType commandType, string commandText, MySqlParameter[] commandParameters, SqlConnectionOwnership connectionOwnership)
-        {
+        private static MySqlDataReader ExecuteReader(MySqlConnection connection, MySqlTransaction transaction, CommandType commandType, string commandText, MySqlParameter[] commandParameters, SqlConnectionOwnership connectionOwnership) {
             if (connection == null) throw new ArgumentNullException("connection");
 
             bool mustCloseConnection = false;
             // 创建命令 
             MySqlCommand cmd = new MySqlCommand();
-            try
-            {
+            try {
                 PrepareCommand(cmd, connection, transaction, commandType, commandText, commandParameters, out mustCloseConnection);
 
                 // 创建数据阅读器 
                 MySqlDataReader dataReader;
 
-                if (connectionOwnership == SqlConnectionOwnership.External)
-                {
+                if (connectionOwnership == SqlConnectionOwnership.External) {
                     dataReader = cmd.ExecuteReader();
-                }
-                else
-                {
+                } else {
                     dataReader = cmd.ExecuteReader(CommandBehavior.CloseConnection);
                 }
 
@@ -850,21 +758,17 @@ namespace SK
                 // then the SqlReader can磘 set its values. 
                 // When this happen, the parameters can磘 be used again in other command. 
                 bool canClear = true;
-                foreach (MySqlParameter commandParameter in cmd.Parameters)
-                {
+                foreach (MySqlParameter commandParameter in cmd.Parameters) {
                     if (commandParameter.Direction != ParameterDirection.Input)
                         canClear = false;
                 }
 
-                if (canClear)
-                {
+                if (canClear) {
                     cmd.Parameters.Clear();
                 }
 
                 return dataReader;
-            }
-            catch
-            {
+            } catch {
                 if (mustCloseConnection)
                     connection.Close();
                 throw;
@@ -882,8 +786,7 @@ namespace SK
         /// <param name="commandType">命令类型 (存储过程,命令文本或其它)</param> 
         /// <param name="commandText">存储过程名或T-SQL语句</param> 
         /// <returns>返回包含结果集的MySqlDataReader</returns> 
-        public static MySqlDataReader ExecuteReader(string connectionString, CommandType commandType, string commandText)
-        {
+        public static MySqlDataReader ExecuteReader(string connectionString, CommandType commandType, string commandText) {
             return ExecuteReader(connectionString, commandType, commandText, (MySqlParameter[])null);
         }
 
@@ -899,19 +802,15 @@ namespace SK
         /// <param name="commandText">存储过程名或T-SQL语句</param> 
         /// <param name="commandParameters">SqlParamter参数数组(new MySqlParameter("@prodid", 24))</param> 
         /// <returns>返回包含结果集的MySqlDataReader</returns> 
-        public static MySqlDataReader ExecuteReader(string connectionString, CommandType commandType, string commandText, params MySqlParameter[] commandParameters)
-        {
+        public static MySqlDataReader ExecuteReader(string connectionString, CommandType commandType, string commandText, params MySqlParameter[] commandParameters) {
             if (connectionString == null || connectionString.Length == 0) throw new ArgumentNullException("connectionString");
             MySqlConnection connection = null;
-            try
-            {
+            try {
                 connection = new MySqlConnection(connectionString);
                 connection.Open();
 
                 return ExecuteReader(connection, null, commandType, commandText, commandParameters, SqlConnectionOwnership.Internal);
-            }
-            catch
-            {
+            } catch {
                 // If we fail to return the SqlDatReader, we need to close the connection ourselves 
                 if (connection != null) connection.Close();
                 throw;
@@ -931,21 +830,17 @@ namespace SK
         /// <param name="spName">存储过程名</param> 
         /// <param name="parameterValues">分配给存储过程输入参数的对象数组</param> 
         /// <returns>返回包含结果集的MySqlDataReader</returns> 
-        public static MySqlDataReader ExecuteReader(string connectionString, string spName, params object[] parameterValues)
-        {
+        public static MySqlDataReader ExecuteReader(string connectionString, string spName, params object[] parameterValues) {
             if (connectionString == null || connectionString.Length == 0) throw new ArgumentNullException("connectionString");
             if (spName == null || spName.Length == 0) throw new ArgumentNullException("spName");
 
-            if ((parameterValues != null) && (parameterValues.Length > 0))
-            {
+            if ((parameterValues != null) && (parameterValues.Length > 0)) {
                 MySqlParameter[] commandParameters = SqlHelperParameterCache.GetSpParameterSet(connectionString, spName);
 
                 AssignParameterValues(commandParameters, parameterValues);
 
                 return ExecuteReader(connectionString, CommandType.StoredProcedure, spName, commandParameters);
-            }
-            else
-            {
+            } else {
                 return ExecuteReader(connectionString, CommandType.StoredProcedure, spName);
             }
         }
@@ -961,8 +856,7 @@ namespace SK
         /// <param name="commandType">命令类型 (存储过程,命令文本或其它)</param> 
         /// <param name="commandText">存储过程名或T-SQL语句</param> 
         /// <returns>返回包含结果集的MySqlDataReader</returns> 
-        public static MySqlDataReader ExecuteReader(MySqlConnection connection, CommandType commandType, string commandText)
-        {
+        public static MySqlDataReader ExecuteReader(MySqlConnection connection, CommandType commandType, string commandText) {
             return ExecuteReader(connection, commandType, commandText, (MySqlParameter[])null);
         }
 
@@ -978,8 +872,7 @@ namespace SK
         /// <param name="commandText">命令类型 (存储过程,命令文本或其它)</param> 
         /// <param name="commandParameters">SqlParamter参数数组</param> 
         /// <returns>返回包含结果集的MySqlDataReader</returns> 
-        public static MySqlDataReader ExecuteReader(MySqlConnection connection, CommandType commandType, string commandText, params MySqlParameter[] commandParameters)
-        {
+        public static MySqlDataReader ExecuteReader(MySqlConnection connection, CommandType commandType, string commandText, params MySqlParameter[] commandParameters) {
             return ExecuteReader(connection, (MySqlTransaction)null, commandType, commandText, commandParameters, SqlConnectionOwnership.External);
         }
 
@@ -995,21 +888,17 @@ namespace SK
         /// <param name="spName">T存储过程名</param> 
         /// <param name="parameterValues">分配给存储过程输入参数的对象数组</param> 
         /// <returns>返回包含结果集的MySqlDataReader</returns> 
-        public static MySqlDataReader ExecuteReader(MySqlConnection connection, string spName, params object[] parameterValues)
-        {
+        public static MySqlDataReader ExecuteReader(MySqlConnection connection, string spName, params object[] parameterValues) {
             if (connection == null) throw new ArgumentNullException("connection");
             if (spName == null || spName.Length == 0) throw new ArgumentNullException("spName");
 
-            if ((parameterValues != null) && (parameterValues.Length > 0))
-            {
+            if ((parameterValues != null) && (parameterValues.Length > 0)) {
                 MySqlParameter[] commandParameters = SqlHelperParameterCache.GetSpParameterSet(connection, spName);
 
                 AssignParameterValues(commandParameters, parameterValues);
 
                 return ExecuteReader(connection, CommandType.StoredProcedure, spName, commandParameters);
-            }
-            else
-            {
+            } else {
                 return ExecuteReader(connection, CommandType.StoredProcedure, spName);
             }
         }
@@ -1025,8 +914,7 @@ namespace SK
         /// <param name="commandType">命令类型 (存储过程,命令文本或其它)</param> 
         /// <param name="commandText">存储过程名称或T-SQL语句</param> 
         /// <returns>返回包含结果集的MySqlDataReader</returns> 
-        public static MySqlDataReader ExecuteReader(MySqlTransaction transaction, CommandType commandType, string commandText)
-        {
+        public static MySqlDataReader ExecuteReader(MySqlTransaction transaction, CommandType commandType, string commandText) {
             return ExecuteReader(transaction, commandType, commandText, (MySqlParameter[])null);
         }
 
@@ -1042,8 +930,7 @@ namespace SK
         /// <param name="commandText">存储过程名称或T-SQL语句</param> 
         /// <param name="commandParameters">分配给命令的SqlParamter参数数组</param> 
         /// <returns>返回包含结果集的MySqlDataReader</returns> 
-        public static MySqlDataReader ExecuteReader(MySqlTransaction transaction, CommandType commandType, string commandText, params MySqlParameter[] commandParameters)
-        {
+        public static MySqlDataReader ExecuteReader(MySqlTransaction transaction, CommandType commandType, string commandText, params MySqlParameter[] commandParameters) {
             if (transaction == null) throw new ArgumentNullException("transaction");
             if (transaction != null && transaction.Connection == null) throw new ArgumentException("The transaction was rollbacked or commited, please provide an open transaction.", "transaction");
 
@@ -1063,23 +950,19 @@ namespace SK
         /// <param name="spName">存储过程名称</param> 
         /// <param name="parameterValues">分配给存储过程输入参数的对象数组</param> 
         /// <returns>返回包含结果集的MySqlDataReader</returns> 
-        public static MySqlDataReader ExecuteReader(MySqlTransaction transaction, string spName, params object[] parameterValues)
-        {
+        public static MySqlDataReader ExecuteReader(MySqlTransaction transaction, string spName, params object[] parameterValues) {
             if (transaction == null) throw new ArgumentNullException("transaction");
             if (transaction != null && transaction.Connection == null) throw new ArgumentException("The transaction was rollbacked or commited, please provide an open transaction.", "transaction");
             if (spName == null || spName.Length == 0) throw new ArgumentNullException("spName");
 
             // 如果有参数值 
-            if ((parameterValues != null) && (parameterValues.Length > 0))
-            {
+            if ((parameterValues != null) && (parameterValues.Length > 0)) {
                 MySqlParameter[] commandParameters = SqlHelperParameterCache.GetSpParameterSet(transaction.Connection, spName);
 
                 AssignParameterValues(commandParameters, parameterValues);
 
                 return ExecuteReader(transaction, CommandType.StoredProcedure, spName, commandParameters);
-            }
-            else
-            {
+            } else {
                 // 没有参数值 
                 return ExecuteReader(transaction, CommandType.StoredProcedure, spName);
             }
@@ -1100,8 +983,7 @@ namespace SK
         /// <param name="commandType">命令类型 (存储过程,命令文本或其它)</param> 
         /// <param name="commandText">存储过程名称或T-SQL语句</param> 
         /// <returns>返回结果集中的第一行第一列</returns> 
-        public static object ExecuteScalar(string connectionString, CommandType commandType, string commandText)
-        {
+        public static object ExecuteScalar(string connectionString, CommandType commandType, string commandText) {
             // 执行参数为空的方法 
             return ExecuteScalar(connectionString, commandType, commandText, (MySqlParameter[])null);
         }
@@ -1118,12 +1000,10 @@ namespace SK
         /// <param name="commandText">存储过程名称或T-SQL语句</param> 
         /// <param name="commandParameters">分配给命令的SqlParamter参数数组</param> 
         /// <returns>返回结果集中的第一行第一列</returns> 
-        public static object ExecuteScalar(string connectionString, CommandType commandType, string commandText, params MySqlParameter[] commandParameters)
-        {
+        public static object ExecuteScalar(string connectionString, CommandType commandType, string commandText, params MySqlParameter[] commandParameters) {
             if (connectionString == null || connectionString.Length == 0) throw new ArgumentNullException("connectionString");
             // 创建并打开数据库连接对象,操作完成释放对象. 
-            using (MySqlConnection connection = new MySqlConnection(connectionString))
-            {
+            using (MySqlConnection connection = new MySqlConnection(connectionString)) {
                 connection.Open();
 
                 // 调用指定数据库连接字符串重载方法. 
@@ -1144,14 +1024,12 @@ namespace SK
         /// <param name="spName">存储过程名称</param> 
         /// <param name="parameterValues">分配给存储过程输入参数的对象数组</param> 
         /// <returns>返回结果集中的第一行第一列</returns> 
-        public static object ExecuteScalar(string connectionString, string spName, params object[] parameterValues)
-        {
+        public static object ExecuteScalar(string connectionString, string spName, params object[] parameterValues) {
             if (connectionString == null || connectionString.Length == 0) throw new ArgumentNullException("connectionString");
             if (spName == null || spName.Length == 0) throw new ArgumentNullException("spName");
 
             // 如果有参数值 
-            if ((parameterValues != null) && (parameterValues.Length > 0))
-            {
+            if ((parameterValues != null) && (parameterValues.Length > 0)) {
                 // 从缓存中加载存储过程参数,如果缓存中不存在则从数据库中检索参数信息并加载到缓存中. () 
                 MySqlParameter[] commandParameters = SqlHelperParameterCache.GetSpParameterSet(connectionString, spName);
 
@@ -1160,9 +1038,7 @@ namespace SK
 
                 // 调用重载方法 
                 return ExecuteScalar(connectionString, CommandType.StoredProcedure, spName, commandParameters);
-            }
-            else
-            {
+            } else {
                 // 没有参数值 
                 return ExecuteScalar(connectionString, CommandType.StoredProcedure, spName);
             }
@@ -1179,8 +1055,7 @@ namespace SK
         /// <param name="commandType">命令类型 (存储过程,命令文本或其它)</param> 
         /// <param name="commandText">存储过程名称或T-SQL语句</param> 
         /// <returns>返回结果集中的第一行第一列</returns> 
-        public static object ExecuteScalar(MySqlConnection connection, CommandType commandType, string commandText)
-        {
+        public static object ExecuteScalar(MySqlConnection connection, CommandType commandType, string commandText) {
             // 执行参数为空的方法 
             return ExecuteScalar(connection, commandType, commandText, (MySqlParameter[])null);
         }
@@ -1197,8 +1072,7 @@ namespace SK
         /// <param name="commandText">存储过程名称或T-SQL语句</param> 
         /// <param name="commandParameters">分配给命令的SqlParamter参数数组</param> 
         /// <returns>返回结果集中的第一行第一列</returns> 
-        public static object ExecuteScalar(MySqlConnection connection, CommandType commandType, string commandText, params MySqlParameter[] commandParameters)
-        {
+        public static object ExecuteScalar(MySqlConnection connection, CommandType commandType, string commandText, params MySqlParameter[] commandParameters) {
             if (connection == null) throw new ArgumentNullException("connection");
 
             // 创建MySqlCommand命令,并进行预处理 
@@ -1232,14 +1106,12 @@ namespace SK
         /// <param name="spName">存储过程名称</param> 
         /// <param name="parameterValues">分配给存储过程输入参数的对象数组</param> 
         /// <returns>返回结果集中的第一行第一列</returns> 
-        public static object ExecuteScalar(MySqlConnection connection, string spName, params object[] parameterValues)
-        {
+        public static object ExecuteScalar(MySqlConnection connection, string spName, params object[] parameterValues) {
             if (connection == null) throw new ArgumentNullException("connection");
             if (spName == null || spName.Length == 0) throw new ArgumentNullException("spName");
 
             // 如果有参数值 
-            if ((parameterValues != null) && (parameterValues.Length > 0))
-            {
+            if ((parameterValues != null) && (parameterValues.Length > 0)) {
                 // 从缓存中加载存储过程参数,如果缓存中不存在则从数据库中检索参数信息并加载到缓存中. () 
                 MySqlParameter[] commandParameters = SqlHelperParameterCache.GetSpParameterSet(connection, spName);
 
@@ -1248,9 +1120,7 @@ namespace SK
 
                 // 调用重载方法 
                 return ExecuteScalar(connection, CommandType.StoredProcedure, spName, commandParameters);
-            }
-            else
-            {
+            } else {
                 // 没有参数值 
                 return ExecuteScalar(connection, CommandType.StoredProcedure, spName);
             }
@@ -1267,8 +1137,7 @@ namespace SK
         /// <param name="commandType">命令类型 (存储过程,命令文本或其它)</param> 
         /// <param name="commandText">存储过程名称或T-SQL语句</param> 
         /// <returns>返回结果集中的第一行第一列</returns> 
-        public static object ExecuteScalar(MySqlTransaction transaction, CommandType commandType, string commandText)
-        {
+        public static object ExecuteScalar(MySqlTransaction transaction, CommandType commandType, string commandText) {
             // 执行参数为空的方法 
             return ExecuteScalar(transaction, commandType, commandText, (MySqlParameter[])null);
         }
@@ -1285,8 +1154,7 @@ namespace SK
         /// <param name="commandText">存储过程名称或T-SQL语句</param> 
         /// <param name="commandParameters">分配给命令的SqlParamter参数数组</param> 
         /// <returns>返回结果集中的第一行第一列</returns> 
-        public static object ExecuteScalar(MySqlTransaction transaction, CommandType commandType, string commandText, params MySqlParameter[] commandParameters)
-        {
+        public static object ExecuteScalar(MySqlTransaction transaction, CommandType commandType, string commandText, params MySqlParameter[] commandParameters) {
             if (transaction == null) throw new ArgumentNullException("transaction");
             if (transaction != null && transaction.Connection == null) throw new ArgumentException("The transaction was rollbacked or commited, please provide an open transaction.", "transaction");
 
@@ -1316,15 +1184,13 @@ namespace SK
         /// <param name="spName">存储过程名称</param> 
         /// <param name="parameterValues">分配给存储过程输入参数的对象数组</param> 
         /// <returns>返回结果集中的第一行第一列</returns> 
-        public static object ExecuteScalar(MySqlTransaction transaction, string spName, params object[] parameterValues)
-        {
+        public static object ExecuteScalar(MySqlTransaction transaction, string spName, params object[] parameterValues) {
             if (transaction == null) throw new ArgumentNullException("transaction");
             if (transaction != null && transaction.Connection == null) throw new ArgumentException("The transaction was rollbacked or commited, please provide an open transaction.", "transaction");
             if (spName == null || spName.Length == 0) throw new ArgumentNullException("spName");
 
             // 如果有参数值 
-            if ((parameterValues != null) && (parameterValues.Length > 0))
-            {
+            if ((parameterValues != null) && (parameterValues.Length > 0)) {
                 // PPull the parameters for this stored procedure from the parameter cache () 
                 MySqlParameter[] commandParameters = SqlHelperParameterCache.GetSpParameterSet(transaction.Connection, spName);
 
@@ -1333,9 +1199,7 @@ namespace SK
 
                 // 调用重载方法 
                 return ExecuteScalar(transaction, CommandType.StoredProcedure, spName, commandParameters);
-            }
-            else
-            {
+            } else {
                 // 没有参数值 
                 return ExecuteScalar(transaction, CommandType.StoredProcedure, spName);
             }
@@ -1357,14 +1221,12 @@ namespace SK
         /// <param name="dataSet">要填充结果集的DataSet实例</param> 
         /// <param name="tableNames">表映射的数据表数组 
         /// 用户定义的表名 (可有是实际的表名.)</param> 
-        public static void FillDataset(string connectionString, CommandType commandType, string commandText, DataSet dataSet, string[] tableNames)
-        {
+        public static void FillDataset(string connectionString, CommandType commandType, string commandText, DataSet dataSet, string[] tableNames) {
             if (connectionString == null || connectionString.Length == 0) throw new ArgumentNullException("connectionString");
             if (dataSet == null) throw new ArgumentNullException("dataSet");
 
             // 创建并打开数据库连接对象,操作完成释放对象. 
-            using (MySqlConnection connection = new MySqlConnection(connectionString))
-            {
+            using (MySqlConnection connection = new MySqlConnection(connectionString)) {
                 connection.Open();
 
                 // 调用指定数据库连接字符串重载方法. 
@@ -1389,13 +1251,11 @@ namespace SK
         /// </param> 
         public static void FillDataset(string connectionString, CommandType commandType,
             string commandText, DataSet dataSet, string[] tableNames,
-            params MySqlParameter[] commandParameters)
-        {
+            params MySqlParameter[] commandParameters) {
             if (connectionString == null || connectionString.Length == 0) throw new ArgumentNullException("connectionString");
             if (dataSet == null) throw new ArgumentNullException("dataSet");
             // 创建并打开数据库连接对象,操作完成释放对象. 
-            using (MySqlConnection connection = new MySqlConnection(connectionString))
-            {
+            using (MySqlConnection connection = new MySqlConnection(connectionString)) {
                 connection.Open();
 
                 // 调用指定数据库连接字符串重载方法. 
@@ -1421,13 +1281,11 @@ namespace SK
         /// <param name="parameterValues">分配给存储过程输入参数的对象数组</param> 
         public static void FillDataset(string connectionString, string spName,
             DataSet dataSet, string[] tableNames,
-            params object[] parameterValues)
-        {
+            params object[] parameterValues) {
             if (connectionString == null || connectionString.Length == 0) throw new ArgumentNullException("connectionString");
             if (dataSet == null) throw new ArgumentNullException("dataSet");
             // 创建并打开数据库连接对象,操作完成释放对象. 
-            using (MySqlConnection connection = new MySqlConnection(connectionString))
-            {
+            using (MySqlConnection connection = new MySqlConnection(connectionString)) {
                 connection.Open();
 
                 // 调用指定数据库连接字符串重载方法. 
@@ -1450,8 +1308,7 @@ namespace SK
         /// 用户定义的表名 (可有是实际的表名.) 
         /// </param>    
         public static void FillDataset(MySqlConnection connection, CommandType commandType,
-            string commandText, DataSet dataSet, string[] tableNames)
-        {
+            string commandText, DataSet dataSet, string[] tableNames) {
             FillDataset(connection, commandType, commandText, dataSet, tableNames, null);
         }
 
@@ -1472,8 +1329,7 @@ namespace SK
         /// <param name="commandParameters">分配给命令的SqlParamter参数数组</param> 
         public static void FillDataset(MySqlConnection connection, CommandType commandType,
             string commandText, DataSet dataSet, string[] tableNames,
-            params MySqlParameter[] commandParameters)
-        {
+            params MySqlParameter[] commandParameters) {
             FillDataset(connection, null, commandType, commandText, dataSet, tableNames, commandParameters);
         }
 
@@ -1495,15 +1351,13 @@ namespace SK
         /// <param name="parameterValues">分配给存储过程输入参数的对象数组</param> 
         public static void FillDataset(MySqlConnection connection, string spName,
             DataSet dataSet, string[] tableNames,
-            params object[] parameterValues)
-        {
+            params object[] parameterValues) {
             if (connection == null) throw new ArgumentNullException("connection");
             if (dataSet == null) throw new ArgumentNullException("dataSet");
             if (spName == null || spName.Length == 0) throw new ArgumentNullException("spName");
 
             // 如果有参数值 
-            if ((parameterValues != null) && (parameterValues.Length > 0))
-            {
+            if ((parameterValues != null) && (parameterValues.Length > 0)) {
                 // 从缓存中加载存储过程参数,如果缓存中不存在则从数据库中检索参数信息并加载到缓存中. () 
                 MySqlParameter[] commandParameters = SqlHelperParameterCache.GetSpParameterSet(connection, spName);
 
@@ -1512,9 +1366,7 @@ namespace SK
 
                 // 调用重载方法 
                 FillDataset(connection, CommandType.StoredProcedure, spName, dataSet, tableNames, commandParameters);
-            }
-            else
-            {
+            } else {
                 // 没有参数值 
                 FillDataset(connection, CommandType.StoredProcedure, spName, dataSet, tableNames);
             }
@@ -1536,8 +1388,7 @@ namespace SK
         /// </param> 
         public static void FillDataset(MySqlTransaction transaction, CommandType commandType,
             string commandText,
-            DataSet dataSet, string[] tableNames)
-        {
+            DataSet dataSet, string[] tableNames) {
             FillDataset(transaction, commandType, commandText, dataSet, tableNames, null);
         }
 
@@ -1558,8 +1409,7 @@ namespace SK
         /// <param name="commandParameters">分配给命令的SqlParamter参数数组</param> 
         public static void FillDataset(MySqlTransaction transaction, CommandType commandType,
             string commandText, DataSet dataSet, string[] tableNames,
-            params MySqlParameter[] commandParameters)
-        {
+            params MySqlParameter[] commandParameters) {
             FillDataset(transaction.Connection, transaction, commandType, commandText, dataSet, tableNames, commandParameters);
         }
 
@@ -1581,16 +1431,14 @@ namespace SK
         /// <param name="parameterValues">分配给存储过程输入参数的对象数组</param> 
         public static void FillDataset(MySqlTransaction transaction, string spName,
             DataSet dataSet, string[] tableNames,
-            params object[] parameterValues)
-        {
+            params object[] parameterValues) {
             if (transaction == null) throw new ArgumentNullException("transaction");
             if (transaction != null && transaction.Connection == null) throw new ArgumentException("The transaction was rollbacked or commited, please provide an open transaction.", "transaction");
             if (dataSet == null) throw new ArgumentNullException("dataSet");
             if (spName == null || spName.Length == 0) throw new ArgumentNullException("spName");
 
             // 如果有参数值 
-            if ((parameterValues != null) && (parameterValues.Length > 0))
-            {
+            if ((parameterValues != null) && (parameterValues.Length > 0)) {
                 // 从缓存中加载存储过程参数,如果缓存中不存在则从数据库中检索参数信息并加载到缓存中. () 
                 MySqlParameter[] commandParameters = SqlHelperParameterCache.GetSpParameterSet(transaction.Connection, spName);
 
@@ -1599,9 +1447,7 @@ namespace SK
 
                 // 调用重载方法 
                 FillDataset(transaction, CommandType.StoredProcedure, spName, dataSet, tableNames, commandParameters);
-            }
-            else
-            {
+            } else {
                 // 没有参数值 
                 FillDataset(transaction, CommandType.StoredProcedure, spName, dataSet, tableNames);
             }
@@ -1625,8 +1471,7 @@ namespace SK
         /// <param name="commandParameters">分配给命令的SqlParamter参数数组</param> 
         private static void FillDataset(MySqlConnection connection, MySqlTransaction transaction, CommandType commandType,
             string commandText, DataSet dataSet, string[] tableNames,
-            params MySqlParameter[] commandParameters)
-        {
+            params MySqlParameter[] commandParameters) {
             if (connection == null) throw new ArgumentNullException("connection");
             if (dataSet == null) throw new ArgumentNullException("dataSet");
 
@@ -1636,15 +1481,12 @@ namespace SK
             PrepareCommand(command, connection, transaction, commandType, commandText, commandParameters, out mustCloseConnection);
 
             // 执行命令 
-            using (MySqlDataAdapter dataAdapter = new MySqlDataAdapter(command))
-            {
+            using (MySqlDataAdapter dataAdapter = new MySqlDataAdapter(command)) {
 
                 // 追加表映射 
-                if (tableNames != null && tableNames.Length > 0)
-                {
+                if (tableNames != null && tableNames.Length > 0) {
                     string tableName = "Table";
-                    for (int index = 0; index < tableNames.Length; index++)
-                    {
+                    for (int index = 0; index < tableNames.Length; index++) {
                         if (tableNames[index] == null || tableNames[index].Length == 0) throw new ArgumentException("The tableNames parameter must contain a list of tables, a value was provided as null or empty string.", "tableNames");
                         dataAdapter.TableMappings.Add(tableName, tableNames[index]);
                         tableName += (index + 1).ToString();
@@ -1676,16 +1518,14 @@ namespace SK
         /// <param name="updateCommand">[更新记录]一个有效的T-SQL语句或存储过程</param> 
         /// <param name="dataSet">要更新到数据库的DataSet</param> 
         /// <param name="tableName">要更新到数据库的DataTable</param> 
-        public static void UpdateDataset(MySqlCommand insertCommand, MySqlCommand deleteCommand, MySqlCommand updateCommand, DataSet dataSet, string tableName)
-        {
+        public static void UpdateDataset(MySqlCommand insertCommand, MySqlCommand deleteCommand, MySqlCommand updateCommand, DataSet dataSet, string tableName) {
             if (insertCommand == null) throw new ArgumentNullException("insertCommand");
             if (deleteCommand == null) throw new ArgumentNullException("deleteCommand");
             if (updateCommand == null) throw new ArgumentNullException("updateCommand");
             if (tableName == null || tableName.Length == 0) throw new ArgumentNullException("tableName");
 
             // 创建MySqlDataAdapter,当操作完成后释放. 
-            using (MySqlDataAdapter dataAdapter = new MySqlDataAdapter())
-            {
+            using (MySqlDataAdapter dataAdapter = new MySqlDataAdapter()) {
                 // 设置数据适配器命令 
                 dataAdapter.UpdateCommand = updateCommand;
                 dataAdapter.InsertCommand = insertCommand;
@@ -1712,8 +1552,7 @@ namespace SK
         /// <param name="spName">存储过程名称</param> 
         /// <param name="sourceColumns">源表的列名称数组</param> 
         /// <returns>返回MySqlCommand命令</returns> 
-        public static MySqlCommand CreateCommand(MySqlConnection connection, string spName, params string[] sourceColumns)
-        {
+        public static MySqlCommand CreateCommand(MySqlConnection connection, string spName, params string[] sourceColumns) {
             if (connection == null) throw new ArgumentNullException("connection");
             if (spName == null || spName.Length == 0) throw new ArgumentNullException("spName");
 
@@ -1722,8 +1561,7 @@ namespace SK
             cmd.CommandType = CommandType.StoredProcedure;
 
             // 如果有参数值 
-            if ((sourceColumns != null) && (sourceColumns.Length > 0))
-            {
+            if ((sourceColumns != null) && (sourceColumns.Length > 0)) {
                 // 从缓存中加载存储过程参数,如果缓存中不存在则从数据库中检索参数信息并加载到缓存中. () 
                 MySqlParameter[] commandParameters = SqlHelperParameterCache.GetSpParameterSet(connection, spName);
 
@@ -1747,14 +1585,12 @@ namespace SK
         /// <param name="spName">存储过程名称</param> 
         /// <param name="dataRow">使用DataRow作为参数值</param> 
         /// <returns>返回影响的行数</returns> 
-        public static int ExecuteNonQueryTypedParams(String connectionString, String spName, DataRow dataRow)
-        {
+        public static int ExecuteNonQueryTypedParams(String connectionString, String spName, DataRow dataRow) {
             if (connectionString == null || connectionString.Length == 0) throw new ArgumentNullException("connectionString");
             if (spName == null || spName.Length == 0) throw new ArgumentNullException("spName");
 
             // 如果row有值,存储过程必须初始化. 
-            if (dataRow != null && dataRow.ItemArray.Length > 0)
-            {
+            if (dataRow != null && dataRow.ItemArray.Length > 0) {
                 // 从缓存中加载存储过程参数,如果缓存中不存在则从数据库中检索参数信息并加载到缓存中. () 
                 MySqlParameter[] commandParameters = SqlHelperParameterCache.GetSpParameterSet(connectionString, spName);
 
@@ -1762,9 +1598,7 @@ namespace SK
                 AssignParameterValues(commandParameters, dataRow);
 
                 return SqlHelper.ExecuteNonQuery(connectionString, CommandType.StoredProcedure, spName, commandParameters);
-            }
-            else
-            {
+            } else {
                 return SqlHelper.ExecuteNonQuery(connectionString, CommandType.StoredProcedure, spName);
             }
         }
@@ -1776,14 +1610,12 @@ namespace SK
         /// <param name="spName">存储过程名称</param> 
         /// <param name="dataRow">使用DataRow作为参数值</param> 
         /// <returns>返回影响的行数</returns> 
-        public static int ExecuteNonQueryTypedParams(MySqlConnection connection, String spName, DataRow dataRow)
-        {
+        public static int ExecuteNonQueryTypedParams(MySqlConnection connection, String spName, DataRow dataRow) {
             if (connection == null) throw new ArgumentNullException("connection");
             if (spName == null || spName.Length == 0) throw new ArgumentNullException("spName");
 
             // 如果row有值,存储过程必须初始化. 
-            if (dataRow != null && dataRow.ItemArray.Length > 0)
-            {
+            if (dataRow != null && dataRow.ItemArray.Length > 0) {
                 // 从缓存中加载存储过程参数,如果缓存中不存在则从数据库中检索参数信息并加载到缓存中. () 
                 MySqlParameter[] commandParameters = SqlHelperParameterCache.GetSpParameterSet(connection, spName);
 
@@ -1791,9 +1623,7 @@ namespace SK
                 AssignParameterValues(commandParameters, dataRow);
 
                 return SqlHelper.ExecuteNonQuery(connection, CommandType.StoredProcedure, spName, commandParameters);
-            }
-            else
-            {
+            } else {
                 return SqlHelper.ExecuteNonQuery(connection, CommandType.StoredProcedure, spName);
             }
         }
@@ -1805,15 +1635,13 @@ namespace SK
         /// <param name="spName">存储过程名称</param> 
         /// <param name="dataRow">使用DataRow作为参数值</param> 
         /// <returns>返回影响的行数</returns> 
-        public static int ExecuteNonQueryTypedParams(MySqlTransaction transaction, String spName, DataRow dataRow)
-        {
+        public static int ExecuteNonQueryTypedParams(MySqlTransaction transaction, String spName, DataRow dataRow) {
             if (transaction == null) throw new ArgumentNullException("transaction");
             if (transaction != null && transaction.Connection == null) throw new ArgumentException("The transaction was rollbacked or commited, please provide an open transaction.", "transaction");
             if (spName == null || spName.Length == 0) throw new ArgumentNullException("spName");
 
             // Sf the row has values, the store procedure parameters must be initialized 
-            if (dataRow != null && dataRow.ItemArray.Length > 0)
-            {
+            if (dataRow != null && dataRow.ItemArray.Length > 0) {
                 // 从缓存中加载存储过程参数,如果缓存中不存在则从数据库中检索参数信息并加载到缓存中. () 
                 MySqlParameter[] commandParameters = SqlHelperParameterCache.GetSpParameterSet(transaction.Connection, spName);
 
@@ -1821,9 +1649,7 @@ namespace SK
                 AssignParameterValues(commandParameters, dataRow);
 
                 return SqlHelper.ExecuteNonQuery(transaction, CommandType.StoredProcedure, spName, commandParameters);
-            }
-            else
-            {
+            } else {
                 return SqlHelper.ExecuteNonQuery(transaction, CommandType.StoredProcedure, spName);
             }
         }
@@ -1837,14 +1663,12 @@ namespace SK
         /// <param name="spName">存储过程名称</param> 
         /// <param name="dataRow">使用DataRow作为参数值</param> 
         /// <returns>返回一个包含结果集的DataSet.</returns> 
-        public static DataSet ExecuteDatasetTypedParams(string connectionString, String spName, DataRow dataRow)
-        {
+        public static DataSet ExecuteDatasetTypedParams(string connectionString, String spName, DataRow dataRow) {
             if (connectionString == null || connectionString.Length == 0) throw new ArgumentNullException("connectionString");
             if (spName == null || spName.Length == 0) throw new ArgumentNullException("spName");
 
             //如果row有值,存储过程必须初始化. 
-            if (dataRow != null && dataRow.ItemArray.Length > 0)
-            {
+            if (dataRow != null && dataRow.ItemArray.Length > 0) {
                 // 从缓存中加载存储过程参数,如果缓存中不存在则从数据库中检索参数信息并加载到缓存中. () 
                 MySqlParameter[] commandParameters = SqlHelperParameterCache.GetSpParameterSet(connectionString, spName);
 
@@ -1852,9 +1676,7 @@ namespace SK
                 AssignParameterValues(commandParameters, dataRow);
 
                 return SqlHelper.ExecuteDataset(connectionString, CommandType.StoredProcedure, spName, commandParameters);
-            }
-            else
-            {
+            } else {
                 return SqlHelper.ExecuteDataset(connectionString, CommandType.StoredProcedure, spName);
             }
         }
@@ -1867,14 +1689,12 @@ namespace SK
         /// <param name="dataRow">使用DataRow作为参数值</param> 
         /// <returns>返回一个包含结果集的DataSet.</returns> 
         /// 
-        public static DataSet ExecuteDatasetTypedParams(MySqlConnection connection, String spName, DataRow dataRow)
-        {
+        public static DataSet ExecuteDatasetTypedParams(MySqlConnection connection, String spName, DataRow dataRow) {
             if (connection == null) throw new ArgumentNullException("connection");
             if (spName == null || spName.Length == 0) throw new ArgumentNullException("spName");
 
             // 如果row有值,存储过程必须初始化. 
-            if (dataRow != null && dataRow.ItemArray.Length > 0)
-            {
+            if (dataRow != null && dataRow.ItemArray.Length > 0) {
                 // 从缓存中加载存储过程参数,如果缓存中不存在则从数据库中检索参数信息并加载到缓存中. () 
                 MySqlParameter[] commandParameters = SqlHelperParameterCache.GetSpParameterSet(connection, spName);
 
@@ -1882,9 +1702,7 @@ namespace SK
                 AssignParameterValues(commandParameters, dataRow);
 
                 return SqlHelper.ExecuteDataset(connection, CommandType.StoredProcedure, spName, commandParameters);
-            }
-            else
-            {
+            } else {
                 return SqlHelper.ExecuteDataset(connection, CommandType.StoredProcedure, spName);
             }
         }
@@ -1896,15 +1714,13 @@ namespace SK
         /// <param name="spName">存储过程名称</param> 
         /// <param name="dataRow">使用DataRow作为参数值</param> 
         /// <returns>返回一个包含结果集的DataSet.</returns> 
-        public static DataSet ExecuteDatasetTypedParams(MySqlTransaction transaction, String spName, DataRow dataRow)
-        {
+        public static DataSet ExecuteDatasetTypedParams(MySqlTransaction transaction, String spName, DataRow dataRow) {
             if (transaction == null) throw new ArgumentNullException("transaction");
             if (transaction != null && transaction.Connection == null) throw new ArgumentException("The transaction was rollbacked or commited, please provide an open transaction.", "transaction");
             if (spName == null || spName.Length == 0) throw new ArgumentNullException("spName");
 
             // 如果row有值,存储过程必须初始化. 
-            if (dataRow != null && dataRow.ItemArray.Length > 0)
-            {
+            if (dataRow != null && dataRow.ItemArray.Length > 0) {
                 // 从缓存中加载存储过程参数,如果缓存中不存在则从数据库中检索参数信息并加载到缓存中. () 
                 MySqlParameter[] commandParameters = SqlHelperParameterCache.GetSpParameterSet(transaction.Connection, spName);
 
@@ -1912,9 +1728,7 @@ namespace SK
                 AssignParameterValues(commandParameters, dataRow);
 
                 return SqlHelper.ExecuteDataset(transaction, CommandType.StoredProcedure, spName, commandParameters);
-            }
-            else
-            {
+            } else {
                 return SqlHelper.ExecuteDataset(transaction, CommandType.StoredProcedure, spName);
             }
         }
@@ -1929,14 +1743,12 @@ namespace SK
         /// <param name="spName">存储过程名称</param> 
         /// <param name="dataRow">使用DataRow作为参数值</param> 
         /// <returns>返回包含结果集的MySqlDataReader</returns> 
-        public static MySqlDataReader ExecuteReaderTypedParams(String connectionString, String spName, DataRow dataRow)
-        {
+        public static MySqlDataReader ExecuteReaderTypedParams(String connectionString, String spName, DataRow dataRow) {
             if (connectionString == null || connectionString.Length == 0) throw new ArgumentNullException("connectionString");
             if (spName == null || spName.Length == 0) throw new ArgumentNullException("spName");
 
             // 如果row有值,存储过程必须初始化. 
-            if (dataRow != null && dataRow.ItemArray.Length > 0)
-            {
+            if (dataRow != null && dataRow.ItemArray.Length > 0) {
                 // 从缓存中加载存储过程参数,如果缓存中不存在则从数据库中检索参数信息并加载到缓存中. () 
                 MySqlParameter[] commandParameters = SqlHelperParameterCache.GetSpParameterSet(connectionString, spName);
 
@@ -1944,9 +1756,7 @@ namespace SK
                 AssignParameterValues(commandParameters, dataRow);
 
                 return SqlHelper.ExecuteReader(connectionString, CommandType.StoredProcedure, spName, commandParameters);
-            }
-            else
-            {
+            } else {
                 return SqlHelper.ExecuteReader(connectionString, CommandType.StoredProcedure, spName);
             }
         }
@@ -1959,14 +1769,12 @@ namespace SK
         /// <param name="spName">存储过程名称</param> 
         /// <param name="dataRow">使用DataRow作为参数值</param> 
         /// <returns>返回包含结果集的MySqlDataReader</returns> 
-        public static MySqlDataReader ExecuteReaderTypedParams(MySqlConnection connection, String spName, DataRow dataRow)
-        {
+        public static MySqlDataReader ExecuteReaderTypedParams(MySqlConnection connection, String spName, DataRow dataRow) {
             if (connection == null) throw new ArgumentNullException("connection");
             if (spName == null || spName.Length == 0) throw new ArgumentNullException("spName");
 
             // 如果row有值,存储过程必须初始化. 
-            if (dataRow != null && dataRow.ItemArray.Length > 0)
-            {
+            if (dataRow != null && dataRow.ItemArray.Length > 0) {
                 // 从缓存中加载存储过程参数,如果缓存中不存在则从数据库中检索参数信息并加载到缓存中. () 
                 MySqlParameter[] commandParameters = SqlHelperParameterCache.GetSpParameterSet(connection, spName);
 
@@ -1974,9 +1782,7 @@ namespace SK
                 AssignParameterValues(commandParameters, dataRow);
 
                 return SqlHelper.ExecuteReader(connection, CommandType.StoredProcedure, spName, commandParameters);
-            }
-            else
-            {
+            } else {
                 return SqlHelper.ExecuteReader(connection, CommandType.StoredProcedure, spName);
             }
         }
@@ -1988,15 +1794,13 @@ namespace SK
         /// <param name="spName">存储过程名称</param> 
         /// <param name="dataRow">使用DataRow作为参数值</param> 
         /// <returns>返回包含结果集的MySqlDataReader</returns> 
-        public static MySqlDataReader ExecuteReaderTypedParams(MySqlTransaction transaction, String spName, DataRow dataRow)
-        {
+        public static MySqlDataReader ExecuteReaderTypedParams(MySqlTransaction transaction, String spName, DataRow dataRow) {
             if (transaction == null) throw new ArgumentNullException("transaction");
             if (transaction != null && transaction.Connection == null) throw new ArgumentException("The transaction was rollbacked or commited, please provide an open transaction.", "transaction");
             if (spName == null || spName.Length == 0) throw new ArgumentNullException("spName");
 
             // 如果row有值,存储过程必须初始化. 
-            if (dataRow != null && dataRow.ItemArray.Length > 0)
-            {
+            if (dataRow != null && dataRow.ItemArray.Length > 0) {
                 // 从缓存中加载存储过程参数,如果缓存中不存在则从数据库中检索参数信息并加载到缓存中. () 
                 MySqlParameter[] commandParameters = SqlHelperParameterCache.GetSpParameterSet(transaction.Connection, spName);
 
@@ -2004,9 +1808,7 @@ namespace SK
                 AssignParameterValues(commandParameters, dataRow);
 
                 return SqlHelper.ExecuteReader(transaction, CommandType.StoredProcedure, spName, commandParameters);
-            }
-            else
-            {
+            } else {
                 return SqlHelper.ExecuteReader(transaction, CommandType.StoredProcedure, spName);
             }
         }
@@ -2020,14 +1822,12 @@ namespace SK
         /// <param name="spName">存储过程名称</param> 
         /// <param name="dataRow">使用DataRow作为参数值</param> 
         /// <returns>返回结果集中的第一行第一列</returns> 
-        public static object ExecuteScalarTypedParams(String connectionString, String spName, DataRow dataRow)
-        {
+        public static object ExecuteScalarTypedParams(String connectionString, String spName, DataRow dataRow) {
             if (connectionString == null || connectionString.Length == 0) throw new ArgumentNullException("connectionString");
             if (spName == null || spName.Length == 0) throw new ArgumentNullException("spName");
 
             // 如果row有值,存储过程必须初始化. 
-            if (dataRow != null && dataRow.ItemArray.Length > 0)
-            {
+            if (dataRow != null && dataRow.ItemArray.Length > 0) {
                 // 从缓存中加载存储过程参数,如果缓存中不存在则从数据库中检索参数信息并加载到缓存中. () 
                 MySqlParameter[] commandParameters = SqlHelperParameterCache.GetSpParameterSet(connectionString, spName);
 
@@ -2035,9 +1835,7 @@ namespace SK
                 AssignParameterValues(commandParameters, dataRow);
 
                 return SqlHelper.ExecuteScalar(connectionString, CommandType.StoredProcedure, spName, commandParameters);
-            }
-            else
-            {
+            } else {
                 return SqlHelper.ExecuteScalar(connectionString, CommandType.StoredProcedure, spName);
             }
         }
@@ -2049,14 +1847,12 @@ namespace SK
         /// <param name="spName">存储过程名称</param> 
         /// <param name="dataRow">使用DataRow作为参数值</param> 
         /// <returns>返回结果集中的第一行第一列</returns> 
-        public static object ExecuteScalarTypedParams(MySqlConnection connection, String spName, DataRow dataRow)
-        {
+        public static object ExecuteScalarTypedParams(MySqlConnection connection, String spName, DataRow dataRow) {
             if (connection == null) throw new ArgumentNullException("connection");
             if (spName == null || spName.Length == 0) throw new ArgumentNullException("spName");
 
             // 如果row有值,存储过程必须初始化. 
-            if (dataRow != null && dataRow.ItemArray.Length > 0)
-            {
+            if (dataRow != null && dataRow.ItemArray.Length > 0) {
                 // 从缓存中加载存储过程参数,如果缓存中不存在则从数据库中检索参数信息并加载到缓存中. () 
                 MySqlParameter[] commandParameters = SqlHelperParameterCache.GetSpParameterSet(connection, spName);
 
@@ -2064,9 +1860,7 @@ namespace SK
                 AssignParameterValues(commandParameters, dataRow);
 
                 return SqlHelper.ExecuteScalar(connection, CommandType.StoredProcedure, spName, commandParameters);
-            }
-            else
-            {
+            } else {
                 return SqlHelper.ExecuteScalar(connection, CommandType.StoredProcedure, spName);
             }
         }
@@ -2078,15 +1872,13 @@ namespace SK
         /// <param name="spName">存储过程名称</param> 
         /// <param name="dataRow">使用DataRow作为参数值</param> 
         /// <returns>返回结果集中的第一行第一列</returns> 
-        public static object ExecuteScalarTypedParams(MySqlTransaction transaction, String spName, DataRow dataRow)
-        {
+        public static object ExecuteScalarTypedParams(MySqlTransaction transaction, String spName, DataRow dataRow) {
             if (transaction == null) throw new ArgumentNullException("transaction");
             if (transaction != null && transaction.Connection == null) throw new ArgumentException("The transaction was rollbacked or commited, please provide an open transaction.", "transaction");
             if (spName == null || spName.Length == 0) throw new ArgumentNullException("spName");
 
             // 如果row有值,存储过程必须初始化. 
-            if (dataRow != null && dataRow.ItemArray.Length > 0)
-            {
+            if (dataRow != null && dataRow.ItemArray.Length > 0) {
                 // 从缓存中加载存储过程参数,如果缓存中不存在则从数据库中检索参数信息并加载到缓存中. () 
                 MySqlParameter[] commandParameters = SqlHelperParameterCache.GetSpParameterSet(transaction.Connection, spName);
 
@@ -2094,9 +1886,7 @@ namespace SK
                 AssignParameterValues(commandParameters, dataRow);
 
                 return SqlHelper.ExecuteScalar(transaction, CommandType.StoredProcedure, spName, commandParameters);
-            }
-            else
-            {
+            } else {
                 return SqlHelper.ExecuteScalar(transaction, CommandType.StoredProcedure, spName);
             }
         }
@@ -2107,8 +1897,7 @@ namespace SK
     /// <summary> 
     /// SqlHelperParameterCache提供缓存存储过程参数,并能够在运行时从存储过程中探索参数. 
     /// </summary> 
-    public sealed class SqlHelperParameterCache
-    {
+    public sealed class SqlHelperParameterCache {
         #region 私有方法,字段,构造函数
         // 私有构造函数,妨止类被实例化. 
         private SqlHelperParameterCache() { }
@@ -2124,8 +1913,7 @@ namespace SK
         /// <param name="spName">存储过程名称</param> 
         /// <param name="includeReturnValueParameter">是否包含返回值参数</param> 
         /// <returns>返回MySqlParameter参数数组</returns> 
-        private static MySqlParameter[] DiscoverSpParameterSet(MySqlConnection connection, string spName, bool includeReturnValueParameter)
-        {
+        private static MySqlParameter[] DiscoverSpParameterSet(MySqlConnection connection, string spName, bool includeReturnValueParameter) {
             if (connection == null) throw new ArgumentNullException("connection");
             if (spName == null || spName.Length == 0) throw new ArgumentNullException("spName");
 
@@ -2138,8 +1926,7 @@ namespace SK
 
             connection.Close();
             // 如果不包含返回值参数,将参数集中的每一个参数删除. 
-            if (!includeReturnValueParameter)
-            {
+            if (!includeReturnValueParameter) {
                 cmd.Parameters.RemoveAt(0);
             }
 
@@ -2149,8 +1936,7 @@ namespace SK
             cmd.Parameters.CopyTo(discoveredParameters, 0);
 
             // 初始化参数值为 DBNull.Value. 
-            foreach (MySqlParameter discoveredParameter in discoveredParameters)
-            {
+            foreach (MySqlParameter discoveredParameter in discoveredParameters) {
                 discoveredParameter.Value = DBNull.Value;
             }
             return discoveredParameters;
@@ -2161,12 +1947,10 @@ namespace SK
         /// </summary> 
         /// <param name="originalParameters">原始参数数组</param> 
         /// <returns>返回一个同样的参数数组</returns> 
-        private static MySqlParameter[] CloneParameters(MySqlParameter[] originalParameters)
-        {
+        private static MySqlParameter[] CloneParameters(MySqlParameter[] originalParameters) {
             MySqlParameter[] clonedParameters = new MySqlParameter[originalParameters.Length];
 
-            for (int i = 0, j = originalParameters.Length; i < j; i++)
-            {
+            for (int i = 0, j = originalParameters.Length; i < j; i++) {
                 clonedParameters[i] = (MySqlParameter)((ICloneable)originalParameters[i]).Clone();
             }
 
@@ -2183,8 +1967,7 @@ namespace SK
         /// <param name="connectionString">一个有效的数据库连接字符串</param> 
         /// <param name="commandText">存储过程名或SQL语句</param> 
         /// <param name="commandParameters">要缓存的参数数组</param> 
-        public static void CacheParameterSet(string connectionString, string commandText, params MySqlParameter[] commandParameters)
-        {
+        public static void CacheParameterSet(string connectionString, string commandText, params MySqlParameter[] commandParameters) {
             if (connectionString == null || connectionString.Length == 0) throw new ArgumentNullException("connectionString");
             if (commandText == null || commandText.Length == 0) throw new ArgumentNullException("commandText");
 
@@ -2199,20 +1982,16 @@ namespace SK
         /// <param name="connectionString">一个有效的数据库连接字符</param> 
         /// <param name="commandText">存储过程名或SQL语句</param> 
         /// <returns>参数数组</returns> 
-        public static MySqlParameter[] GetCachedParameterSet(string connectionString, string commandText)
-        {
+        public static MySqlParameter[] GetCachedParameterSet(string connectionString, string commandText) {
             if (connectionString == null || connectionString.Length == 0) throw new ArgumentNullException("connectionString");
             if (commandText == null || commandText.Length == 0) throw new ArgumentNullException("commandText");
 
             string hashKey = connectionString + ":" + commandText;
 
             MySqlParameter[] cachedParameters = paramCache[hashKey] as MySqlParameter[];
-            if (cachedParameters == null)
-            {
+            if (cachedParameters == null) {
                 return null;
-            }
-            else
-            {
+            } else {
                 return CloneParameters(cachedParameters);
             }
         }
@@ -2230,8 +2009,7 @@ namespace SK
         /// <param name="connectionString">一个有效的数据库连接字符</param> 
         /// <param name="spName">存储过程名</param> 
         /// <returns>返回MySqlParameter参数数组</returns> 
-        public static MySqlParameter[] GetSpParameterSet(string connectionString, string spName)
-        {
+        public static MySqlParameter[] GetSpParameterSet(string connectionString, string spName) {
             return GetSpParameterSet(connectionString, spName, false);
         }
 
@@ -2245,13 +2023,11 @@ namespace SK
         /// <param name="spName">存储过程名</param> 
         /// <param name="includeReturnValueParameter">是否包含返回值参数</param> 
         /// <returns>返回MySqlParameter参数数组</returns> 
-        public static MySqlParameter[] GetSpParameterSet(string connectionString, string spName, bool includeReturnValueParameter)
-        {
+        public static MySqlParameter[] GetSpParameterSet(string connectionString, string spName, bool includeReturnValueParameter) {
             if (connectionString == null || connectionString.Length == 0) throw new ArgumentNullException("connectionString");
             if (spName == null || spName.Length == 0) throw new ArgumentNullException("spName");
 
-            using (MySqlConnection connection = new MySqlConnection(connectionString))
-            {
+            using (MySqlConnection connection = new MySqlConnection(connectionString)) {
                 return GetSpParameterSetInternal(connection, spName, includeReturnValueParameter);
             }
         }
@@ -2265,8 +2041,7 @@ namespace SK
         /// <param name="connection">一个有效的数据库连接字符</param> 
         /// <param name="spName">存储过程名</param> 
         /// <returns>返回MySqlParameter参数数组</returns> 
-        internal static MySqlParameter[] GetSpParameterSet(MySqlConnection connection, string spName)
-        {
+        internal static MySqlParameter[] GetSpParameterSet(MySqlConnection connection, string spName) {
             return GetSpParameterSet(connection, spName, false);
         }
 
@@ -2282,11 +2057,9 @@ namespace SK
         /// 是否包含返回值参数 
         /// </param> 
         /// <returns>返回MySqlParameter参数数组</returns> 
-        internal static MySqlParameter[] GetSpParameterSet(MySqlConnection connection, string spName, bool includeReturnValueParameter)
-        {
+        internal static MySqlParameter[] GetSpParameterSet(MySqlConnection connection, string spName, bool includeReturnValueParameter) {
             if (connection == null) throw new ArgumentNullException("connection");
-            using (MySqlConnection clonedConnection = (MySqlConnection)((ICloneable)connection).Clone())
-            {
+            using (MySqlConnection clonedConnection = (MySqlConnection)((ICloneable)connection).Clone()) {
                 return GetSpParameterSetInternal(clonedConnection, spName, includeReturnValueParameter);
             }
         }
@@ -2298,8 +2071,7 @@ namespace SK
         /// <param name="spName">存储过程名</param> 
         /// <param name="includeReturnValueParameter">是否包含返回值参数</param> 
         /// <returns>返回MySqlParameter参数数组</returns> 
-        private static MySqlParameter[] GetSpParameterSetInternal(MySqlConnection connection, string spName, bool includeReturnValueParameter)
-        {
+        private static MySqlParameter[] GetSpParameterSetInternal(MySqlConnection connection, string spName, bool includeReturnValueParameter) {
             if (connection == null) throw new ArgumentNullException("connection");
             if (spName == null || spName.Length == 0) throw new ArgumentNullException("spName");
 
@@ -2308,8 +2080,7 @@ namespace SK
             MySqlParameter[] cachedParameters;
 
             cachedParameters = paramCache[hashKey] as MySqlParameter[];
-            if (cachedParameters == null)
-            {
+            if (cachedParameters == null) {
                 MySqlParameter[] spParameters = DiscoverSpParameterSet(connection, spName, includeReturnValueParameter);
                 paramCache[hashKey] = spParameters;
                 cachedParameters = spParameters;

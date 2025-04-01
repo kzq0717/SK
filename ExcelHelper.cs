@@ -10,21 +10,17 @@ using System.Data;
 using System.Data.OleDb;
 using Microsoft.Win32;
 
-namespace SK
-{
+namespace SK {
     /// <summary>Excel操作类
     /// </summary>
-   public class ExcelHelper
-    {
+    public class ExcelHelper {
         public static Excel.Application m_xlApp = null;
 
         /// <summary>导出DataGridView中的数据到Excel中
         /// </summary>
         /// <param name="dataGridView"></param>
-        public static void OutputAsExcelFile(DataGridView dataGridView)
-        {
-            if (dataGridView.Rows.Count <= 0)
-            {
+        public static void OutputAsExcelFile(DataGridView dataGridView) {
+            if (dataGridView.Rows.Count <= 0) {
                 MessageBox.Show("无数据！", "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning); return;
             }
             string filePath = "";
@@ -41,18 +37,15 @@ namespace SK
 
             DataTable tmpDataTable = new DataTable("tmpDataTable");
             DataTable modelTable = new DataTable("ModelTable");
-            for (int column = 0; column < dataGridView.Columns.Count; column++)
-            {
-                if (dataGridView.Columns[column].Visible == true)
-                {
+            for (int column = 0; column < dataGridView.Columns.Count; column++) {
+                if (dataGridView.Columns[column].Visible == true) {
                     DataColumn tempColumn = new DataColumn(dataGridView.Columns[column].HeaderText, typeof(string));
                     tmpDataTable.Columns.Add(tempColumn);
                     DataColumn modelColumn = new DataColumn(dataGridView.Columns[column].Name, typeof(string));
                     modelTable.Columns.Add(modelColumn);
                 }
             }
-            for (int row = 0; row < dataGridView.Rows.Count; row++)
-            {
+            for (int row = 0; row < dataGridView.Rows.Count; row++) {
                 if (dataGridView.Rows[row].Visible == false)
                     continue;
                 DataRow tempRow = tmpDataTable.NewRow();
@@ -60,8 +53,7 @@ namespace SK
                     tempRow[i] = dataGridView.Rows[row].Cells[modelTable.Columns[i].ColumnName].Value;
                 tmpDataTable.Rows.Add(tempRow);
             }
-            if (tmpDataTable == null)
-            {
+            if (tmpDataTable == null) {
                 return;
             }
 
@@ -76,8 +68,7 @@ namespace SK
             Excel.Workbook workbook = workbooks.Add(Excel.XlWBATemplate.xlWBATWorksheet);
             Excel.Worksheet worksheet = (Excel.Worksheet)workbook.Worksheets[1];//取得sheet1  
 
-            try
-            {
+            try {
                 string[,] datas = new string[rowNum + 1, columnNum];
                 for (int i = 0; i < columnNum; i++) //写入字段  
                     datas[0, i] = tmpDataTable.Columns[i].Caption;
@@ -88,10 +79,8 @@ namespace SK
                 range.Font.Size = 10;
 
                 int r = 0;
-                for (r = 0; r < rowNum; r++)
-                {
-                    for (int i = 0; i < columnNum; i++)
-                    {
+                for (r = 0; r < rowNum; r++) {
+                    for (int i = 0; i < columnNum; i++) {
                         object obj = tmpDataTable.Rows[r][tmpDataTable.Columns[i].ToString()];
                         datas[r + 1, i] = obj == null ? "" : "'" + obj.ToString().Trim();//在obj.ToString()前加单引号是为了防止自动转化格式  
                     }
@@ -118,13 +107,9 @@ namespace SK
                 range.HorizontalAlignment = 1;
                 workbook.Saved = true;
                 workbook.SaveCopyAs(filePath);
-            }
-            catch (Exception ex)
-            {
+            } catch (Exception ex) {
                 MessageBox.Show("导出异常：" + ex.Message, "导出异常", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-            }
-            finally
-            {
+            } finally {
                 EndReport();
             }
 
@@ -134,72 +119,56 @@ namespace SK
             m_xlApp.Quit();
             MessageBox.Show("导出成功！", "提示", MessageBoxButtons.OK, MessageBoxIcon.Information);
         }
-        private static void EndReport()
-        {
+
+        private static void EndReport() {
             object missing = System.Reflection.Missing.Value;
-            try
-            {
+            try {
                 //m_xlApp.Workbooks.Close();  
                 //m_xlApp.Workbooks.Application.Quit();  
                 //m_xlApp.Application.Quit();  
                 //m_xlApp.Quit();  
-            }
-            catch { }
-            finally
-            {
-                try
-                {
+            } catch { } finally {
+                try {
                     System.Runtime.InteropServices.Marshal.ReleaseComObject(m_xlApp.Workbooks);
                     System.Runtime.InteropServices.Marshal.ReleaseComObject(m_xlApp.Application);
                     System.Runtime.InteropServices.Marshal.ReleaseComObject(m_xlApp);
                     m_xlApp = null;
-                }
-                catch { }
-                try
-                {
+                } catch { }
+                try {
                     //清理垃圾进程  
                     killProcessThread();
-                }
-                catch { }
+                } catch { }
                 GC.Collect();
             }
         }
 
         /// <summary>清理垃圾进程
         /// </summary>
-        private static void killProcessThread()
-        {
+        private static void killProcessThread() {
             ArrayList myProcess = new ArrayList();
-            for (int i = 0; i < myProcess.Count; i++)
-            {
-                try
-                {
+            for (int i = 0; i < myProcess.Count; i++) {
+                try {
                     System.Diagnostics.Process.GetProcessById(int.Parse((string)myProcess[i])).Kill();
-                }
-                catch { }
+                } catch { }
             }
         }
-
 
         /// <summary>获取注册表中OFFICE版本和安装路径信息
         /// </summary>
         /// <param name="version">输出:版本号</param>
         /// <param name="path">输出：安装路径</param>
         /// <returns>错误码</returns>
-        public static int getOfficeInfo(out string version, out string path)
-        {
+        public static int getOfficeInfo(out string version, out string path) {
             path = string.Empty; // OFFICE安装路径  
             version = string.Empty; // OFFICE版本  
             int result = 0;
             RegistryKey regKey = null;
-            try
-            {
+            try {
                 regKey = Registry.LocalMachine.OpenSubKey(@"SOFTWARE\Microsoft\Windows\CurrentVersion\App Paths\Excel.exe"); // Excel程序的注册表路径  
                 string regValue = regKey.GetValue("Path").ToString();
                 string temp = regValue.Substring(0, regValue.Length - 1);
                 string versionName = temp.Substring(temp.LastIndexOf("\\") + 1);
-                switch (versionName)
-                {
+                switch (versionName) {
                     case "Office11":  //检查本机是否安装Office2003 
                         version = "Office2003";
                         break;
@@ -220,16 +189,11 @@ namespace SK
                         break;
                 }
                 path = regValue;
-            }
-            catch (Exception ex)
-            {
+            } catch (Exception ex) {
                 result = -1;
                 Console.WriteLine(ex.Message);
-            }
-            finally
-            {
-                if (null != regKey)
-                {
+            } finally {
+                if (null != regKey) {
                     regKey.Close();
                     regKey = null;
                 }

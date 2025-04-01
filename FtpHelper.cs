@@ -7,10 +7,8 @@ using System.Threading.Tasks;
 using System.IO;
 using System.Net;
 
-namespace SK
-{
-    public class FtpHelper
-    {
+namespace SK {
+    public class FtpHelper {
         private string host = null;
         private string user = null;
         private string pass = null;
@@ -29,8 +27,7 @@ namespace SK
         /// <param name="hostIP">地址</param>
         /// <param name="userName">用户名</param>
         /// <param name="password">密码</param>、
-        public FtpHelper(string hostIP, string userName, string password)
-        {
+        public FtpHelper(string hostIP, string userName, string password) {
             host = hostIP;
             user = userName;
             pass = password;
@@ -40,25 +37,20 @@ namespace SK
         /// 连接字符串
         /// </summary>
         /// <param name="url"></param>
-        public FtpHelper(string url)
-        {
+        public FtpHelper(string url) {
             //string ip = "", userName = "", userPassword = "";
             string _key = SK.SecurityHelper.RSADecrypt(privateKey, url);
             string[] _connect = _key.Split(new char[] { '@', '=' });
-            for (int i = 0; i < _connect.Length; i++)
-            {
-                if (_connect[i].Equals("IP"))
-                {
+            for (int i = 0; i < _connect.Length; i++) {
+                if (_connect[i].Equals("IP")) {
                     host = "ftp://" + _connect[i + 1];
                 }
 
-                if (_connect[i].Equals("UserName"))
-                {
+                if (_connect[i].Equals("UserName")) {
                     user = _connect[i + 1];
                 }
 
-                if (_connect[i].Equals("Passwd"))
-                {
+                if (_connect[i].Equals("Passwd")) {
                     pass = _connect[i + 1];
                 }
             }
@@ -69,10 +61,8 @@ namespace SK
         /// </summary>
         /// <param name="remoteFile">远程文件</param>
         /// <param name="localFile">本地文件</param>
-        public void download(string remoteFile, string localFile)
-        {
-            try
-            {
+        public void download(string remoteFile, string localFile) {
+            try {
                 /* Create an FTP Request */
                 ftpRequest = (FtpWebRequest)FtpWebRequest.Create(host + "/" + remoteFile);
                 /* Log in to the FTP Server with the User Name and Password Provided */
@@ -94,22 +84,18 @@ namespace SK
                 int bytesRead = ftpStream.Read(byteBuffer, 0, bufferSize);
                 /* Download the File by Writing the Buffered Data Until the Transfer is Complete */
 
-                try
-                {
-                    while (bytesRead > 0)
-                    {
+                try {
+                    while (bytesRead > 0) {
                         localFileStream.Write(byteBuffer, 0, bytesRead);
                         bytesRead = ftpStream.Read(byteBuffer, 0, bufferSize);
                     }
-                }
-                catch (Exception ex) { Console.WriteLine(ex.ToString()); }
+                } catch (Exception ex) { Console.WriteLine(ex.ToString()); }
                 /* Resource Cleanup */
                 localFileStream.Close();
                 ftpStream.Close();
                 ftpResponse.Close();
                 ftpRequest = null;
-            }
-            catch (Exception ex) { Console.WriteLine(ex.ToString()); }
+            } catch (Exception ex) { Console.WriteLine(ex.ToString()); }
             return;
         }
 
@@ -120,14 +106,11 @@ namespace SK
         /// <summary>
         /// 上传百分比信
         /// </summary>
-        public string Percenage
-        {
+        public string Percenage {
             get { return _percenage; }
-            set
-            {
+            set {
                 //如果变量值改变则调用事件触发函数
-                if (value != _percenage)
-                {
+                if (value != _percenage) {
                     WhenPercenageChange();
                 }
                 _percenage = value;
@@ -141,25 +124,21 @@ namespace SK
         public event PercenageChanged OnPercenageChanged;
 
         //事件触发函数
-        private void WhenPercenageChange()
-        {
-            if (OnPercenageChanged != null)
-            {
+        private void WhenPercenageChange() {
+            if (OnPercenageChanged != null) {
                 OnPercenageChanged(this, null);
             }
         }
 
 
-     /// <summary>
-     /// 上传文件
-     /// </summary>
-     /// <param name="remoteFile">远程存储文件名(包含路径)</param>
-     /// <param name="localFile">本地文件路径(包含路径)</param>
-     /// <returns>成功：true</returns>
-        public bool upload(string remoteFile, string localFile)
-        {
-            try
-            {
+        /// <summary>
+        /// 上传文件
+        /// </summary>
+        /// <param name="remoteFile">远程存储文件名(包含路径)</param>
+        /// <param name="localFile">本地文件路径(包含路径)</param>
+        /// <returns>成功：true</returns>
+        public bool upload(string remoteFile, string localFile) {
+            try {
                 //OnPercenageChanged += new PercenageChanged();
 
                 /* Create an FTP Request */
@@ -189,10 +168,8 @@ namespace SK
                 long fileLength = localFileStream.Length;
 
                 /* Upload the File by Sending the Buffered Data Until the Transfer is Complete */
-                try
-                {
-                    while (bytesSent != 0)
-                    {
+                try {
+                    while (bytesSent != 0) {
                         ftpStream.Write(byteBuffer, 0, bytesSent);
                         //计算上传大小及速度
                         offset += bytesSent;
@@ -211,8 +188,7 @@ namespace SK
                         Percenage = msg;
                         bytesSent = localFileStream.Read(byteBuffer, 0, bufferSize);
                     }
-                }
-                catch (Exception ex) {
+                } catch (Exception ex) {
                     Console.WriteLine(ex.ToString());
                     throw ex;
                 }
@@ -223,9 +199,7 @@ namespace SK
                 ftpRequest = null;
 
                 return true;
-            }
-            catch (Exception ex)
-            {
+            } catch (Exception ex) {
                 Console.WriteLine(ex.ToString());
                 throw ex;
             }
@@ -234,10 +208,8 @@ namespace SK
         /// <summary>Delete File
         /// </summary>
         /// <param name="deleteFile"></param>
-        public void delete(string deleteFile)
-        {
-            try
-            {
+        public void delete(string deleteFile) {
+            try {
                 /* Create an FTP Request */
                 ftpRequest = (FtpWebRequest)WebRequest.Create($"{host}/{deleteFile}");
                 /* Log in to the FTP Server with the User Name and Password Provided */
@@ -253,8 +225,7 @@ namespace SK
                 /* Resource Cleanup */
                 ftpResponse.Close();
                 ftpRequest = null;
-            }
-            catch (Exception ex) { Console.WriteLine(ex.ToString()); }
+            } catch (Exception ex) { Console.WriteLine(ex.ToString()); }
             return;
         }
 
@@ -262,10 +233,8 @@ namespace SK
         /// </summary>
         /// <param name="currentFileNameAndPath"></param>
         /// <param name="newFileName"></param>
-        public void rename(string currentFileNameAndPath, string newFileName)
-        {
-            try
-            {
+        public void rename(string currentFileNameAndPath, string newFileName) {
+            try {
                 /* Create an FTP Request */
                 ftpRequest = (FtpWebRequest)WebRequest.Create(host + "/" + currentFileNameAndPath);
                 /* Log in to the FTP Server with the User Name and Password Provided */
@@ -283,18 +252,15 @@ namespace SK
                 /* Resource Cleanup */
                 ftpResponse.Close();
                 ftpRequest = null;
-            }
-            catch (Exception ex) { Console.WriteLine(ex.ToString()); }
+            } catch (Exception ex) { Console.WriteLine(ex.ToString()); }
             return;
         }
 
         /// <summary>Create a New Directory on the FTP Server
         /// </summary>
         /// <param name="newDirectory"></param>
-        public void createDirectory(string newDirectory)
-        {
-            try
-            {
+        public void createDirectory(string newDirectory) {
+            try {
                 /* Create an FTP Request */
                 ftpRequest = (FtpWebRequest)WebRequest.Create(host + "/" + newDirectory);
                 /* Log in to the FTP Server with the User Name and Password Provided */
@@ -310,8 +276,7 @@ namespace SK
                 /* Resource Cleanup */
                 ftpResponse.Close();
                 ftpRequest = null;
-            }
-            catch (Exception ex) { Console.WriteLine(ex.ToString()); }
+            } catch (Exception ex) { Console.WriteLine(ex.ToString()); }
             return;
         }
 
@@ -319,10 +284,8 @@ namespace SK
         /// </summary>
         /// <param name="fileName"></param>
         /// <returns></returns>
-        public string getFileCreatedDateTime(string fileName)
-        {
-            try
-            {
+        public string getFileCreatedDateTime(string fileName) {
+            try {
                 /* Create an FTP Request */
                 ftpRequest = (FtpWebRequest)FtpWebRequest.Create(host + "/" + fileName);
                 /* Log in to the FTP Server with the User Name and Password Provided */
@@ -342,8 +305,7 @@ namespace SK
                 /* Store the Raw Response */
                 string fileInfo = null;
                 /* Read the Full Response Stream */
-                try { fileInfo = ftpReader.ReadToEnd(); }
-                catch (Exception ex) { Console.WriteLine(ex.ToString()); }
+                try { fileInfo = ftpReader.ReadToEnd(); } catch (Exception ex) { Console.WriteLine(ex.ToString()); }
                 /* Resource Cleanup */
                 ftpReader.Close();
                 ftpStream.Close();
@@ -351,8 +313,7 @@ namespace SK
                 ftpRequest = null;
                 /* Return File Created Date Time */
                 return fileInfo;
-            }
-            catch (Exception ex) { Console.WriteLine(ex.ToString()); }
+            } catch (Exception ex) { Console.WriteLine(ex.ToString()); }
             /* Return an Empty string Array if an Exception Occurs */
             return "";
         }
@@ -361,10 +322,8 @@ namespace SK
         /// </summary>
         /// <param name="fileName"></param>
         /// <returns></returns>
-        public string getFileSize(string fileName)
-        {
-            try
-            {
+        public string getFileSize(string fileName) {
+            try {
                 /* Create an FTP Request */
                 ftpRequest = (FtpWebRequest)FtpWebRequest.Create(host + "/" + fileName);
                 /* Log in to the FTP Server with the User Name and Password Provided */
@@ -384,8 +343,7 @@ namespace SK
                 /* Store the Raw Response */
                 string fileInfo = null;
                 /* Read the Full Response Stream */
-                try { while (ftpReader.Peek() != -1) { fileInfo = ftpReader.ReadToEnd(); } }
-                catch (Exception ex) { Console.WriteLine(ex.ToString()); }
+                try { while (ftpReader.Peek() != -1) { fileInfo = ftpReader.ReadToEnd(); } } catch (Exception ex) { Console.WriteLine(ex.ToString()); }
                 /* Resource Cleanup */
                 ftpReader.Close();
                 ftpStream.Close();
@@ -393,8 +351,7 @@ namespace SK
                 ftpRequest = null;
                 /* Return File Size */
                 return fileInfo;
-            }
-            catch (Exception ex) { Console.WriteLine(ex.ToString()); }
+            } catch (Exception ex) { Console.WriteLine(ex.ToString()); }
             /* Return an Empty string Array if an Exception Occurs */
             return "";
         }
@@ -403,10 +360,8 @@ namespace SK
         /// </summary>
         /// <param name="directory"></param>
         /// <returns></returns>
-        public string[] directoryListSimple(string directory)
-        {
-            try
-            {
+        public string[] directoryListSimple(string directory) {
+            try {
                 /* Create an FTP Request */
                 ftpRequest = (FtpWebRequest)FtpWebRequest.Create(host + "/" + directory);
                 /* Log in to the FTP Server with the User Name and Password Provided */
@@ -426,18 +381,15 @@ namespace SK
                 /* Store the Raw Response */
                 string directoryRaw = null;
                 /* Read Each Line of the Response and Append a Pipe to Each Line for Easy Parsing */
-                try { while (ftpReader.Peek() != -1) { directoryRaw += ftpReader.ReadLine() + "|"; } }
-                catch (Exception ex) { Console.WriteLine(ex.ToString()); }
+                try { while (ftpReader.Peek() != -1) { directoryRaw += ftpReader.ReadLine() + "|"; } } catch (Exception ex) { Console.WriteLine(ex.ToString()); }
                 /* Resource Cleanup */
                 ftpReader.Close();
                 ftpStream.Close();
                 ftpResponse.Close();
                 ftpRequest = null;
                 /* Return the Directory Listing as a string Array by Parsing 'directoryRaw' with the Delimiter you Append (I use | in This Example) */
-                try { string[] directoryList = directoryRaw.Split("|".ToCharArray()); return directoryList; }
-                catch (Exception ex) { Console.WriteLine(ex.ToString()); }
-            }
-            catch (Exception ex) { Console.WriteLine(ex.ToString()); }
+                try { string[] directoryList = directoryRaw.Split("|".ToCharArray()); return directoryList; } catch (Exception ex) { Console.WriteLine(ex.ToString()); }
+            } catch (Exception ex) { Console.WriteLine(ex.ToString()); }
             /* Return an Empty string Array if an Exception Occurs */
             return new string[] { "" };
         }
@@ -446,10 +398,8 @@ namespace SK
         /// </summary>
         /// <param name="directory"></param>
         /// <returns></returns>
-        public string[] directoryListDetailed(string directory)
-        {
-            try
-            {
+        public string[] directoryListDetailed(string directory) {
+            try {
                 /* Create an FTP Request */
                 ftpRequest = (FtpWebRequest)FtpWebRequest.Create(host + "/" + directory);
                 /* Log in to the FTP Server with the User Name and Password Provided */
@@ -469,18 +419,15 @@ namespace SK
                 /* Store the Raw Response */
                 string directoryRaw = null;
                 /* Read Each Line of the Response and Append a Pipe to Each Line for Easy Parsing */
-                try { while (ftpReader.Peek() != -1) { directoryRaw += ftpReader.ReadLine() + "|"; } }
-                catch (Exception ex) { Console.WriteLine(ex.ToString()); }
+                try { while (ftpReader.Peek() != -1) { directoryRaw += ftpReader.ReadLine() + "|"; } } catch (Exception ex) { Console.WriteLine(ex.ToString()); }
                 /* Resource Cleanup */
                 ftpReader.Close();
                 ftpStream.Close();
                 ftpResponse.Close();
                 ftpRequest = null;
                 /* Return the Directory Listing as a string Array by Parsing 'directoryRaw' with the Delimiter you Append (I use | in This Example) */
-                try { string[] directoryList = directoryRaw.Split("|".ToCharArray()); return directoryList; }
-                catch (Exception ex) { Console.WriteLine(ex.ToString()); }
-            }
-            catch (Exception ex) { Console.WriteLine(ex.ToString()); }
+                try { string[] directoryList = directoryRaw.Split("|".ToCharArray()); return directoryList; } catch (Exception ex) { Console.WriteLine(ex.ToString()); }
+            } catch (Exception ex) { Console.WriteLine(ex.ToString()); }
             /* Return an Empty string Array if an Exception Occurs */
             return new string[] { "" };
         }

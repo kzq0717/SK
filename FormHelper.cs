@@ -9,11 +9,8 @@ using System.Drawing;
 using System.Windows.Forms;
 using System.Runtime.InteropServices;
 
-namespace SK
-{
-    public class FormHelper
-    {
-
+namespace SK {
+    public class FormHelper {
         #region 使窗体可以移动
         [DllImport("user32.dll")]
         private static extern bool ReleaseCapture();
@@ -29,29 +26,22 @@ namespace SK
         /// </summary>
         /// <param name="b"></param>
         /// <returns></returns>
-        public static Image GetImage(byte[] b)
-        {
-            if (b != null)
-            {
+        public static Image GetImage(byte[] b) {
+            if (b != null) {
                 MemoryStream memStream = new MemoryStream();
                 memStream.Write(b, 0, b.Length);
                 memStream.Position = 0;
                 memStream.Seek(0, SeekOrigin.Begin);
 
                 Image img;
-                try
-                {
+                try {
                     img = Image.FromStream(memStream, true);
                     memStream.Close();
-                }
-                catch (Exception)
-                {
+                } catch (Exception) {
                     img = null;
                 }
                 return img;
-            }
-            else
-            {
+            } else {
                 return null;
             }
         }
@@ -62,14 +52,10 @@ namespace SK
         /// <param name="bitmap">待旋转图像</param>
         /// <param name="angle">旋转角度</param>
         /// <returns></returns>
-        public static Bitmap ImageRotate(Bitmap bitmap, int angle)
-        {
-            try
-            {
-                if (bitmap != null)
-                {
-                    switch (angle)
-                    {
+        public static Bitmap ImageRotate(Bitmap bitmap, int angle) {
+            try {
+                if (bitmap != null) {
+                    switch (angle) {
                         case 0:
                             bitmap.RotateFlip(RotateFlipType.RotateNoneFlipNone);
                             return bitmap;
@@ -87,9 +73,7 @@ namespace SK
                     }
                 }
                 return null;
-            }
-            catch
-            {
+            } catch {
                 return null;
             }
         }
@@ -98,10 +82,8 @@ namespace SK
         /// <summary>获取或设置包含有关控件的数据的对象。
         /// </summary>
         /// <param name="cons"></param>
-        public static void setTag(Control cons)
-        {
-            foreach (Control con in cons.Controls)
-            {
+        public static void setTag(Control cons) {
+            foreach (Control con in cons.Controls) {
                 con.Tag = con.Width + ":" + con.Height + ":" + con.Left + ":" + con.Top + ":" + con.Font.Size;
                 if (con.Controls.Count > 0)
                     setTag(con);
@@ -113,10 +95,8 @@ namespace SK
         /// <param name="newx">变化后的宽</param>
         /// <param name="newy">变化后的高</param>
         /// <param name="cons">要改变的控件集合</param>
-        public static void setControls(float newx, float newy, Control cons)
-        {
-            foreach (Control con in cons.Controls)
-            {
+        public static void setControls(float newx, float newy, Control cons) {
+            foreach (Control con in cons.Controls) {
 
                 string[] mytag = con.Tag.ToString().Split(new char[] { ':' });
                 float a = Convert.ToSingle(mytag[0]) * newx;
@@ -129,8 +109,7 @@ namespace SK
                 con.Top = (int)(a);
                 Single currentSize = Convert.ToSingle(mytag[4]) * Math.Min(newx, newy);
                 con.Font = new Font(con.Font.Name, currentSize, con.Font.Style, con.Font.Unit);
-                if (con.Controls.Count > 0)
-                {
+                if (con.Controls.Count > 0) {
                     setControls(newx, newy, con);
                 }
             }
@@ -141,8 +120,7 @@ namespace SK
         /// <summary>窗体类型为None时，拖动鼠标窗体可移动
         /// </summary>
         /// <param name="form">要移动的窗体</param>
-        public static void MoveForm(Form form)
-        {
+        public static void MoveForm(Form form) {
             //拖动窗体
             form.Cursor = System.Windows.Forms.Cursors.Hand;//改变鼠标样式
             ReleaseCapture();
@@ -155,14 +133,10 @@ namespace SK
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        public static void CheckBox_CheckedChanged(object sender, EventArgs e)
-        {
-            if ((sender as CheckBox).Checked == true)
-            {
-                foreach (CheckBox check in (sender as CheckBox).Parent.Controls)
-                {
-                    if (check != sender)
-                    {
+        public static void CheckBox_CheckedChanged(object sender, EventArgs e) {
+            if ((sender as CheckBox).Checked == true) {
+                foreach (CheckBox check in (sender as CheckBox).Parent.Controls) {
+                    if (check != sender) {
                         check.Checked = false;
                     }
                 }
@@ -174,10 +148,8 @@ namespace SK
         /// </summary>
         /// <param name="message">带转化的字符串信息</param>
         /// <returns></returns>
-        public static List<string> ConvertToList(string message)
-        {
-            if (string.IsNullOrEmpty(message))
-            {
+        public static List<string> ConvertToList(string message) {
+            if (string.IsNullOrEmpty(message)) {
                 return null;
             }
             string[] strInfo = message.Split(new char[] { ',', '，', ' ' });
@@ -189,23 +161,18 @@ namespace SK
         /// <summary>递归获取所有文件
         /// </summary>
         /// <param name="info">查找找的目录</param>
-        public static void ListFiles(FileSystemInfo info)
-        {
+        public static void ListFiles(FileSystemInfo info) {
 
             if (!info.Exists) return;
             DirectoryInfo dir = info as DirectoryInfo;
             if (dir == null) return;//不是目录
 
             FileSystemInfo[] files = dir.GetFileSystemInfos();
-            for (int i = 0; i < files.Length; i++)
-            {
+            for (int i = 0; i < files.Length; i++) {
                 FileInfo fileInfo = files[i] as FileInfo;
-                if (fileInfo != null)
-                {   //是文件
+                if (fileInfo != null) {   //是文件
                     Console.WriteLine(fileInfo.FullName + "\t" + fileInfo.Length);
-                }
-                else
-                {
+                } else {
                     ListFiles(files[i]);//对于子目录，进行递归调用
                 }
             }
@@ -222,30 +189,24 @@ namespace SK
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        public static void treeView_DrawNode(object sender, DrawTreeNodeEventArgs e)
-        {
+        public static void treeView_DrawNode(object sender, DrawTreeNodeEventArgs e) {
             e.DrawDefault = true;//这里采用默认颜色，只需要在TreeView失去焦点时选中节点仍然突显
             return;
 
             // OR 自定义颜色
-            if ((e.State & TreeNodeStates.Selected) != 0)
-            {
+            if ((e.State & TreeNodeStates.Selected) != 0) {
                 //演示为绿底白字
                 e.Graphics.FillRectangle(Brushes.DarkBlue, e.Node.Bounds);
                 Font nodeFont = e.Node.NodeFont;
                 if (nodeFont == null)
                     nodeFont = ((TreeView)sender).Font;
                 e.Graphics.DrawString(e.Node.Text, nodeFont, Brushes.White, Rectangle.Inflate(e.Bounds, 2, 0));
-            }
-            else
-            {
+            } else {
                 e.DrawDefault = true;
             }
 
-            if ((e.State & TreeNodeStates.Focused) != 0)
-            {
-                using (Pen focusPen = new Pen(Color.Black))
-                {
+            if ((e.State & TreeNodeStates.Focused) != 0) {
+                using (Pen focusPen = new Pen(Color.Black)) {
                     focusPen.DashStyle = System.Drawing.Drawing2D.DashStyle.Dot;
                     Rectangle focusBounds = e.Node.Bounds;
                     focusBounds.Size = new Size(focusBounds.Width - 1,
@@ -263,22 +224,16 @@ namespace SK
     /// <summary>
     ///  Scroll控件类
     /// </summary>
-    public static class FormHelper_Scroll
-    {
+    public static class FormHelper_Scroll {
         /// <summary>判断datagridView中垂直滑块是否已经到底
         /// </summary>
         /// <param name="dataGridView"></param>
         /// <param name="eventHandler"></param>
-        public static void RegistScrollToEndEvent(this DataGridView dataGridView, EventHandler eventHandler)
-        {
-            dataGridView.Scroll += new ScrollEventHandler((sender, e) =>
-            {
-                if (e.ScrollOrientation == ScrollOrientation.VerticalScroll)
-                {
-                    if (e.NewValue + dataGridView.DisplayedRowCount(false) == dataGridView.Rows.Count)
-                    {
-                        if (eventHandler != null)
-                        {
+        public static void RegistScrollToEndEvent(this DataGridView dataGridView, EventHandler eventHandler) {
+            dataGridView.Scroll += new ScrollEventHandler((sender, e) => {
+                if (e.ScrollOrientation == ScrollOrientation.VerticalScroll) {
+                    if (e.NewValue + dataGridView.DisplayedRowCount(false) == dataGridView.Rows.Count) {
+                        if (eventHandler != null) {
                             eventHandler(dataGridView, null);
                         }
                     }
@@ -288,15 +243,13 @@ namespace SK
     }
 
 
-    public static class Extension
-    {
+    public static class Extension {
         /// <summary>判断数组或者列表是否为空
         /// </summary>
         /// <typeparam name="T"></typeparam>
         /// <param name="list"></param>
         /// <returns></returns>
-        public static IEnumerable<T> checkNull<T>(this IEnumerable<T> list)
-        {
+        public static IEnumerable<T> checkNull<T>(this IEnumerable<T> list) {
             return list == null ? new List<T>(0) : list;
         }
     }
@@ -305,8 +258,7 @@ namespace SK
     /// <summary>
     /// textbox帮助类
     /// </summary>
-    public static class FormHelper_TextBox
-    {
+    public static class FormHelper_TextBox {
         private const int EM_SETCUEBANNER = 0x1501;
         [DllImport("user32.dll", CharSet = CharSet.Auto)]
         private static extern Int32 SendMessage(IntPtr hWnd, int msg, int wParam, [MarshalAs(UnmanagedType.LPWStr)] string lParam);
@@ -316,16 +268,14 @@ namespace SK
         /// </summary>
         /// <param name="textBox">TextBox</param>
         /// <param name="watermark">水印文字</param>
-        public static void SetWatermark(this TextBox textBox, string watermark)
-        {
+        public static void SetWatermark(this TextBox textBox, string watermark) {
             SendMessage(textBox.Handle, EM_SETCUEBANNER, 0, watermark);
         }
         /// <summary>
         /// 清除水印文字
         /// </summary>
         /// <param name="textBox">TextBox</param>
-        public static void ClearWatermark(this TextBox textBox)
-        {
+        public static void ClearWatermark(this TextBox textBox) {
             SendMessage(textBox.Handle, EM_SETCUEBANNER, 0, string.Empty);
         }
     }
@@ -337,8 +287,7 @@ namespace SK
             AttributeTargets.Method |         //方法
             AttributeTargets.Property,       //属性
             AllowMultiple = true)]
-    public class DeBugInfo : System.Attribute
-    {
+    public class DeBugInfo : System.Attribute {
 
         private int bugNo;             //bug编号
         private string developer;      //开发者
@@ -353,8 +302,7 @@ namespace SK
         /// <param name="dev">辨认该bug的开发人员名字</param>
         /// <param name="d">最后异常审查该代码的日期</param>
 
-        public DeBugInfo(int bg, string dev, string d)
-        {
+        public DeBugInfo(int bg, string dev, string d) {
             this.bugNo = bg;
             this.developer = dev;
             this.lastReview = d;
@@ -363,10 +311,8 @@ namespace SK
         /// <summary>
         /// bug代码编号
         /// </summary>
-        public int BugNo
-        {
-            get
-            {
+        public int BugNo {
+            get {
                 return bugNo;
             }
         }
@@ -375,10 +321,8 @@ namespace SK
         /// <summary>
         /// bug的开发人员
         /// </summary>
-        public string Developer
-        {
-            get
-            {
+        public string Developer {
+            get {
                 return developer;
             }
         }
@@ -387,10 +331,8 @@ namespace SK
         /// <summary>
         /// 最后一次审查该代码的日期
         /// </summary>
-        public string LastReview
-        {
-            get
-            {
+        public string LastReview {
+            get {
                 return lastReview;
             }
         }
@@ -399,14 +341,11 @@ namespace SK
         /// <summary>
         /// 存储开发人员标记的字符串信息
         /// </summary>
-        public string Message
-        {
-            get
-            {
+        public string Message {
+            get {
                 return message;
             }
-            set
-            {
+            set {
                 message = value;
             }
         }

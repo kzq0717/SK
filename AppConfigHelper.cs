@@ -5,12 +5,10 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Configuration;
 
-namespace SK
-{
+namespace SK {
     /// <summary>App.config配置类
     /// </summary>
-    public class AppConfigHelper
-    {
+    public class AppConfigHelper {
 
         #region appSetting节点
 
@@ -18,8 +16,7 @@ namespace SK
         /// </summary>
         /// <param name="key">key值</param>
         /// <param name="value">相应值</param>
-        public static bool SetConfigValue(string key, string value)
-        {
+        public static bool SetConfigValue(string key, string value) {
             try
             {
                 Configuration config = ConfigurationManager.OpenExeConfiguration(ConfigurationUserLevel.None);
@@ -41,13 +38,11 @@ namespace SK
         /// <summary>获取AppSettings中某一节点值
         /// </summary>
         /// <param name="key"></param>
-        public static string GetConfigValue(string key)
-        {
+        public static string GetConfigValue(string key) {
             Configuration config = ConfigurationManager.OpenExeConfiguration(ConfigurationUserLevel.None);
             if (config.AppSettings.Settings[key] != null)
                 return config.AppSettings.Settings[key].Value;
             else
-
                 return string.Empty;
         }
         #endregion
@@ -58,8 +53,7 @@ namespace SK
         /// </summary>
         /// <param name="key"></param>
         /// <returns></returns>
-        public static string GetConnectionValue(string key)
-        {
+        public static string GetConnectionValue(string key) {
             if (ConfigurationManager.ConnectionStrings[key] != null)
                 return ConfigurationManager.ConnectionStrings[key].ConnectionString;
             return string.Empty;
@@ -69,8 +63,7 @@ namespace SK
         /// </summary>
         /// <param name="key"></param>
         /// <param name="conString"></param>
-        public static void UpdateConnectionStringsConfig(string key, string conString)
-        {
+        public static void UpdateConnectionStringsConfig(string key, string conString) {
             bool isModified = false;    //记录该连接串是否已经存在 
             if (ConfigurationManager.ConnectionStrings[key] != null)
             {

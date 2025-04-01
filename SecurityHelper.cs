@@ -6,12 +6,10 @@ using System.Threading.Tasks;
 using System.Security.Cryptography;
 using System.IO;
 
-namespace SK
-{
+namespace SK {
     /// <summary>安全方式
     /// </summary>
-    public class SecurityHelper
-    {
+    public class SecurityHelper {
         #region  变量
         /// <summary>私有密钥
         /// </summary>
@@ -29,8 +27,7 @@ namespace SK
         /// <param name="input">待加密的字符串</param>
         /// <param name="encoding">字符编码</param>
         /// <returns></returns>
-        private static string HashEncrypt(HashAlgorithm hashAlgorithm, string input, Encoding encoding)
-        {
+        private static string HashEncrypt(HashAlgorithm hashAlgorithm, string input, Encoding encoding) {
             var data = hashAlgorithm.ComputeHash(encoding.GetBytes(input));
 
             return BitConverter.ToString(data).Replace("-", "");
@@ -45,8 +42,7 @@ namespace SK
         /// <param name="encoding"> 字符编码 </param>
         /// <returns></returns>
         private static bool VerifyHashValue(HashAlgorithm hashAlgorithm, string unhashedText, string hashedText,
-            Encoding encoding)
-        {
+            Encoding encoding) {
             return string.Equals(HashEncrypt(hashAlgorithm, unhashedText, encoding), hashedText,
                 StringComparison.OrdinalIgnoreCase);
         }
@@ -63,8 +59,7 @@ namespace SK
         /// <param name="input"> 待加密的字符串 </param>
         /// <param name="encoding"> 字符编码 </param>
         /// <returns></returns>
-        public static string MD5Encrypt(string input, Encoding encoding)
-        {
+        public static string MD5Encrypt(string input, Encoding encoding) {
             return HashEncrypt(MD5.Create(), input, encoding);
         }
 
@@ -74,8 +69,7 @@ namespace SK
         /// <param name="input"> 未加密的字符串 </param>
         /// <param name="encoding"> 字符编码 </param>
         /// <returns></returns>
-        public static bool VerifyMD5Value(string input, Encoding encoding)
-        {
+        public static bool VerifyMD5Value(string input, Encoding encoding) {
             return VerifyHashValue(MD5.Create(), input, MD5Encrypt(input, encoding), encoding);
         }
 
@@ -89,8 +83,7 @@ namespace SK
         /// <param name="input"> 要加密的字符串 </param>
         /// <param name="encoding"> 字符编码 </param>
         /// <returns></returns>
-        public static string SHA1Encrypt(string input, Encoding encoding)
-        {
+        public static string SHA1Encrypt(string input, Encoding encoding) {
             return HashEncrypt(SHA1.Create(), input, encoding);
         }
 
@@ -100,8 +93,7 @@ namespace SK
         /// <param name="input"> 未加密的字符串 </param>
         /// <param name="encoding"> 字符编码 </param>
         /// <returns></returns>
-        public static bool VerifySHA1Value(string input, Encoding encoding)
-        {
+        public static bool VerifySHA1Value(string input, Encoding encoding) {
             return VerifyHashValue(SHA1.Create(), input, SHA1Encrypt(input, encoding), encoding);
         }
 
@@ -115,8 +107,7 @@ namespace SK
         /// <param name="input"> 要加密的字符串 </param>
         /// <param name="encoding"> 字符编码 </param>
         /// <returns></returns>
-        public static string SHA256Encrypt(string input, Encoding encoding)
-        {
+        public static string SHA256Encrypt(string input, Encoding encoding) {
             return HashEncrypt(SHA256.Create(), input, encoding);
         }
 
@@ -126,8 +117,7 @@ namespace SK
         /// <param name="input"> 未加密的字符串 </param>
         /// <param name="encoding"> 字符编码 </param>
         /// <returns></returns>
-        public static bool VerifySHA256Value(string input, Encoding encoding)
-        {
+        public static bool VerifySHA256Value(string input, Encoding encoding) {
             return VerifyHashValue(SHA256.Create(), input, SHA256Encrypt(input, encoding), encoding);
         }
 
@@ -141,8 +131,7 @@ namespace SK
         /// <param name="input"> 要加密的字符串 </param>
         /// <param name="encoding"> 字符编码 </param>
         /// <returns></returns>
-        public static string SHA384Encrypt(string input, Encoding encoding)
-        {
+        public static string SHA384Encrypt(string input, Encoding encoding) {
             return HashEncrypt(SHA384.Create(), input, encoding);
         }
 
@@ -152,8 +141,7 @@ namespace SK
         /// <param name="input"> 未加密的字符串 </param>
         /// <param name="encoding"> 字符编码 </param>
         /// <returns></returns>
-        public static bool VerifySHA384Value(string input, Encoding encoding)
-        {
+        public static bool VerifySHA384Value(string input, Encoding encoding) {
             return VerifyHashValue(SHA256.Create(), input, SHA384Encrypt(input, encoding), encoding);
         }
 
@@ -167,8 +155,7 @@ namespace SK
         /// <param name="input"> 要加密的字符串 </param>
         /// <param name="encoding"> 字符编码 </param>
         /// <returns></returns>
-        public static string SHA512Encrypt(string input, Encoding encoding)
-        {
+        public static string SHA512Encrypt(string input, Encoding encoding) {
             return HashEncrypt(SHA512.Create(), input, encoding);
         }
 
@@ -178,8 +165,7 @@ namespace SK
         /// <param name="input"> 未加密的字符串 </param>
         /// <param name="encoding"> 字符编码 </param>
         /// <returns></returns>
-        public static bool VerifySHA512Value(string input, Encoding encoding)
-        {
+        public static bool VerifySHA512Value(string input, Encoding encoding) {
             return VerifyHashValue(SHA512.Create(), input, SHA512Encrypt(input, encoding), encoding);
         }
 
@@ -194,8 +180,7 @@ namespace SK
         /// <param name="key"> 密钥 </param>
         /// <param name="encoding"> 字符编码 </param>
         /// <returns></returns>
-        public static string HMACSMD5Encrypt(string input, string key, Encoding encoding)
-        {
+        public static string HMACSMD5Encrypt(string input, string key, Encoding encoding) {
             return HashEncrypt(new HMACMD5(encoding.GetBytes(key)), input, encoding);
         }
 
@@ -210,8 +195,7 @@ namespace SK
         /// <param name="key"> 密钥 </param>
         /// <param name="encoding"> 字符编码 </param>
         /// <returns></returns>
-        public static string HMACSHA1Encrypt(string input, string key, Encoding encoding)
-        {
+        public static string HMACSHA1Encrypt(string input, string key, Encoding encoding) {
             return HashEncrypt(new HMACSHA1(encoding.GetBytes(key)), input, encoding);
         }
 
@@ -226,8 +210,7 @@ namespace SK
         /// <param name="key"> 密钥 </param>
         /// <param name="encoding"> 字符编码 </param>
         /// <returns></returns>
-        public static string HMACSHA256Encrypt(string input, string key, Encoding encoding)
-        {
+        public static string HMACSHA256Encrypt(string input, string key, Encoding encoding) {
             return HashEncrypt(new HMACSHA256(encoding.GetBytes(key)), input, encoding);
         }
 
@@ -242,8 +225,7 @@ namespace SK
         /// <param name="key"> 密钥 </param>
         /// <param name="encoding"> 字符编码 </param>
         /// <returns></returns>
-        public static string HMACSHA384Encrypt(string input, string key, Encoding encoding)
-        {
+        public static string HMACSHA384Encrypt(string input, string key, Encoding encoding) {
             return HashEncrypt(new HMACSHA384(encoding.GetBytes(key)), input, encoding);
         }
 
@@ -258,8 +240,7 @@ namespace SK
         /// <param name="key"> 密钥 </param>
         /// <param name="encoding"> 字符编码 </param>
         /// <returns></returns>
-        public static string HMACSHA512Encrypt(string input, string key, Encoding encoding)
-        {
+        public static string HMACSHA512Encrypt(string input, string key, Encoding encoding) {
             return HashEncrypt(new HMACSHA512(encoding.GetBytes(key)), input, encoding);
         }
 
@@ -276,10 +257,8 @@ namespace SK
         /// <param name="input"> 待加密的字符串 </param>
         /// <param name="key"> 密钥（8位） </param>
         /// <returns></returns>
-        public static string DESEncrypt(string input, string key)
-        {
-            try
-            {
+        public static string DESEncrypt(string input, string key) {
+            try {
                 var keyBytes = Encoding.UTF8.GetBytes(key);
                 //var ivBytes = Encoding.UTF8.GetBytes(iv);
 
@@ -287,22 +266,18 @@ namespace SK
                 des.Mode = CipherMode.ECB; //兼容其他语言的 Des 加密算法
                 des.Padding = PaddingMode.Zeros; //自动补 0
 
-                using (var ms = new MemoryStream())
-                {
+                using (var ms = new MemoryStream()) {
                     var data = Encoding.UTF8.GetBytes(input);
 
                     using (var cs = new CryptoStream(ms, des.CreateEncryptor(keyBytes, IvBytes), CryptoStreamMode.Write)
-                        )
-                    {
+                        ) {
                         cs.Write(data, 0, data.Length);
                         cs.FlushFinalBlock();
                     }
 
                     return Convert.ToBase64String(ms.ToArray());
                 }
-            }
-            catch
-            {
+            } catch {
                 return input;
             }
         }
@@ -312,10 +287,8 @@ namespace SK
         /// <param name="input"> 待解密的字符串 </param>
         /// <param name="key"> 密钥（8位） </param>
         /// <returns></returns>
-        public static string DESDecrypt(string input, string key)
-        {
-            try
-            {
+        public static string DESDecrypt(string input, string key) {
+            try {
                 var keyBytes = Encoding.UTF8.GetBytes(key);
                 //var ivBytes = Encoding.UTF8.GetBytes(iv);
 
@@ -323,11 +296,9 @@ namespace SK
                 des.Mode = CipherMode.ECB; //兼容其他语言的Des加密算法
                 des.Padding = PaddingMode.Zeros; //自动补0
 
-                using (var ms = new MemoryStream())
-                {
+                using (var ms = new MemoryStream()) {
                     var data = Convert.FromBase64String(input);
-                    using (var cs = new CryptoStream(ms, des.CreateDecryptor(keyBytes, IvBytes), CryptoStreamMode.Write))
-                    {
+                    using (var cs = new CryptoStream(ms, des.CreateDecryptor(keyBytes, IvBytes), CryptoStreamMode.Write)) {
                         cs.Write(data, 0, data.Length);
 
                         cs.FlushFinalBlock();
@@ -335,9 +306,7 @@ namespace SK
 
                     return Encoding.UTF8.GetString(ms.ToArray());
                 }
-            }
-            catch
-            {
+            } catch {
                 return input;
             }
         }
@@ -352,10 +321,8 @@ namespace SK
         /// </summary>
         /// <param name="publicKey"> 公钥 </param>
         /// <param name="privateKey"> 私钥 </param>
-        public static void GenerateRSAKeys(out string publicKey, out string privateKey)
-        {
-            using (var rsa = new RSACryptoServiceProvider())
-            {
+        public static void GenerateRSAKeys(out string publicKey, out string privateKey) {
+            using (var rsa = new RSACryptoServiceProvider()) {
                 publicKey = rsa.ToXmlString(false);
                 privateKey = rsa.ToXmlString(true);
             }
@@ -367,8 +334,7 @@ namespace SK
         /// <param name="publickey"> 公钥 </param>
         /// <param name="content"> 待加密的内容 </param>
         /// <returns> 经过加密的字符串 </returns>
-        public static string RSAEncrypt(string publickey, string content)
-        {
+        public static string RSAEncrypt(string publickey, string content) {
             var rsa = new RSACryptoServiceProvider();
             rsa.FromXmlString(publickey);
             var cipherbytes = rsa.Encrypt(Encoding.UTF8.GetBytes(content), false);
@@ -382,10 +348,8 @@ namespace SK
         /// <param name="privatekey"> 私钥 </param>
         /// <param name="content"> 待解密的内容 </param>
         /// <returns> 解密后的字符串 </returns>
-        public static string RSADecrypt(string privatekey, string content)
-        {
-            if (string.IsNullOrEmpty(content))
-            {
+        public static string RSADecrypt(string privatekey, string content) {
+            if (string.IsNullOrEmpty(content)) {
                 return null;
             }
             var rsa = new RSACryptoServiceProvider();
@@ -402,11 +366,9 @@ namespace SK
         /// 生成字符串类型的ID（16位）
         /// </summary>
         /// <returns></returns>
-        public static string GenerateStringID()
-        {
+        public static string GenerateStringID() {
             long i = 1;
-            foreach (byte b in Guid.NewGuid().ToByteArray())
-            {
+            foreach (byte b in Guid.NewGuid().ToByteArray()) {
                 i *= ((int)b + 1);
             }
             return string.Format("{0:x}", i - DateTime.Now.Ticks);
@@ -418,8 +380,7 @@ namespace SK
         /// 19位数字序列
         /// </summary>
         /// <returns></returns>
-        public static long GenerateIntID()
-        {
+        public static long GenerateIntID() {
             byte[] buffer = Guid.NewGuid().ToByteArray();
             return BitConverter.ToUInt32(buffer, 0);
         }
